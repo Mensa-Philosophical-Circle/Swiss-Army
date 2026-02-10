@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:swiss_army_component/swiss_army_component.dart';
+import 'package:country_state_city/country_state_city.dart' as csc;
 
 void main() {
   runApp(const ExampleApp());
@@ -121,6 +122,7 @@ class ComponentShowcase extends StatelessWidget {
           _buildSection('OTP Input', const OTPExamples()),
           _buildSection('Search Bars', const SearchBarExamples()),
           _buildSection('Utilities', const UtilityExamples()),
+          _buildSection('Location Dropdowns', const LocationDropdownExamples()),
         ],
       ),
     );
@@ -172,7 +174,7 @@ class ThemeExamples extends StatelessWidget {
           ),
         ),
         vSpace(16),
- 
+
         // SACThemeConfig usage
         MedAppText('2. SACThemeConfig - Color Configuration'),
         vSpace(4),
@@ -743,4 +745,124 @@ class UtilityExamples extends StatelessWidget {
       ],
     );
   }
+}
+// =============================================================================
+// LOCATION DROPDOWN EXAMPLES
+// =============================================================================
+
+class LocationDropdownExamples extends StatefulWidget {
+  const LocationDropdownExamples({super.key});
+
+  @override
+  State<LocationDropdownExamples> createState() =>
+      _LocationDropdownExamplesState();
+}
+
+class _LocationDropdownExamplesState extends State<LocationDropdownExamples> {
+  csc.Country? _selectedCountry;
+  csc.State? _selectedState;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        BigAppText('1. Chained Selection'),
+        vSpace(8),
+        SmallAppText(
+          'Selecting country filters states, selecting state filters cities.',
+        ),
+        vSpace(12),
+
+        CountryDropdown(
+          label: 'Select Country',
+          value: _selectedCountry,
+          onChanged: (country) {
+            setState(() {
+              _selectedCountry = country;
+              _selectedState = null;
+            });
+            print('Selected: ${country?.name}');
+          },
+        ),
+        vSpace(16),
+
+        StateDropdown(
+          label: 'Select State / Region',
+          country: _selectedCountry,
+          value: _selectedState,
+          onChanged: (state) {
+            setState(() {
+              _selectedState = state;
+            });
+            print('Selected State: ${state?.name}');
+          },
+        ),
+        vSpace(16),
+
+        CityDropdown(
+          label: 'Select City / LGA',
+          country: _selectedCountry,
+          state: _selectedState,
+          onChanged: (city) {
+            print('Selected City: ${city?.name}');
+          },
+        ),
+
+        vSpace(32),
+        Divider(),
+        vSpace(16),
+
+        BigAppText('2. Independent Usage (e.g., Nigeria Only)'),
+        vSpace(8),
+        SmallAppText(
+          'You can use StateDropdown without a selectable CountryDropdown if you provide a fixed country object. This example fixes the country to Nigeria to show the custom LGA data.',
+        ),
+        vSpace(12),
+
+        // Example: Independent State for Nigeria
+        StateDropdown(
+          label: 'Select State (Nigeria Only)',
+          // Manually constructing a Country object for Nigeria
+          country: csc.Country(
+            name: 'Nigeria',
+            isoCode: 'NG',
+            phoneCode: '234',
+            currency: 'NGN',
+            flag: '🇳🇬',
+            latitude: '',
+            longitude: '',
+          ),
+          value: _independentState,
+          onChanged: (val) {
+            setState(() {
+              _independentState = val;
+              _independentCity = null;
+            });
+          },
+        ),
+        vSpace(16),
+
+        // City/LGA for the independent state
+        CityDropdown(
+          label: 'Select LGA (Official List)',
+          country: csc.Country(
+            name: 'Nigeria',
+            isoCode: 'NG',
+            phoneCode: '234',
+            currency: 'NGN',
+            flag: '🇳🇬',
+            latitude: '',
+            longitude: '',
+          ),
+          state: _independentState,
+          value: _independentCity,
+          onChanged: (val) => setState(() => _independentCity = val),
+        ),
+      ],
+    );
+  }
+
+  csc.State? _independentState;
+  csc.City? _independentCity;
 }

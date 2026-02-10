@@ -1,5 +1,4 @@
 // OTP Security Features Test
-// Run with: flutter test test/otp_security_test.dart
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:swiss_army_component/utils/utils.dart';

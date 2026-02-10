@@ -9,23 +9,17 @@ void main() {
   test('Check Custom Nigeria Data correctness', () async {
     // 1. Check Country exists in standard package (we still use standard country list)
     final countries = await csc.getAllCountries();
-    final nigeria = countries.firstWhere(
+    countries.firstWhere(
       (c) => c.name.toLowerCase() == 'nigeria',
       orElse: () => throw Exception('Nigeria not found'),
     );
-    if (kDebugMode) {
-      print('Found country: ${nigeria.name}, ISO: ${nigeria.isoCode}');
-    }
-
+    
     // 2. Verify NigeriaData States
     final customStates = NigeriaData.getStates();
     if (customStates.isEmpty) {
       throw Exception('Custom NigeriaData returned no states!');
     }
-    // Check count - should be 37 (36 + FCT)
-    print(
-      'Found ${customStates.length} custom states for Nigeria (Expected 37).',
-    );
+    
 
     // 3. Verify LGAs for Lagos
     final lagosValues = customStates.where(
@@ -36,27 +30,30 @@ void main() {
     }
     final lagos = lagosValues.first;
 
-    if (kDebugMode) {
-      print('Checking custom LGAs for state: ${lagos.name} (${lagos.isoCode})');
-    }
-
+   
     final lgas = NigeriaData.getLgas(lagos.isoCode);
-    if (kDebugMode) {
-      print('Found ${lgas.length} LGAs for Lagos (Expected 20).');
-    }
-
     if (lgas.length != 20) {
-      print('WARNING: Expected 20 LGAs, found ${lgas.length}');
+      if (kDebugMode) {
+        print('WARNING: Expected 20 LGAs, found ${lgas.length}');
+      }
       // List found to debug
-      print('LGAs Found: ${lgas.map((c) => c.name).join(', ')}');
-      if (lgas.length < 10)
+      if (kDebugMode) {
+        print('LGAs Found: ${lgas.map((c) => c.name).join(', ')}');
+      }
+      if (lgas.length < 10) {
+        if (kDebugMode) {
+          print('WARNING: Expected 20 LGAs, found ${lgas.length}');
+        }
         throw Exception('Too few LGAs found, data likely incorrect.');
+      }
     }
 
     // Check for Alimosho (key indicator of correct data)
     final hasAlimosho = lgas.any((c) => c.name == 'Alimosho');
     if (hasAlimosho) {
-      print('SUCCESS: Alimosho LGA found!');
+      if (kDebugMode) {
+        print('SUCCESS: Alimosho LGA found!');
+      }
     } else {
       throw Exception('FAILURE: Alimosho LGA missing from custom data!');
     }
@@ -81,8 +78,12 @@ void main() {
         if (kDebugMode) {
           print('FCT Councils: ${fctLgas.map((c) => c.name).join(', ')}');
         }
-        if (fctLgas.length < 10)
+        if (fctLgas.length < 10) {
+          if (kDebugMode) {
+            print('WARNING: Expected 6 FCT councils, found ${fctLgas.length}');
+          }
           throw Exception('Too few FCT councils found, data likely incorrect.');
+        }
       }
     }
   });

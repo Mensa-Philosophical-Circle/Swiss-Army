@@ -859,10 +859,60 @@ class _LocationDropdownExamplesState extends State<LocationDropdownExamples> {
           value: _independentCity,
           onChanged: (val) => setState(() => _independentCity = val),
         ),
+
+        vSpace(24),
+        Divider(),
+        vSpace(16),
+
+        BigAppText('3. Independent Usage (e.g., USA Only)'),
+        vSpace(8),
+        SmallAppText('Example for United States, using default package data.'),
+        vSpace(12),
+
+        // Example: Independent State for US
+        StateDropdown(
+          label: 'Select State (USA Only)',
+          country: csc.Country(
+            name: 'United States',
+            isoCode: 'US',
+            phoneCode: '1',
+            currency: 'USD',
+            flag: '🇺🇸',
+            latitude: '',
+            longitude: '',
+          ),
+          value: _usState,
+          onChanged: (val) {
+            setState(() {
+              _usState = val;
+              _usCity = null;
+            });
+          },
+        ),
+        vSpace(16),
+
+        CityDropdown(
+          label: 'Select City',
+          country: csc.Country(
+            name: 'United States',
+            isoCode: 'US',
+            phoneCode: '1',
+            currency: 'USD',
+            flag: '🇺🇸',
+            latitude: '',
+            longitude: '',
+          ),
+          state: _usState,
+          value: _usCity,
+          onChanged: (val) => setState(() => _usCity = val),
+        ),
       ],
     );
   }
 
   csc.State? _independentState;
   csc.City? _independentCity;
+
+  csc.State? _usState;
+  csc.City? _usCity;
 }

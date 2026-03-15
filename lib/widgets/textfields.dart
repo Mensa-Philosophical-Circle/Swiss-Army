@@ -544,9 +544,8 @@ class _AppTextFieldState extends State<AppTextField> {
       fillColor: _backgroundColor,
       border: _buildBorder(),
       enabledBorder: _buildBorder(),
-      focusedBorder: _buildBorder(
-        color: widget.focusedBorderColor ?? AppColors.primary,
-      ),
+      // Use _borderColor which already resolves focusedBorderColor → theme → AppColors.primary
+      focusedBorder: _buildBorder(color: _borderColor),
       errorBorder: _buildBorder(color: _errorColor),
       focusedErrorBorder: _buildBorder(
         color: _errorColor,
@@ -765,16 +764,20 @@ class _AppTextFieldState extends State<AppTextField> {
       onSaved: widget.onSaved,
     );
 
+    // Build the text field, applying optional height constraint
+    Widget fieldWidget = textField;
+    if (widget.height != null || widget.width != null) {
+      fieldWidget = SizedBox(
+        width: widget.width,
+        height: widget.height,
+        child: textField,
+      );
+    }
+
     Widget result = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
-      children: [
-        _buildLabel(),
-        if (widget.width != null)
-          SizedBox(width: widget.width, child: textField)
-        else
-          textField,
-      ],
+      children: [_buildLabel(), fieldWidget],
     );
 
     if (widget.semanticsLabel != null) {
@@ -897,6 +900,9 @@ class AppPhoneTextField extends StatelessWidget {
     this.requiredIndicatorColor,
     this.invalidNumberMessage,
     this.enableSecurity,
+    // ============== Size Configuration ==============
+    this.height,
+    this.contentPadding,
   });
 
   final TextEditingController? controller;
@@ -930,6 +936,8 @@ class AppPhoneTextField extends StatelessWidget {
   final Color? requiredIndicatorColor;
   final String? invalidNumberMessage;
   final bool? enableSecurity;
+  final double? height;
+  final EdgeInsetsGeometry? contentPadding;
 
   // ============== Default Values ==============
   static const double _defaultLabelFontSize = 16.0;
@@ -1022,69 +1030,75 @@ class AppPhoneTextField extends StatelessWidget {
           ),
           SizedBox(height: _labelSpacing),
         ],
-        IntlPhoneField(
-          controller: controller,
-          decoration: InputDecoration(
-            hintText: hint,
-            hintStyle: TextStyle(color: effectiveHintColor),
-            filled: true,
-            fillColor:
-                backgroundColor ??
-                theme.inputDecorationTheme.fillColor ??
-                AppColors.white,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(_borderRadius ?? 4.0),
-              borderSide: BorderSide(
-                color: effectiveBorderColor,
-                width: _borderWidth ?? 1.0,
+        SizedBox(
+          height: height,
+          child: IntlPhoneField(
+            controller: controller,
+            decoration: InputDecoration(
+              hintText: hint,
+              hintStyle: TextStyle(color: effectiveHintColor),
+              filled: true,
+              fillColor:
+                  backgroundColor ??
+                  theme.inputDecorationTheme.fillColor ??
+                  AppColors.white,
+              contentPadding:
+                  contentPadding ??
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(_borderRadius ?? 4.0),
+                borderSide: BorderSide(
+                  color: effectiveBorderColor,
+                  width: _borderWidth ?? 1.0,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(_borderRadius ?? 4.0),
+                borderSide: BorderSide(
+                  color: effectiveBorderColor,
+                  width: _borderWidth ?? 1.0,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(_borderRadius ?? 4.0),
+                borderSide: BorderSide(
+                  color: effectiveFocusedBorderColor,
+                  width: _borderWidth ?? 1.0,
+                ),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(_borderRadius ?? 4.0),
+                borderSide: BorderSide(
+                  color: effectiveErrorBorderColor,
+                  width: _borderWidth ?? 1.0,
+                ),
               ),
             ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(_borderRadius ?? 4.0),
-              borderSide: BorderSide(
-                color: effectiveBorderColor,
-                width: _borderWidth ?? 1.0,
-              ),
+            initialCountryCode: initialCountryCode,
+            onChanged: onChanged,
+            onCountryChanged: onCountryChanged != null
+                ? (country) => onCountryChanged!(country.code)
+                : null,
+            validator: validator,
+            cursorColor:
+                cursorColor ??
+                theme.textSelectionTheme.cursorColor ??
+                AppColors.primary,
+            style: TextStyle(color: effectiveTextColor),
+            showDropdownIcon: showDropdownIcon,
+            dropdownIconPosition: IconPosition.trailing,
+            dropdownIcon: Icon(
+              Icons.arrow_drop_down,
+              color: dropdownIconColor ?? AppColors.grey,
             ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(_borderRadius ?? 4.0),
-              borderSide: BorderSide(
-                color: effectiveFocusedBorderColor,
-                width: _borderWidth ?? 1.0,
-              ),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(_borderRadius ?? 4.0),
-              borderSide: BorderSide(
-                color: effectiveErrorBorderColor,
-                width: _borderWidth ?? 1.0,
-              ),
-            ),
+            flagsButtonPadding: EdgeInsets.only(left: 12.w),
+            showCountryFlag: showCountryFlag,
+            enabled: enabled,
+            readOnly: readOnly,
+            invalidNumberMessage: invalidNumberMessage ?? 'Invalid phone number',
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            keyboardType: TextInputType.phone,
           ),
-          initialCountryCode: initialCountryCode,
-          onChanged: onChanged,
-          onCountryChanged: onCountryChanged != null
-              ? (country) => onCountryChanged!(country.code)
-              : null,
-          validator: validator,
-          cursorColor:
-              cursorColor ??
-              theme.textSelectionTheme.cursorColor ??
-              AppColors.primary,
-          style: TextStyle(color: effectiveTextColor),
-          showDropdownIcon: showDropdownIcon,
-          dropdownIconPosition: IconPosition.trailing,
-          dropdownIcon: Icon(
-            Icons.arrow_drop_down,
-            color: dropdownIconColor ?? AppColors.grey,
-          ),
-          flagsButtonPadding: EdgeInsets.only(left: 12.w),
-          showCountryFlag: showCountryFlag,
-          enabled: enabled,
-          readOnly: readOnly,
-          invalidNumberMessage: invalidNumberMessage ?? 'Invalid phone number',
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          keyboardType: TextInputType.phone,
         ),
       ],
     );

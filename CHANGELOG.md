@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.2] - 2026-03-15
+
+### Fixed
+
+- **TextField Border Color**: Fixed an issue where the `focusedBorder` color was hardcoded to `AppColors.primary`, ignoring the theme's `focusedBorder` color or explicit `focusedBorderColor` property.
+- **TextField Height**: Fixed an issue where the `height` parameter passed to `AppTextField` (and derived widgets) was being ignored.
+- **AppPhoneTextField Consistency**: Added `height` and `contentPadding` parameters to `AppPhoneTextField` to ensure visual consistency with regular text fields. Default `contentPadding` now matches `AppTextField`.
+
 ## [0.5.1] - 2026-02-10
 
 ### Fixed

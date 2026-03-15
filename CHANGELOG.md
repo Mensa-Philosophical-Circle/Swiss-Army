@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.3] - 2026-03-15
+
+### Added
+
+- **Default Height Fallback**: Added a standard default height of `52.h` to `AppTextField`, `AppPhoneTextField`, and `AppDropdown` when no height is explicitly provided. This ensures visual consistency across all input types by default.
+
+### Changed
+
+- **AppDropdown**: Added `height` parameter support and updated default vertical `contentPadding` to `14.h` to match text fields.
+
 ## [0.5.2] - 2026-03-15
 
 ### Fixed

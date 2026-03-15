@@ -20,6 +20,7 @@ class AppDropdown<T> extends StatefulWidget {
     this.borderColor,
     this.borderRadius,
     this.contentPadding,
+    this.height,
     this.enabled = true,
   });
 
@@ -38,6 +39,7 @@ class AppDropdown<T> extends StatefulWidget {
   final Color? borderColor;
   final double? borderRadius;
   final EdgeInsetsGeometry? contentPadding;
+  final double? height;
   final bool enabled;
 
   @override
@@ -155,51 +157,54 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
           ),
         ],
 
-        DropdownButtonFormField<T>(
-          key: ValueKey(widget.value),
-          initialValue: widget.value,
-          items: widget.items,
-          onChanged: widget.enabled && !widget.isLoading
-              ? widget.onChanged
-              : null,
-          validator: (value) {
-            final error = widget.validator?.call(value);
-            setState(() => _hasError = error != null);
-            return error;
-          },
-          onSaved: widget.onSaved,
-          focusNode: _focusNode,
-          icon: widget.isLoading
-              ? SizedBox(
-                  width: 20.w,
-                  height: 20.h,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                )
-              : null,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            color: isDark ? Colors.white : Colors.black87,
-            fontSize: 16.sp,
+        SizedBox(
+          height: widget.height ?? 52.h,
+          child: DropdownButtonFormField<T>(
+            key: ValueKey(widget.value),
+            initialValue: widget.value,
+            items: widget.items,
+            onChanged: widget.enabled && !widget.isLoading
+                ? widget.onChanged
+                : null,
+            validator: (value) {
+              final error = widget.validator?.call(value);
+              setState(() => _hasError = error != null);
+              return error;
+            },
+            onSaved: widget.onSaved,
+            focusNode: _focusNode,
+            icon: widget.isLoading
+                ? SizedBox(
+                    width: 20.w,
+                    height: 20.h,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  )
+                : null,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              color: isDark ? Colors.white : Colors.black87,
+              fontSize: 16.sp,
+            ),
+            decoration: InputDecoration(
+              isDense: true,
+              filled: true,
+              fillColor: _backgroundColor,
+              contentPadding:
+                  widget.contentPadding ??
+                  EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+              hintText: widget.hint,
+              hintStyle: Theme.of(context).inputDecorationTheme.hintStyle,
+              prefixIcon: widget.prefixIcon,
+              border: _getBorder(_borderColor),
+              enabledBorder: _getBorder(_borderColor),
+              focusedBorder: _getBorder(Theme.of(context).primaryColor),
+              errorBorder: _getBorder(Theme.of(context).colorScheme.error),
+              focusedErrorBorder: _getBorder(Theme.of(context).colorScheme.error),
+            ),
+            dropdownColor: isDark ? Colors.grey[850] : Colors.white,
           ),
-          decoration: InputDecoration(
-            isDense: true,
-            filled: true,
-            fillColor: _backgroundColor,
-            contentPadding:
-                widget.contentPadding ??
-                EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-            hintText: widget.hint,
-            hintStyle: Theme.of(context).inputDecorationTheme.hintStyle,
-            prefixIcon: widget.prefixIcon,
-            border: _getBorder(_borderColor),
-            enabledBorder: _getBorder(_borderColor),
-            focusedBorder: _getBorder(Theme.of(context).primaryColor),
-            errorBorder: _getBorder(Theme.of(context).colorScheme.error),
-            focusedErrorBorder: _getBorder(Theme.of(context).colorScheme.error),
-          ),
-          dropdownColor: isDark ? Colors.grey[850] : Colors.white,
         ),
       ],
     );

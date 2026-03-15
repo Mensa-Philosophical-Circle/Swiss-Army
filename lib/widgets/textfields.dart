@@ -766,10 +766,13 @@ class _AppTextFieldState extends State<AppTextField> {
 
     // Build the text field, applying optional height constraint
     Widget fieldWidget = textField;
-    if (widget.height != null || widget.width != null) {
+    final double? effectiveHeight =
+        widget.height ?? (widget.maxLines == 1 ? 52.h : null);
+
+    if (effectiveHeight != null || widget.width != null) {
       fieldWidget = SizedBox(
         width: widget.width,
-        height: widget.height,
+        height: effectiveHeight,
         child: textField,
       );
     }
@@ -1031,7 +1034,7 @@ class AppPhoneTextField extends StatelessWidget {
           SizedBox(height: _labelSpacing),
         ],
         SizedBox(
-          height: height,
+          height: height ?? 52.h,
           child: IntlPhoneField(
             controller: controller,
             decoration: InputDecoration(

@@ -5,7 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.5.3] - 2026-03-15
+## [0.5.4] - 2026-03-19
+
+### Added
+
+- **Standardized Component Heights**: Introduced global configuration for input and button heights through `SACThemeConfig`.
+- **SACThemeExtension**: Added a custom theme extension to store and access Swiss Army component-specific properties.
+- **SACThemeContext Extension**: Added a `BuildContext` extension for easy access to `inputHeight` and `buttonHeight` with a responsive fallback of `context.height * 0.07`.
+
+### Changed
+
+- **AppTextField**: Now respects global `inputHeight` from theme or fallback.
+- **AppDropdown**: Now respects global `inputHeight` from theme or fallback.
+- **CustomSearchBar**: Replaced hardcoded height with theme-aware `inputHeight` and fallback.
+- **AppButtons**: Updated `AppElevatedButton`, `NormalElevatedButton`, `AppSecondaryElevatedButton`, `AppOutlinedButton`, and `ConfigElevatedButton` to respect global `buttonHeight` from theme or fallback.
+
 
 ### Added
 

@@ -20,6 +20,7 @@ class CountryDropdown extends StatefulWidget {
   final String label;
   final String hint;
   final TextFieldStyle fieldStyle;
+  final double? height;
 
   @override
   State<CountryDropdown> createState() => _CountryDropdownState();
@@ -79,6 +80,7 @@ class StateDropdown extends StatefulWidget {
   final String label;
   final String hint;
   final TextFieldStyle fieldStyle;
+  final double? height;
 
   @override
   State<StateDropdown> createState() => _StateDropdownState();
@@ -166,6 +168,7 @@ class CityDropdown extends StatefulWidget {
   final String label;
   final String hint;
   final TextFieldStyle fieldStyle;
+  final double? height;
 
   @override
   State<CityDropdown> createState() => _CityDropdownState();

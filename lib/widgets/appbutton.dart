@@ -206,7 +206,7 @@ class _AppElevatedButtonState extends State<AppElevatedButton> {
 
     final button = SizedBox(
       width: widget.width ?? double.infinity,
-      height: widget.height,
+      height: widget.height ?? context.buttonHeight,
       child: ElevatedButton(
         onPressed: widget.enabled && !widget.isLoading && !_isDebouncing
             ? _handlePress
@@ -387,10 +387,12 @@ class _NormalElevatedButtonState extends State<NormalElevatedButton> {
 
     final button = SizedBox(
       width: widget.width ?? double.infinity,
-      height: widget.height,
+      height: widget.height ?? context.buttonHeight,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          minimumSize: widget.height != null ? Size(0, widget.height!) : null,
+          minimumSize: widget.height != null
+              ? Size(0, widget.height!)
+              : Size(0, context.buttonHeight),
           padding: widget.padding,
           backgroundColor: widget.color,
           elevation: validateElevation(
@@ -548,12 +550,14 @@ class _AppSecondaryElevatedButtonState
 
     final button = SizedBox(
       width: widget.width ?? double.infinity,
-      height: widget.height,
+      height: widget.height ?? context.buttonHeight,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: widget.bgColor,
           padding: widget.padding,
-          minimumSize: widget.height != null ? Size(0, widget.height!) : null,
+          minimumSize: widget.height != null
+              ? Size(0, widget.height!)
+              : Size(0, context.buttonHeight),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(
               validateBorderRadius(
@@ -731,9 +735,12 @@ class _AppOutlinedButtonState extends State<AppOutlinedButton> {
 
     final button = SizedBox(
       width: widget.buttonWidth ?? double.infinity,
-      height: widget.buttonHeight,
+      height: widget.buttonHeight ?? context.buttonHeight,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+          minimumSize: widget.buttonHeight != null
+              ? Size(0, widget.buttonHeight!)
+              : Size(0, context.buttonHeight),
           backgroundColor: widget.bgColor ?? Colors.transparent,
           side: widget.hideBorder == true
               ? BorderSide.none

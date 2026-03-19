@@ -152,6 +152,8 @@ class SACTheme {
           : (config?.popupMenuBackgroundLight ??
                 config?.surfaceLight ??
                 AppColors.surfaceLight),
+      inputHeight: config?.inputHeight,
+      buttonHeight: config?.buttonHeight,
     );
   }
 
@@ -766,8 +768,55 @@ class SACTheme {
         textColor: colors.textPrimary,
         collapsedTextColor: colors.textPrimary,
       ),
+      extensions: [
+        SACThemeExtension(
+          inputHeight: colors.inputHeight,
+          buttonHeight: colors.buttonHeight,
+        ),
+      ],
     );
   }
+}
+
+/// Theme extension for Swiss Army Component specific properties
+class SACThemeExtension extends ThemeExtension<SACThemeExtension> {
+  final double? inputHeight;
+  final double? buttonHeight;
+
+  SACThemeExtension({this.inputHeight, this.buttonHeight});
+
+  @override
+  SACThemeExtension copyWith({double? inputHeight, double? buttonHeight}) {
+    return SACThemeExtension(
+      inputHeight: inputHeight ?? this.inputHeight,
+      buttonHeight: buttonHeight ?? this.buttonHeight,
+    );
+  }
+
+  @override
+  SACThemeExtension lerp(ThemeExtension<SACThemeExtension>? other, double t) {
+    if (other is! SACThemeExtension) return this;
+    return SACThemeExtension(
+      inputHeight: lerpDouble(inputHeight, other.inputHeight, t),
+      buttonHeight: lerpDouble(buttonHeight, other.buttonHeight, t),
+    );
+  }
+
+  static double? lerpDouble(double? a, double? b, double t) {
+    if (a == null && b == null) return null;
+    return (a ?? 0.0) + ((b ?? 0.0) - (a ?? 0.0)) * t;
+  }
+}
+
+extension SACThemeContext on BuildContext {
+  SACThemeExtension get sacTheme =>
+      Theme.of(this).extension<SACThemeExtension>() ?? SACThemeExtension();
+
+  double get inputHeight => sacTheme.inputHeight ?? height * 0.07;
+  double get buttonHeight => sacTheme.buttonHeight ?? height * 0.07;
+
+  double get height => MediaQuery.of(this).size.height;
+  double get width => MediaQuery.of(this).size.width;
 }
 
 /// Legacy aliases for backward compatibility
@@ -802,8 +851,6 @@ class _ResolvedColors {
   final Color border;
   final Color textPrimary;
   final Color textMuted;
-
-  // Component specific
   final Color scaffoldBackground;
   final Color appBarBackground;
   final Color appBarForeground;
@@ -817,6 +864,9 @@ class _ResolvedColors {
   final Color inputFillColor;
   final Color chipBackground;
   final Color popupMenuBackground;
+
+  final double? inputHeight;
+  final double? buttonHeight;
 
   _ResolvedColors({
     required this.primary,
@@ -841,5 +891,7 @@ class _ResolvedColors {
     required this.inputFillColor,
     required this.chipBackground,
     required this.popupMenuBackground,
+    this.inputHeight,
+    this.buttonHeight,
   });
 }

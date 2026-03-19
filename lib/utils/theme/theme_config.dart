@@ -173,6 +173,8 @@ class SACThemeConfig {
   final TextStyle? inputLabelStyle;
   final TextStyle? inputHintStyle;
   final double? inputBorderRadius;
+  final double? inputHeight;
+  final double? buttonHeight;
 
   // --- Checkbox/Radio/Switch ---
   final Color? checkboxFillColor;
@@ -430,6 +432,8 @@ class SACThemeConfig {
     this.inputLabelStyle,
     this.inputHintStyle,
     this.inputBorderRadius,
+    this.inputHeight,
+    this.buttonHeight,
     this.checkboxFillColor,
     this.checkboxFillColorLight,
     this.checkboxFillColorDark,
@@ -657,6 +661,8 @@ class SACThemeConfig {
     TextStyle? inputLabelStyle,
     TextStyle? inputHintStyle,
     double? inputBorderRadius,
+    double? inputHeight,
+    double? buttonHeight,
     Color? checkboxFillColor,
     Color? checkboxFillColorLight,
     Color? checkboxFillColorDark,
@@ -911,6 +917,8 @@ class SACThemeConfig {
       inputLabelStyle: inputLabelStyle ?? this.inputLabelStyle,
       inputHintStyle: inputHintStyle ?? this.inputHintStyle,
       inputBorderRadius: inputBorderRadius ?? this.inputBorderRadius,
+      inputHeight: inputHeight ?? this.inputHeight,
+      buttonHeight: buttonHeight ?? this.buttonHeight,
       checkboxFillColor: checkboxFillColor ?? this.checkboxFillColor,
       checkboxFillColorLight:
           checkboxFillColorLight ?? this.checkboxFillColorLight,

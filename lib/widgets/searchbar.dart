@@ -365,7 +365,6 @@ class _CustomSearchBarState extends State<CustomSearchBar>
   bool _hasText = false;
 
   // ============== Default Values ==============
-  static const double _defaultHeight = 56.0;
   static const double _defaultBorderWidth = 1.0;
   static const double _defaultIconPaddingLeft = 16.0;
   static const double _defaultIconPaddingRight = 8.0;
@@ -546,7 +545,7 @@ class _CustomSearchBarState extends State<CustomSearchBar>
 
   double get _height => validateSearchBarHeight(
     widget.height,
-    defaultValue: _defaultHeight.h,
+    defaultValue: context.inputHeight,
     enableSecurity: widget.enableSecurity,
   );
 

@@ -767,7 +767,7 @@ class _AppTextFieldState extends State<AppTextField> {
     // Build the text field, applying optional height constraint
     Widget fieldWidget = textField;
     final double? effectiveHeight =
-        widget.height ?? (widget.maxLines == 1 ? 52.h : null);
+        widget.maxLines == 1 ? (widget.height ?? context.inputHeight) : null;
 
     if (effectiveHeight != null || widget.width != null) {
       fieldWidget = SizedBox(

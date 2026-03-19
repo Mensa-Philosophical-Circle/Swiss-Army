@@ -12,6 +12,7 @@ class CountryDropdown extends StatefulWidget {
     this.label = 'Country',
     this.hint = 'Select Country',
     this.fieldStyle = TextFieldStyle.outlined,
+    this.height,
   });
 
   final ValueChanged<csc.Country?> onChanged;
@@ -69,6 +70,7 @@ class StateDropdown extends StatefulWidget {
     this.label = 'State / Region',
     this.hint = 'Select State',
     this.fieldStyle = TextFieldStyle.outlined,
+    this.height,
   });
 
   final csc.Country? country;
@@ -154,6 +156,7 @@ class CityDropdown extends StatefulWidget {
     this.label = 'City / LGA',
     this.hint = 'Select City',
     this.fieldStyle = TextFieldStyle.outlined,
+    this.height,
   });
 
   final csc.Country? country;

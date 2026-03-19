@@ -818,6 +818,7 @@ class AppPasswordField extends StatelessWidget {
     this.focusedBorderColor,
     this.prefixIconData,
     this.enableSecurity,
+    this.height,
   });
 
   final TextEditingController? controller;
@@ -839,6 +840,7 @@ class AppPasswordField extends StatelessWidget {
   final Color? focusedBorderColor;
   final IconData? prefixIconData;
   final bool? enableSecurity;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
@@ -864,6 +866,7 @@ class AppPasswordField extends StatelessWidget {
       borderColor: borderColor,
       focusedBorderColor: focusedBorderColor,
       enableSecurity: enableSecurity,
+      height: height,
     );
   }
 }

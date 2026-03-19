@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.5] - 2026-03-20
+
+### Fixed
+
+- **AppPhoneTextField**: Now accurately respects global `inputHeight` from theme.
+- **SocialButton**: Now respects global `buttonHeight` from theme and includes missing internal padding fixes.
+- **Comprehensive Standardization**: Applied height standardization to all remaining input and button variants including `OTPTextField`, `AppPasswordField`, `ConfigOutlinedButton`, `AppTextButton`, and `AppGradientButton`.
+- **Flexibility**: Added `height` parameter to `CountryDropdown`, `StateDropdown`, `CityDropdown`, and `AppPasswordField` for granular overrides.
+
 ## [0.5.4] - 2026-03-19
 
 ### Added

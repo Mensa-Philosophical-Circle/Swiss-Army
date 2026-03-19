@@ -398,7 +398,10 @@ class _AppTextFieldState extends State<AppTextField> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     switch (widget.fieldStyle) {
       case TextFieldStyle.filled:
-        return isDark ? AppColors.grey800 : AppColors.grey300;
+        return isDark
+            ? AppColors.grey800
+            : (Theme.of(context).inputDecorationTheme.fillColor ??
+                AppColors.grey300);
       case TextFieldStyle.outlined:
       case TextFieldStyle.underline:
       case TextFieldStyle.rounded:
@@ -1044,10 +1047,13 @@ class AppPhoneTextField extends StatelessWidget {
               hintText: hint,
               hintStyle: TextStyle(color: effectiveHintColor),
               filled: true,
-              fillColor:
-                  backgroundColor ??
-                  theme.inputDecorationTheme.fillColor ??
-                  AppColors.white,
+              fillColor: !enabled
+                  ? (theme.brightness == Brightness.dark
+                      ? AppColors.grey800.withValues(alpha: 0.5)
+                      : AppColors.grey100)
+                  : (backgroundColor ??
+                      theme.inputDecorationTheme.fillColor ??
+                      AppColors.white),
               contentPadding:
                   contentPadding ??
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -1308,9 +1314,10 @@ class AppRoundedTextField extends StatelessWidget {
       fieldStyle: isPill ? TextFieldStyle.pill : TextFieldStyle.rounded,
       backgroundColor:
           backgroundColor ??
-          (Theme.of(context).brightness == Brightness.dark
-              ? AppColors.grey800
-              : AppColors.grey300),
+          (Theme.of(context).inputDecorationTheme.fillColor ??
+              (Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.grey800
+                  : AppColors.white)),
       borderColor: showBorder
           ? (borderColor ??
                 (Theme.of(context).brightness == Brightness.dark

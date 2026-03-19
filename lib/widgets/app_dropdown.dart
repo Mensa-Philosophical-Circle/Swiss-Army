@@ -93,7 +93,10 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     switch (widget.fieldStyle) {
       case TextFieldStyle.filled:
-        return isDark ? AppColors.grey800 : AppColors.grey300;
+        return isDark
+            ? AppColors.grey800
+            : (Theme.of(context).inputDecorationTheme.fillColor ??
+                AppColors.grey300);
       case TextFieldStyle.outlined:
       case TextFieldStyle.underline:
       case TextFieldStyle.rounded:

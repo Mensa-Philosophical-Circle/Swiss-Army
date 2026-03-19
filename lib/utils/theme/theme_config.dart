@@ -125,9 +125,76 @@ class SACThemeConfig {
 
   // --- Buttons ---
   final ButtonStyle? elevatedButtonStyle;
+
+  /// Elevated button background color
+  final Color? elevatedButtonBackgroundColor;
+
+  /// Elevated button background color for light mode
+  final Color? elevatedButtonBackgroundColorLight;
+
+  /// Elevated button background color for dark mode
+  final Color? elevatedButtonBackgroundColorDark;
+
+  /// Elevated button foreground (text/icon) color
+  final Color? elevatedButtonForegroundColor;
+
+  /// Elevated button foreground color for light mode
+  final Color? elevatedButtonForegroundColorLight;
+
+  /// Elevated button foreground color for dark mode
+  final Color? elevatedButtonForegroundColorDark;
+
   final ButtonStyle? outlinedButtonStyle;
+
+  /// Outlined button text color
+  final Color? outlinedButtonTextColor;
+
+  /// Outlined button text color for light mode
+  final Color? outlinedButtonTextColorLight;
+
+  /// Outlined button text color for dark mode
+  final Color? outlinedButtonTextColorDark;
+
+  /// Outlined button border color
+  final Color? outlinedButtonBorderColor;
+
+  /// Outlined button border color for light mode
+  final Color? outlinedButtonBorderColorLight;
+
+  /// Outlined button border color for dark mode
+  final Color? outlinedButtonBorderColorDark;
+
   final ButtonStyle? textButtonStyle;
+
+  /// Text button text color
+  final Color? textButtonTextColor;
+
+  /// Text button text color for light mode
+  final Color? textButtonTextColorLight;
+
+  /// Text button text color for dark mode
+  final Color? textButtonTextColorDark;
+
   final ButtonStyle? filledButtonStyle;
+
+  /// Filled button background color
+  final Color? filledButtonBackgroundColor;
+
+  /// Filled button background color for light mode
+  final Color? filledButtonBackgroundColorLight;
+
+  /// Filled button background color for dark mode
+  final Color? filledButtonBackgroundColorDark;
+
+  /// Filled button foreground (text/icon) color
+  final Color? filledButtonForegroundColor;
+
+  /// Filled button foreground color for light mode
+  final Color? filledButtonForegroundColorLight;
+
+  /// Filled button foreground color for dark mode
+  final Color? filledButtonForegroundColorDark;
+
   final ButtonStyle? iconButtonStyle;
 
   // --- Cards ---
@@ -394,9 +461,30 @@ class SACThemeConfig {
     this.fabElevation,
     this.fabShape,
     this.elevatedButtonStyle,
+    this.elevatedButtonBackgroundColor,
+    this.elevatedButtonBackgroundColorLight,
+    this.elevatedButtonBackgroundColorDark,
+    this.elevatedButtonForegroundColor,
+    this.elevatedButtonForegroundColorLight,
+    this.elevatedButtonForegroundColorDark,
     this.outlinedButtonStyle,
+    this.outlinedButtonTextColor,
+    this.outlinedButtonTextColorLight,
+    this.outlinedButtonTextColorDark,
+    this.outlinedButtonBorderColor,
+    this.outlinedButtonBorderColorLight,
+    this.outlinedButtonBorderColorDark,
     this.textButtonStyle,
+    this.textButtonTextColor,
+    this.textButtonTextColorLight,
+    this.textButtonTextColorDark,
     this.filledButtonStyle,
+    this.filledButtonBackgroundColor,
+    this.filledButtonBackgroundColorLight,
+    this.filledButtonBackgroundColorDark,
+    this.filledButtonForegroundColor,
+    this.filledButtonForegroundColorLight,
+    this.filledButtonForegroundColorDark,
     this.iconButtonStyle,
     this.cardColorLight,
     this.cardColorDark,
@@ -623,9 +711,30 @@ class SACThemeConfig {
     double? fabElevation,
     ShapeBorder? fabShape,
     ButtonStyle? elevatedButtonStyle,
+    Color? elevatedButtonBackgroundColor,
+    Color? elevatedButtonBackgroundColorLight,
+    Color? elevatedButtonBackgroundColorDark,
+    Color? elevatedButtonForegroundColor,
+    Color? elevatedButtonForegroundColorLight,
+    Color? elevatedButtonForegroundColorDark,
     ButtonStyle? outlinedButtonStyle,
+    Color? outlinedButtonTextColor,
+    Color? outlinedButtonTextColorLight,
+    Color? outlinedButtonTextColorDark,
+    Color? outlinedButtonBorderColor,
+    Color? outlinedButtonBorderColorLight,
+    Color? outlinedButtonBorderColorDark,
     ButtonStyle? textButtonStyle,
+    Color? textButtonTextColor,
+    Color? textButtonTextColorLight,
+    Color? textButtonTextColorDark,
     ButtonStyle? filledButtonStyle,
+    Color? filledButtonBackgroundColor,
+    Color? filledButtonBackgroundColorLight,
+    Color? filledButtonBackgroundColorDark,
+    Color? filledButtonForegroundColor,
+    Color? filledButtonForegroundColorLight,
+    Color? filledButtonForegroundColorDark,
     ButtonStyle? iconButtonStyle,
     Color? cardColorLight,
     Color? cardColorDark,
@@ -866,9 +975,58 @@ class SACThemeConfig {
       fabElevation: fabElevation ?? this.fabElevation,
       fabShape: fabShape ?? this.fabShape,
       elevatedButtonStyle: elevatedButtonStyle ?? this.elevatedButtonStyle,
+      elevatedButtonBackgroundColor:
+          elevatedButtonBackgroundColor ?? this.elevatedButtonBackgroundColor,
+      elevatedButtonBackgroundColorLight:
+          elevatedButtonBackgroundColorLight ??
+              this.elevatedButtonBackgroundColorLight,
+      elevatedButtonBackgroundColorDark:
+          elevatedButtonBackgroundColorDark ??
+              this.elevatedButtonBackgroundColorDark,
+      elevatedButtonForegroundColor:
+          elevatedButtonForegroundColor ?? this.elevatedButtonForegroundColor,
+      elevatedButtonForegroundColorLight:
+          elevatedButtonForegroundColorLight ??
+              this.elevatedButtonForegroundColorLight,
+      elevatedButtonForegroundColorDark:
+          elevatedButtonForegroundColorDark ??
+              this.elevatedButtonForegroundColorDark,
       outlinedButtonStyle: outlinedButtonStyle ?? this.outlinedButtonStyle,
+      outlinedButtonTextColor:
+          outlinedButtonTextColor ?? this.outlinedButtonTextColor,
+      outlinedButtonTextColorLight:
+          outlinedButtonTextColorLight ?? this.outlinedButtonTextColorLight,
+      outlinedButtonTextColorDark:
+          outlinedButtonTextColorDark ?? this.outlinedButtonTextColorDark,
+      outlinedButtonBorderColor:
+          outlinedButtonBorderColor ?? this.outlinedButtonBorderColor,
+      outlinedButtonBorderColorLight:
+          outlinedButtonBorderColorLight ?? this.outlinedButtonBorderColorLight,
+      outlinedButtonBorderColorDark:
+          outlinedButtonBorderColorDark ?? this.outlinedButtonBorderColorDark,
       textButtonStyle: textButtonStyle ?? this.textButtonStyle,
+      textButtonTextColor: textButtonTextColor ?? this.textButtonTextColor,
+      textButtonTextColorLight:
+          textButtonTextColorLight ?? this.textButtonTextColorLight,
+      textButtonTextColorDark:
+          textButtonTextColorDark ?? this.textButtonTextColorDark,
       filledButtonStyle: filledButtonStyle ?? this.filledButtonStyle,
+      filledButtonBackgroundColor:
+          filledButtonBackgroundColor ?? this.filledButtonBackgroundColor,
+      filledButtonBackgroundColorLight:
+          filledButtonBackgroundColorLight ??
+              this.filledButtonBackgroundColorLight,
+      filledButtonBackgroundColorDark:
+          filledButtonBackgroundColorDark ??
+              this.filledButtonBackgroundColorDark,
+      filledButtonForegroundColor:
+          filledButtonForegroundColor ?? this.filledButtonForegroundColor,
+      filledButtonForegroundColorLight:
+          filledButtonForegroundColorLight ??
+              this.filledButtonForegroundColorLight,
+      filledButtonForegroundColorDark:
+          filledButtonForegroundColorDark ??
+              this.filledButtonForegroundColorDark,
       iconButtonStyle: iconButtonStyle ?? this.iconButtonStyle,
       cardColorLight: cardColorLight ?? this.cardColorLight,
       cardColorDark: cardColorDark ?? this.cardColorDark,
@@ -1202,9 +1360,59 @@ class SACThemeConfig {
       fabElevation: other.fabElevation ?? fabElevation,
       fabShape: other.fabShape ?? fabShape,
       elevatedButtonStyle: other.elevatedButtonStyle ?? elevatedButtonStyle,
+      elevatedButtonBackgroundColor:
+          other.elevatedButtonBackgroundColor ?? elevatedButtonBackgroundColor,
+      elevatedButtonBackgroundColorLight:
+          other.elevatedButtonBackgroundColorLight ??
+              elevatedButtonBackgroundColorLight,
+      elevatedButtonBackgroundColorDark:
+          other.elevatedButtonBackgroundColorDark ??
+              elevatedButtonBackgroundColorDark,
+      elevatedButtonForegroundColor:
+          other.elevatedButtonForegroundColor ?? elevatedButtonForegroundColor,
+      elevatedButtonForegroundColorLight:
+          other.elevatedButtonForegroundColorLight ??
+              elevatedButtonForegroundColorLight,
+      elevatedButtonForegroundColorDark:
+          other.elevatedButtonForegroundColorDark ??
+              elevatedButtonForegroundColorDark,
       outlinedButtonStyle: other.outlinedButtonStyle ?? outlinedButtonStyle,
+      outlinedButtonTextColor:
+          other.outlinedButtonTextColor ?? outlinedButtonTextColor,
+      outlinedButtonTextColorLight:
+          other.outlinedButtonTextColorLight ?? outlinedButtonTextColorLight,
+      outlinedButtonTextColorDark:
+          other.outlinedButtonTextColorDark ?? outlinedButtonTextColorDark,
+      outlinedButtonBorderColor:
+          other.outlinedButtonBorderColor ?? outlinedButtonBorderColor,
+      outlinedButtonBorderColorLight:
+          other.outlinedButtonBorderColorLight ??
+              outlinedButtonBorderColorLight,
+      outlinedButtonBorderColorDark:
+          other.outlinedButtonBorderColorDark ?? outlinedButtonBorderColorDark,
       textButtonStyle: other.textButtonStyle ?? textButtonStyle,
+      textButtonTextColor: other.textButtonTextColor ?? textButtonTextColor,
+      textButtonTextColorLight:
+          other.textButtonTextColorLight ?? textButtonTextColorLight,
+      textButtonTextColorDark:
+          other.textButtonTextColorDark ?? textButtonTextColorDark,
       filledButtonStyle: other.filledButtonStyle ?? filledButtonStyle,
+      filledButtonBackgroundColor:
+          other.filledButtonBackgroundColor ?? filledButtonBackgroundColor,
+      filledButtonBackgroundColorLight:
+          other.filledButtonBackgroundColorLight ??
+              filledButtonBackgroundColorLight,
+      filledButtonBackgroundColorDark:
+          other.filledButtonBackgroundColorDark ??
+              filledButtonBackgroundColorDark,
+      filledButtonForegroundColor:
+          other.filledButtonForegroundColor ?? filledButtonForegroundColor,
+      filledButtonForegroundColorLight:
+          other.filledButtonForegroundColorLight ??
+              filledButtonForegroundColorLight,
+      filledButtonForegroundColorDark:
+          other.filledButtonForegroundColorDark ??
+              filledButtonForegroundColorDark,
       iconButtonStyle: other.iconButtonStyle ?? iconButtonStyle,
       cardColorLight: other.cardColorLight ?? cardColorLight,
       cardColorDark: other.cardColorDark ?? cardColorDark,

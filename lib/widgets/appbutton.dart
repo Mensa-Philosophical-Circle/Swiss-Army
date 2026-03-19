@@ -215,17 +215,21 @@ class _AppElevatedButtonState extends State<AppElevatedButton> {
         autofocus: widget.autofocus,
         clipBehavior: widget.clipBehavior,
         statesController: widget.statesController,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: widget.bgColor,
-          foregroundColor: widget.textColor,
-          disabledBackgroundColor: widget.disabledBgColor,
-          disabledForegroundColor: widget.disabledTextColor,
-          minimumSize: safeHeight != null ? Size(0, safeHeight) : null,
-          padding: widget.padding,
-          elevation: safeElevation,
-          shape: RoundedRectangleBorder(
-            borderRadius: widget.borderRadius ?? BorderRadius.circular(10.r),
-            side: widget.side ?? BorderSide.none,
+        style: Theme.of(context).elevatedButtonTheme.style?.merge(
+          ElevatedButton.styleFrom(
+            backgroundColor: widget.bgColor,
+            foregroundColor: widget.textColor,
+            disabledBackgroundColor: widget.disabledBgColor,
+            disabledForegroundColor: widget.disabledTextColor,
+            minimumSize: safeHeight != null
+                ? Size(0, safeHeight)
+                : Size(0, context.buttonHeight),
+            padding: widget.padding,
+            elevation: safeElevation,
+            shape: RoundedRectangleBorder(
+              borderRadius: widget.borderRadius ?? BorderRadius.circular(10.r),
+              side: widget.side ?? BorderSide.none,
+            ),
           ),
         ),
         child: content,
@@ -389,19 +393,21 @@ class _NormalElevatedButtonState extends State<NormalElevatedButton> {
       width: widget.width ?? double.infinity,
       height: widget.height ?? context.buttonHeight,
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          minimumSize: widget.height != null
-              ? Size(0, widget.height!)
-              : Size(0, context.buttonHeight),
-          padding: widget.padding,
-          backgroundColor: widget.color,
-          elevation: validateElevation(
-            widget.elevation,
-            defaultValue: null,
-            enableSecurity: widget.enableSecurity,
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(safeRadius!),
+        style: Theme.of(context).elevatedButtonTheme.style?.merge(
+          ElevatedButton.styleFrom(
+            minimumSize: widget.height != null
+                ? Size(0, widget.height!)
+                : Size(0, context.buttonHeight),
+            padding: widget.padding,
+            backgroundColor: widget.color,
+            elevation: validateElevation(
+              widget.elevation,
+              defaultValue: null,
+              enableSecurity: widget.enableSecurity,
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(safeRadius!),
+            ),
           ),
         ),
         onPressed: widget.enabled && !widget.isLoading && !_isDebouncing
@@ -552,27 +558,29 @@ class _AppSecondaryElevatedButtonState
       width: widget.width ?? double.infinity,
       height: widget.height ?? context.buttonHeight,
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: widget.bgColor,
-          padding: widget.padding,
-          minimumSize: widget.height != null
-              ? Size(0, widget.height!)
-              : Size(0, context.buttonHeight),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(
-              validateBorderRadius(
-                widget.radius,
-                defaultValue: 10.0,
-                enableSecurity: widget.enableSecurity,
-              )!,
+        style: Theme.of(context).elevatedButtonTheme.style?.merge(
+          ElevatedButton.styleFrom(
+            backgroundColor: widget.bgColor,
+            padding: widget.padding,
+            minimumSize: widget.height != null
+                ? Size(0, widget.height!)
+                : Size(0, context.buttonHeight),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                validateBorderRadius(
+                  widget.radius,
+                  defaultValue: 10.0,
+                  enableSecurity: widget.enableSecurity,
+                )!,
+              ),
             ),
+            elevation: validateElevation(
+              widget.elevation,
+              defaultValue: 0,
+              enableSecurity: widget.enableSecurity,
+            ),
+            disabledBackgroundColor: widget.bgColor?.withValues(alpha: 0.5),
           ),
-          elevation: validateElevation(
-            widget.elevation,
-            defaultValue: 0,
-            enableSecurity: widget.enableSecurity,
-          ),
-          disabledBackgroundColor: widget.bgColor?.withValues(alpha: 0.5),
         ),
         onPressed: widget.enabled && !widget.isLoading && !_isDebouncing
             ? _handlePress
@@ -737,28 +745,30 @@ class _AppOutlinedButtonState extends State<AppOutlinedButton> {
       width: widget.buttonWidth ?? double.infinity,
       height: widget.buttonHeight ?? context.buttonHeight,
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          minimumSize: widget.buttonHeight != null
-              ? Size(0, widget.buttonHeight!)
-              : Size(0, context.buttonHeight),
-          backgroundColor: widget.bgColor ?? Colors.transparent,
-          side: widget.hideBorder == true
-              ? BorderSide.none
-              : BorderSide(
-                  width: widget.borderWidth ?? 1.0,
-                  color: widget.brdColor ?? Theme.of(context).primaryColor,
-                ),
-          padding: widget.padding,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(
-              validateBorderRadius(
-                widget.radius,
-                defaultValue: 10.0,
-                enableSecurity: widget.enableSecurity,
-              )!, // Defaults to 10.0 so ! is safe here if we keep default, but better to allow null if we want full theme
+        style: Theme.of(context).outlinedButtonTheme.style?.merge(
+          OutlinedButton.styleFrom(
+            minimumSize: widget.buttonHeight != null
+                ? Size(0, widget.buttonHeight!)
+                : Size(0, context.buttonHeight),
+            backgroundColor: widget.bgColor ?? Colors.transparent,
+            side: widget.hideBorder == true
+                ? BorderSide.none
+                : BorderSide(
+                    width: widget.borderWidth ?? 1.0,
+                    color: widget.brdColor ?? Theme.of(context).primaryColor,
+                  ),
+            padding: widget.padding,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                validateBorderRadius(
+                  widget.radius,
+                  defaultValue: 10.0,
+                  enableSecurity: widget.enableSecurity,
+                )!,
+              ),
             ),
+            elevation: 0,
           ),
-          elevation: 0,
         ),
         onPressed: widget.enabled && !widget.isLoading && !_isDebouncing
             ? _handlePress

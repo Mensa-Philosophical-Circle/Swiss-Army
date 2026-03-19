@@ -152,8 +152,41 @@ class SACTheme {
           : (config?.popupMenuBackgroundLight ??
                 config?.surfaceLight ??
                 AppColors.surfaceLight),
-      inputHeight: config?.inputHeight,
-      buttonHeight: config?.buttonHeight,
+      inputHeight: config?.inputHeight ?? 52.0,
+      buttonHeight: config?.buttonHeight ?? 52.0,
+      elevatedButtonBackgroundColor: isDark
+          ? (config?.elevatedButtonBackgroundColorDark ??
+              config?.elevatedButtonBackgroundColor)
+          : (config?.elevatedButtonBackgroundColorLight ??
+              config?.elevatedButtonBackgroundColor),
+      elevatedButtonForegroundColor: isDark
+          ? (config?.elevatedButtonForegroundColorDark ??
+              config?.elevatedButtonForegroundColor)
+          : (config?.elevatedButtonForegroundColorLight ??
+              config?.elevatedButtonForegroundColor),
+      outlinedButtonTextColor: isDark
+          ? (config?.outlinedButtonTextColorDark ??
+              config?.outlinedButtonTextColor)
+          : (config?.outlinedButtonTextColorLight ??
+              config?.outlinedButtonTextColor),
+      outlinedButtonBorderColor: isDark
+          ? (config?.outlinedButtonBorderColorDark ??
+              config?.outlinedButtonBorderColor)
+          : (config?.outlinedButtonBorderColorLight ??
+              config?.outlinedButtonBorderColor),
+      textButtonTextColor: isDark
+          ? (config?.textButtonTextColorDark ?? config?.textButtonTextColor)
+          : (config?.textButtonTextColorLight ?? config?.textButtonTextColor),
+      filledButtonBackgroundColor: isDark
+          ? (config?.filledButtonBackgroundColorDark ??
+              config?.filledButtonBackgroundColor)
+          : (config?.filledButtonBackgroundColorLight ??
+              config?.filledButtonBackgroundColor),
+      filledButtonForegroundColor: isDark
+          ? (config?.filledButtonForegroundColorDark ??
+              config?.filledButtonForegroundColor)
+          : (config?.filledButtonForegroundColorLight ??
+              config?.filledButtonForegroundColor),
     );
   }
 
@@ -335,14 +368,47 @@ class SACTheme {
 
       // Buttons
       elevatedButtonTheme: ElevatedButtonThemeData(
-        style: config?.elevatedButtonStyle,
+        style: ElevatedButton.styleFrom(
+          backgroundColor:
+              colors.elevatedButtonBackgroundColor ?? colors.primary,
+          foregroundColor:
+              colors.elevatedButtonForegroundColor ?? AppColors.white,
+          elevation: 0,
+          minimumSize: Size(0, colors.buttonHeight),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ).merge(config?.elevatedButtonStyle),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
-        style: config?.outlinedButtonStyle,
+        style: OutlinedButton.styleFrom(
+          foregroundColor: colors.outlinedButtonTextColor ?? colors.primary,
+          side: BorderSide(
+            color: colors.outlinedButtonBorderColor ?? colors.primary,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ).merge(config?.outlinedButtonStyle),
       ),
-      textButtonTheme: TextButtonThemeData(style: config?.textButtonStyle),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: colors.textButtonTextColor ?? colors.primary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ).merge(config?.textButtonStyle),
+      ),
       filledButtonTheme: FilledButtonThemeData(
-        style: config?.filledButtonStyle,
+        style: FilledButton.styleFrom(
+          backgroundColor:
+              colors.filledButtonBackgroundColor ?? colors.primary,
+          foregroundColor:
+              colors.filledButtonForegroundColor ?? AppColors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ).merge(config?.filledButtonStyle),
       ),
       iconButtonTheme: IconButtonThemeData(style: config?.iconButtonStyle),
 
@@ -812,8 +878,8 @@ extension SACThemeContext on BuildContext {
   SACThemeExtension get sacTheme =>
       Theme.of(this).extension<SACThemeExtension>() ?? SACThemeExtension();
 
-  double get inputHeight => sacTheme.inputHeight ?? height * 0.07;
-  double get buttonHeight => sacTheme.buttonHeight ?? height * 0.07;
+  double get inputHeight => sacTheme.inputHeight ?? 52.0;
+  double get buttonHeight => sacTheme.buttonHeight ?? 52.0;
 
   double get height => MediaQuery.of(this).size.height;
   double get width => MediaQuery.of(this).size.width;
@@ -864,9 +930,16 @@ class _ResolvedColors {
   final Color inputFillColor;
   final Color chipBackground;
   final Color popupMenuBackground;
+  final double inputHeight;
+  final double buttonHeight;
 
-  final double? inputHeight;
-  final double? buttonHeight;
+  final Color? elevatedButtonBackgroundColor;
+  final Color? elevatedButtonForegroundColor;
+  final Color? outlinedButtonTextColor;
+  final Color? outlinedButtonBorderColor;
+  final Color? textButtonTextColor;
+  final Color? filledButtonBackgroundColor;
+  final Color? filledButtonForegroundColor;
 
   _ResolvedColors({
     required this.primary,
@@ -891,7 +964,14 @@ class _ResolvedColors {
     required this.inputFillColor,
     required this.chipBackground,
     required this.popupMenuBackground,
-    this.inputHeight,
-    this.buttonHeight,
+    required this.inputHeight,
+    required this.buttonHeight,
+    this.elevatedButtonBackgroundColor,
+    this.elevatedButtonForegroundColor,
+    this.outlinedButtonTextColor,
+    this.outlinedButtonBorderColor,
+    this.textButtonTextColor,
+    this.filledButtonBackgroundColor,
+    this.filledButtonForegroundColor,
   });
 }

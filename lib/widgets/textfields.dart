@@ -1034,7 +1034,7 @@ class AppPhoneTextField extends StatelessWidget {
           SizedBox(height: _labelSpacing),
         ],
         SizedBox(
-          height: height ?? 52.h,
+          height: height ?? context.inputHeight,
           child: IntlPhoneField(
             controller: controller,
             decoration: InputDecoration(

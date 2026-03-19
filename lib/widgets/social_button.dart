@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../utils/utils.dart';
 
 /// Supported social login providers.
 enum SocialProvider {
@@ -139,7 +140,7 @@ class SocialButton extends StatelessWidget {
     final effectiveFontWeight = fontWeight ?? FontWeight.w600;
     final effectiveIconSpacing = iconSpacing ?? 12.0;
     final effectiveRadius = borderRadius ?? 10.0;
-    final effectiveHeight = height ?? 50.h;
+    final effectiveHeight = height ?? context.buttonHeight;
     final effectiveElevation = elevation ?? 0.0;
 
     return SizedBox(
@@ -148,6 +149,7 @@ class SocialButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: enabled && !isLoading ? onPressed : null,
         style: ElevatedButton.styleFrom(
+          minimumSize: Size(0, effectiveHeight),
           backgroundColor: style == SocialButtonStyle.outlined
               ? Colors.transparent
               : effectiveBgColor,

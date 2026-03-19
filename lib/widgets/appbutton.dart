@@ -1089,9 +1089,12 @@ class _ConfigOutlinedButtonState extends State<ConfigOutlinedButton> {
 
     final button = SizedBox(
       width: widget.width ?? screenWidth * 0.40,
-      height: widget.height ?? 50.h,
+      height: widget.height ?? context.buttonHeight,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+          minimumSize: widget.height != null
+              ? Size(0, widget.height!)
+              : Size(0, context.buttonHeight),
           backgroundColor: widget.bgColour ?? AppColors.white,
           padding: widget.padding ?? simPad(0, 14),
           shape: RoundedRectangleBorder(
@@ -1357,7 +1360,7 @@ class _AppTextButtonState extends State<AppTextButton> {
         padding:
             widget.padding ??
             EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
-        minimumSize: Size.zero,
+        minimumSize: widget.fontSize != null ? Size(0, widget.fontSize! * 2) : Size.zero,
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
       child: Row(
@@ -1561,7 +1564,7 @@ class _AppGradientButtonState extends State<AppGradientButton> {
 
     final button = Container(
       width: widget.width ?? double.infinity,
-      height: widget.height ?? 50.h,
+      height: widget.height ?? context.buttonHeight,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: widget.enabled
@@ -1581,6 +1584,7 @@ class _AppGradientButtonState extends State<AppGradientButton> {
             ? _handlePress
             : null,
         style: ElevatedButton.styleFrom(
+          minimumSize: Size(0, widget.height ?? context.buttonHeight),
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
           shape: RoundedRectangleBorder(

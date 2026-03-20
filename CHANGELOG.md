@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.7] - 2026-03-20
+
+### Fixed
+
+- **Phone Validation**: Added `isValidPhoneNumber` to `FormValidator` for `PhoneNumber` compatibility.
+- **AppPhoneTextField**: Added `phoneValidator` parameter to support standard string-based validators.
+
+## [0.5.6] - 2026-03-20
+
+### Fixed
+
+- **Theme Consistency**: Refactored `AppButton` variants to correctly merge with global theme styles, ensuring primary color inheritance.
+- **Granular Theming**: Added separate color properties for Elevated, Outlined, and Filled buttons in `SACThemeConfig`.
+- **Field Backgrounds**: Fixed `AppPhoneTextField` and `AppDropdown` to have a white background in light mode (consistent with other fields).
+- **Height Standardization**: Standardized all buttons and inputs to a default height of 52.0 logical pixels.
+- **Visual Feedback**: Added distinct disabled state background for `AppPhoneTextField`.
+
 ## [0.5.5] - 2026-03-20
 
 ### Fixed

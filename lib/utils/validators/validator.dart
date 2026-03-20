@@ -1,3 +1,5 @@
+import 'package:intl_phone_field/phone_number.dart';
+
 class FormValidator {
   static String? isValidEmail(String? email) {
     final RegExp emailRegExp = RegExp(
@@ -61,12 +63,19 @@ class FormValidator {
       return 'Please enter a valid phone number.';
     }
     final regExp = RegExp(
-      r'^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$',
+      r'^\+?[1-9]\d{1,14}$',
     );
-    if (!regExp.hasMatch(phoneNo)) {
+    if (!regExp.hasMatch(phoneNo.replaceAll(RegExp(r'\s+'), ''))) {
       return 'Please enter a valid phone number';
     }
     return null;
+  }
+
+  static String? isValidPhoneNumber(PhoneNumber? phoneNumber) {
+    if (phoneNumber == null || phoneNumber.number.isEmpty) {
+      return 'Please enter a valid phone number.';
+    }
+    return isValidPhone(phoneNumber.completeNumber);
   }
 
   static String? isValidPassword(String? password) {

@@ -912,6 +912,7 @@ class AppPhoneTextField extends StatelessWidget {
     // ============== Size Configuration ==============
     this.height,
     this.contentPadding,
+    this.phoneValidator,
   });
 
   final TextEditingController? controller;
@@ -947,6 +948,7 @@ class AppPhoneTextField extends StatelessWidget {
   final bool? enableSecurity;
   final double? height;
   final EdgeInsetsGeometry? contentPadding;
+  final String? Function(String?)? phoneValidator;
 
   // ============== Default Values ==============
   static const double _defaultLabelFontSize = 16.0;
@@ -1091,7 +1093,9 @@ class AppPhoneTextField extends StatelessWidget {
             onCountryChanged: onCountryChanged != null
                 ? (country) => onCountryChanged!(country.code)
                 : null,
-            validator: validator,
+            validator: validator ?? (phoneValidator != null
+                ? (phone) => phoneValidator!(phone?.completeNumber)
+                : null),
             cursorColor:
                 cursorColor ??
                 theme.textSelectionTheme.cursorColor ??

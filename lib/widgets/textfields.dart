@@ -279,7 +279,7 @@ class _AppTextFieldState extends State<AppTextField> {
   static const double _defaultLabelSpacing = 8.0;
   static const double _defaultIconSize = 24.0;
   static const double _defaultContentPaddingH = 16.0;
-  static const double _defaultContentPaddingV = 0.0;
+  static const double _defaultContentPaddingV = 12.0;
 
   @override
   void initState() {
@@ -566,7 +566,7 @@ class _AppTextFieldState extends State<AppTextField> {
         minWidth: (_suffixIconSize ?? 24.0) + 24,
         minHeight: _suffixIconSize ?? 24.0,
       ),
-      isDense: true,
+      isDense: widget.fieldStyle == TextFieldStyle.pill,
     );
   }
 
@@ -1052,7 +1052,7 @@ class AppPhoneTextField extends StatelessWidget {
               hintText: hint,
               hintStyle: TextStyle(color: effectiveHintColor),
               filled: true,
-              isDense: true,
+              isDense: false,
               fillColor: !enabled
                   ? (theme.brightness == Brightness.dark
                       ? AppColors.grey800.withValues(alpha: 0.5)
@@ -1064,7 +1064,7 @@ class AppPhoneTextField extends StatelessWidget {
                               AppColors.white))),
               contentPadding:
                   contentPadding ??
-                  EdgeInsets.symmetric(horizontal: 16.w, vertical: 0.h),
+                  EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(_borderRadius ?? 4.0),
                 borderSide: BorderSide(

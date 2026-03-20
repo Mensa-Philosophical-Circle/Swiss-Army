@@ -153,6 +153,8 @@ class SACTheme {
                 config?.surfaceLight ??
                 AppColors.surfaceLight),
       inputHeight: config?.inputHeight ?? 52.0,
+      phoneFieldHeight: config?.phoneFieldHeight ?? config?.inputHeight ?? 56.0,
+      dropdownHeight: config?.dropdownHeight ?? config?.inputHeight ?? 52.0,
       buttonHeight: config?.buttonHeight ?? 52.0,
       elevatedButtonBackgroundColor: isDark
           ? (config?.elevatedButtonBackgroundColorDark ??
@@ -837,6 +839,8 @@ class SACTheme {
       extensions: [
         SACThemeExtension(
           inputHeight: colors.inputHeight,
+          phoneFieldHeight: colors.phoneFieldHeight,
+          dropdownHeight: colors.dropdownHeight,
           buttonHeight: colors.buttonHeight,
         ),
       ],
@@ -847,14 +851,28 @@ class SACTheme {
 /// Theme extension for Swiss Army Component specific properties
 class SACThemeExtension extends ThemeExtension<SACThemeExtension> {
   final double? inputHeight;
+  final double? phoneFieldHeight;
+  final double? dropdownHeight;
   final double? buttonHeight;
 
-  SACThemeExtension({this.inputHeight, this.buttonHeight});
+  SACThemeExtension({
+    this.inputHeight,
+    this.phoneFieldHeight,
+    this.dropdownHeight,
+    this.buttonHeight,
+  });
 
   @override
-  SACThemeExtension copyWith({double? inputHeight, double? buttonHeight}) {
+  SACThemeExtension copyWith({
+    double? inputHeight,
+    double? phoneFieldHeight,
+    double? dropdownHeight,
+    double? buttonHeight,
+  }) {
     return SACThemeExtension(
       inputHeight: inputHeight ?? this.inputHeight,
+      phoneFieldHeight: phoneFieldHeight ?? this.phoneFieldHeight,
+      dropdownHeight: dropdownHeight ?? this.dropdownHeight,
       buttonHeight: buttonHeight ?? this.buttonHeight,
     );
   }
@@ -864,6 +882,8 @@ class SACThemeExtension extends ThemeExtension<SACThemeExtension> {
     if (other is! SACThemeExtension) return this;
     return SACThemeExtension(
       inputHeight: lerpDouble(inputHeight, other.inputHeight, t),
+      phoneFieldHeight: lerpDouble(phoneFieldHeight, other.phoneFieldHeight, t),
+      dropdownHeight: lerpDouble(dropdownHeight, other.dropdownHeight, t),
       buttonHeight: lerpDouble(buttonHeight, other.buttonHeight, t),
     );
   }
@@ -879,6 +899,8 @@ extension SACThemeContext on BuildContext {
       Theme.of(this).extension<SACThemeExtension>() ?? SACThemeExtension();
 
   double get inputHeight => sacTheme.inputHeight ?? 52.0;
+  double get phoneFieldHeight => sacTheme.phoneFieldHeight ?? inputHeight;
+  double get dropdownHeight => sacTheme.dropdownHeight ?? inputHeight;
   double get buttonHeight => sacTheme.buttonHeight ?? 52.0;
 
   double get height => MediaQuery.of(this).size.height;
@@ -931,6 +953,8 @@ class _ResolvedColors {
   final Color chipBackground;
   final Color popupMenuBackground;
   final double inputHeight;
+  final double phoneFieldHeight;
+  final double dropdownHeight;
   final double buttonHeight;
 
   final Color? elevatedButtonBackgroundColor;
@@ -965,6 +989,8 @@ class _ResolvedColors {
     required this.chipBackground,
     required this.popupMenuBackground,
     required this.inputHeight,
+    required this.phoneFieldHeight,
+    required this.dropdownHeight,
     required this.buttonHeight,
     this.elevatedButtonBackgroundColor,
     this.elevatedButtonForegroundColor,

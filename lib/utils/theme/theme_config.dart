@@ -241,6 +241,8 @@ class SACThemeConfig {
   final TextStyle? inputHintStyle;
   final double? inputBorderRadius;
   final double? inputHeight;
+  final double? phoneFieldHeight;
+  final double? dropdownHeight;
   final double? buttonHeight;
 
   // --- Checkbox/Radio/Switch ---
@@ -521,6 +523,8 @@ class SACThemeConfig {
     this.inputHintStyle,
     this.inputBorderRadius,
     this.inputHeight,
+    this.phoneFieldHeight,
+    this.dropdownHeight,
     this.buttonHeight,
     this.checkboxFillColor,
     this.checkboxFillColorLight,
@@ -771,6 +775,8 @@ class SACThemeConfig {
     TextStyle? inputHintStyle,
     double? inputBorderRadius,
     double? inputHeight,
+    double? phoneFieldHeight,
+    double? dropdownHeight,
     double? buttonHeight,
     Color? checkboxFillColor,
     Color? checkboxFillColorLight,
@@ -1076,6 +1082,8 @@ class SACThemeConfig {
       inputHintStyle: inputHintStyle ?? this.inputHintStyle,
       inputBorderRadius: inputBorderRadius ?? this.inputBorderRadius,
       inputHeight: inputHeight ?? this.inputHeight,
+      phoneFieldHeight: phoneFieldHeight ?? this.phoneFieldHeight,
+      dropdownHeight: dropdownHeight ?? this.dropdownHeight,
       buttonHeight: buttonHeight ?? this.buttonHeight,
       checkboxFillColor: checkboxFillColor ?? this.checkboxFillColor,
       checkboxFillColorLight:
@@ -1461,6 +1469,10 @@ class SACThemeConfig {
       inputLabelStyle: other.inputLabelStyle ?? inputLabelStyle,
       inputHintStyle: other.inputHintStyle ?? inputHintStyle,
       inputBorderRadius: other.inputBorderRadius ?? inputBorderRadius,
+      inputHeight: other.inputHeight ?? inputHeight,
+      phoneFieldHeight: other.phoneFieldHeight ?? phoneFieldHeight,
+      dropdownHeight: other.dropdownHeight ?? dropdownHeight,
+      buttonHeight: other.buttonHeight ?? buttonHeight,
       checkboxFillColor: other.checkboxFillColor ?? checkboxFillColor,
       checkboxFillColorLight:
           other.checkboxFillColorLight ?? checkboxFillColorLight,

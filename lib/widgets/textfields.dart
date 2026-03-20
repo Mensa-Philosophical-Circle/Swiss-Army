@@ -279,7 +279,7 @@ class _AppTextFieldState extends State<AppTextField> {
   static const double _defaultLabelSpacing = 8.0;
   static const double _defaultIconSize = 24.0;
   static const double _defaultContentPaddingH = 16.0;
-  static const double _defaultContentPaddingV = 14.0;
+  static const double _defaultContentPaddingV = 0.0;
 
   @override
   void initState() {
@@ -566,7 +566,7 @@ class _AppTextFieldState extends State<AppTextField> {
         minWidth: (_suffixIconSize ?? 24.0) + 24,
         minHeight: _suffixIconSize ?? 24.0,
       ),
-      isDense: widget.fieldStyle == TextFieldStyle.pill,
+      isDense: true,
     );
   }
 
@@ -734,6 +734,8 @@ class _AppTextFieldState extends State<AppTextField> {
       autocorrect: widget.autocorrect,
       showCursor: widget.showCursor,
       cursorColor: _cursorColor,
+      cursorHeight: 22.h,
+      textAlignVertical: TextAlignVertical.center,
       inputFormatters: widget.inputFormatters,
       autofillHints: widget.autofillHints,
       autovalidateMode:
@@ -1042,13 +1044,15 @@ class AppPhoneTextField extends StatelessWidget {
           SizedBox(height: _labelSpacing),
         ],
         SizedBox(
-          height: height ?? context.inputHeight,
+          height: height ?? context.phoneFieldHeight,
           child: IntlPhoneField(
             controller: controller,
+            textAlignVertical: TextAlignVertical.center,
             decoration: InputDecoration(
               hintText: hint,
               hintStyle: TextStyle(color: effectiveHintColor),
               filled: true,
+              isDense: true,
               fillColor: !enabled
                   ? (theme.brightness == Brightness.dark
                       ? AppColors.grey800.withValues(alpha: 0.5)
@@ -1060,7 +1064,7 @@ class AppPhoneTextField extends StatelessWidget {
                               AppColors.white))),
               contentPadding:
                   contentPadding ??
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  EdgeInsets.symmetric(horizontal: 16.w, vertical: 0.h),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(_borderRadius ?? 4.0),
                 borderSide: BorderSide(
@@ -1102,7 +1106,12 @@ class AppPhoneTextField extends StatelessWidget {
                 cursorColor ??
                 theme.textSelectionTheme.cursorColor ??
                 AppColors.primary,
-            style: TextStyle(color: effectiveTextColor),
+            cursorHeight: 22.h,
+            style: TextStyle(
+              color: effectiveTextColor,
+              fontSize: 16.sp,
+              height: 1.2,
+            ),
             showDropdownIcon: showDropdownIcon,
             dropdownIconPosition: IconPosition.trailing,
             dropdownIcon: Icon(

@@ -1043,8 +1043,10 @@ class AppPhoneTextField extends StatelessWidget {
           ),
           SizedBox(height: _labelSpacing),
         ],
-        SizedBox(
-          height: height ?? context.phoneFieldHeight,
+        ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: height ?? context.phoneFieldHeight,
+          ),
           child: IntlPhoneField(
             controller: controller,
             textAlignVertical: TextAlignVertical.center,

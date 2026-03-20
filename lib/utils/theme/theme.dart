@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'chip_theme.dart';
 import 'colors.dart';
@@ -899,7 +900,7 @@ extension SACThemeContext on BuildContext {
       Theme.of(this).extension<SACThemeExtension>() ?? SACThemeExtension();
 
   double get inputHeight => sacTheme.inputHeight ?? 52.0;
-  double get phoneFieldHeight => sacTheme.phoneFieldHeight ?? inputHeight;
+  double get phoneFieldHeight => sacTheme.phoneFieldHeight ?? 70.h;
   double get dropdownHeight => sacTheme.dropdownHeight ?? inputHeight;
   double get buttonHeight => sacTheme.buttonHeight ?? 52.0;
 

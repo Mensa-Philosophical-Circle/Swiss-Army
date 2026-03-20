@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [0.5.11] - 2026-03-20
+
+### Fixed
+
+- **AppPhoneTextField**: Fixed height collapse when validation errors appear. Default height is now `70.h`.
+- **Dependencies**: Upgraded all packages (`google_fonts` 8.x, `flutter_svg` 2.2.4, `pinput` 6.0.2, and more).
+
 ## [0.5.10] - 2026-03-20
 
 ### Fixed

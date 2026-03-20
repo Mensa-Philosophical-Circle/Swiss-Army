@@ -1054,8 +1054,10 @@ class AppPhoneTextField extends StatelessWidget {
                       ? AppColors.grey800.withValues(alpha: 0.5)
                       : AppColors.grey100)
                   : (backgroundColor ??
-                      theme.inputDecorationTheme.fillColor ??
-                      AppColors.white),
+                      (theme.brightness == Brightness.light
+                          ? AppColors.white
+                          : (theme.inputDecorationTheme.fillColor ??
+                              AppColors.white))),
               contentPadding:
                   contentPadding ??
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -1107,7 +1109,7 @@ class AppPhoneTextField extends StatelessWidget {
               Icons.arrow_drop_down,
               color: dropdownIconColor ?? AppColors.grey,
             ),
-            flagsButtonPadding: EdgeInsets.only(left: 12.w),
+            flagsButtonPadding: EdgeInsets.fromLTRB(12.w, 0, 8.w, 0),
             showCountryFlag: showCountryFlag,
             enabled: enabled,
             readOnly: readOnly,

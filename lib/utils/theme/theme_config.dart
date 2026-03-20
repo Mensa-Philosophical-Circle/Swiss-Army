@@ -1443,26 +1443,75 @@ class SACThemeConfig {
       inputFillColorLight: other.inputFillColorLight ?? inputFillColorLight,
       inputFillColorDark: other.inputFillColorDark ?? inputFillColorDark,
       inputBorderColor: other.inputBorderColor ?? inputBorderColor,
+      inputBorderColorLight:
+          other.inputBorderColorLight ?? inputBorderColorLight,
+      inputBorderColorDark: other.inputBorderColorDark ?? inputBorderColorDark,
       inputFocusedBorderColor:
           other.inputFocusedBorderColor ?? inputFocusedBorderColor,
+      inputFocusedBorderColorLight:
+          other.inputFocusedBorderColorLight ?? inputFocusedBorderColorLight,
+      inputFocusedBorderColorDark:
+          other.inputFocusedBorderColorDark ?? inputFocusedBorderColorDark,
       inputErrorBorderColor:
           other.inputErrorBorderColor ?? inputErrorBorderColor,
+      inputErrorBorderColorLight:
+          other.inputErrorBorderColorLight ?? inputErrorBorderColorLight,
+      inputErrorBorderColorDark:
+          other.inputErrorBorderColorDark ?? inputErrorBorderColorDark,
       inputLabelStyle: other.inputLabelStyle ?? inputLabelStyle,
       inputHintStyle: other.inputHintStyle ?? inputHintStyle,
       inputBorderRadius: other.inputBorderRadius ?? inputBorderRadius,
       checkboxFillColor: other.checkboxFillColor ?? checkboxFillColor,
+      checkboxFillColorLight:
+          other.checkboxFillColorLight ?? checkboxFillColorLight,
+      checkboxFillColorDark:
+          other.checkboxFillColorDark ?? checkboxFillColorDark,
       radioFillColor: other.radioFillColor ?? radioFillColor,
+      radioFillColorLight: other.radioFillColorLight ?? radioFillColorLight,
+      radioFillColorDark: other.radioFillColorDark ?? radioFillColorDark,
       switchActiveColor: other.switchActiveColor ?? switchActiveColor,
+      switchActiveColorLight:
+          other.switchActiveColorLight ?? switchActiveColorLight,
+      switchActiveColorDark:
+          other.switchActiveColorDark ?? switchActiveColorDark,
       switchInactiveColor: other.switchInactiveColor ?? switchInactiveColor,
+      switchInactiveColorLight:
+          other.switchInactiveColorLight ?? switchInactiveColorLight,
+      switchInactiveColorDark:
+          other.switchInactiveColorDark ?? switchInactiveColorDark,
       switchTrackColor: other.switchTrackColor ?? switchTrackColor,
+      switchTrackColorLight:
+          other.switchTrackColorLight ?? switchTrackColorLight,
+      switchTrackColorDark: other.switchTrackColorDark ?? switchTrackColorDark,
       sliderActiveColor: other.sliderActiveColor ?? sliderActiveColor,
+      sliderActiveColorLight:
+          other.sliderActiveColorLight ?? sliderActiveColorLight,
+      sliderActiveColorDark:
+          other.sliderActiveColorDark ?? sliderActiveColorDark,
       sliderInactiveColor: other.sliderInactiveColor ?? sliderInactiveColor,
+      sliderInactiveColorLight:
+          other.sliderInactiveColorLight ?? sliderInactiveColorLight,
+      sliderInactiveColorDark:
+          other.sliderInactiveColorDark ?? sliderInactiveColorDark,
       sliderThumbColor: other.sliderThumbColor ?? sliderThumbColor,
+      sliderThumbColorLight:
+          other.sliderThumbColorLight ?? sliderThumbColorLight,
+      sliderThumbColorDark: other.sliderThumbColorDark ?? sliderThumbColorDark,
       progressIndicatorColor:
           other.progressIndicatorColor ?? progressIndicatorColor,
+      progressIndicatorColorLight:
+          other.progressIndicatorColorLight ?? progressIndicatorColorLight,
+      progressIndicatorColorDark:
+          other.progressIndicatorColorDark ?? progressIndicatorColorDark,
       progressIndicatorBackgroundColor:
           other.progressIndicatorBackgroundColor ??
           progressIndicatorBackgroundColor,
+      progressIndicatorBackgroundColorLight:
+          other.progressIndicatorBackgroundColorLight ??
+          progressIndicatorBackgroundColorLight,
+      progressIndicatorBackgroundColorDark:
+          other.progressIndicatorBackgroundColorDark ??
+          progressIndicatorBackgroundColorDark,
       circularProgressStrokeWidth:
           other.circularProgressStrokeWidth ?? circularProgressStrokeWidth,
       tooltipBackgroundColor:
@@ -1470,24 +1519,55 @@ class SACThemeConfig {
       tooltipTextStyle: other.tooltipTextStyle ?? tooltipTextStyle,
       tooltipPadding: other.tooltipPadding ?? tooltipPadding,
       dividerColor: other.dividerColor ?? dividerColor,
+      dividerColorLight: other.dividerColorLight ?? dividerColorLight,
+      dividerColorDark: other.dividerColorDark ?? dividerColorDark,
       dividerThickness: other.dividerThickness ?? dividerThickness,
       dividerIndent: other.dividerIndent ?? dividerIndent,
       listTileIconColor: other.listTileIconColor ?? listTileIconColor,
+      listTileIconColorLight:
+          other.listTileIconColorLight ?? listTileIconColorLight,
+      listTileIconColorDark:
+          other.listTileIconColorDark ?? listTileIconColorDark,
       listTileTitleStyle: other.listTileTitleStyle ?? listTileTitleStyle,
       listTileSubtitleStyle:
           other.listTileSubtitleStyle ?? listTileSubtitleStyle,
       listTileSelectedColor:
           other.listTileSelectedColor ?? listTileSelectedColor,
+      listTileSelectedColorLight:
+          other.listTileSelectedColorLight ?? listTileSelectedColorLight,
+      listTileSelectedColorDark:
+          other.listTileSelectedColorDark ?? listTileSelectedColorDark,
       tabBarIndicatorColor: other.tabBarIndicatorColor ?? tabBarIndicatorColor,
+      tabBarIndicatorColorLight:
+          other.tabBarIndicatorColorLight ?? tabBarIndicatorColorLight,
+      tabBarIndicatorColorDark:
+          other.tabBarIndicatorColorDark ?? tabBarIndicatorColorDark,
       tabBarLabelColor: other.tabBarLabelColor ?? tabBarLabelColor,
+      tabBarLabelColorLight:
+          other.tabBarLabelColorLight ?? tabBarLabelColorLight,
+      tabBarLabelColorDark: other.tabBarLabelColorDark ?? tabBarLabelColorDark,
       tabBarUnselectedLabelColor:
           other.tabBarUnselectedLabelColor ?? tabBarUnselectedLabelColor,
+      tabBarUnselectedLabelColorLight:
+          other.tabBarUnselectedLabelColorLight ??
+          tabBarUnselectedLabelColorLight,
+      tabBarUnselectedLabelColorDark:
+          other.tabBarUnselectedLabelColorDark ??
+          tabBarUnselectedLabelColorDark,
       tabBarIndicatorWeight:
           other.tabBarIndicatorWeight ?? tabBarIndicatorWeight,
       dataTableHeadingRowColor:
           other.dataTableHeadingRowColor ?? dataTableHeadingRowColor,
+      dataTableHeadingRowColorLight:
+          other.dataTableHeadingRowColorLight ?? dataTableHeadingRowColorLight,
+      dataTableHeadingRowColorDark:
+          other.dataTableHeadingRowColorDark ?? dataTableHeadingRowColorDark,
       dataTableDataRowColor:
           other.dataTableDataRowColor ?? dataTableDataRowColor,
+      dataTableDataRowColorLight:
+          other.dataTableDataRowColorLight ?? dataTableDataRowColorLight,
+      dataTableDataRowColorDark:
+          other.dataTableDataRowColorDark ?? dataTableDataRowColorDark,
       dataTableDividerThickness:
           other.dataTableDividerThickness ?? dataTableDividerThickness,
       chipBackgroundLight: other.chipBackgroundLight ?? chipBackgroundLight,
@@ -1496,7 +1576,13 @@ class SACThemeConfig {
       chipDeleteIconColor: other.chipDeleteIconColor ?? chipDeleteIconColor,
       chipSelectedColor: other.chipSelectedColor ?? chipSelectedColor,
       badgeBackgroundColor: other.badgeBackgroundColor ?? badgeBackgroundColor,
+      badgeBackgroundColorLight:
+          other.badgeBackgroundColorLight ?? badgeBackgroundColorLight,
+      badgeBackgroundColorDark:
+          other.badgeBackgroundColorDark ?? badgeBackgroundColorDark,
       badgeTextColor: other.badgeTextColor ?? badgeTextColor,
+      badgeTextColorLight: other.badgeTextColorLight ?? badgeTextColorLight,
+      badgeTextColorDark: other.badgeTextColorDark ?? badgeTextColorDark,
       searchBarBackgroundLight:
           other.searchBarBackgroundLight ?? searchBarBackgroundLight,
       searchBarBackgroundDark:
@@ -1505,9 +1591,21 @@ class SACThemeConfig {
       searchBarHintStyle: other.searchBarHintStyle ?? searchBarHintStyle,
       segmentedButtonSelectedColor:
           other.segmentedButtonSelectedColor ?? segmentedButtonSelectedColor,
+      segmentedButtonSelectedColorLight:
+          other.segmentedButtonSelectedColorLight ??
+          segmentedButtonSelectedColorLight,
+      segmentedButtonSelectedColorDark:
+          other.segmentedButtonSelectedColorDark ??
+          segmentedButtonSelectedColorDark,
       segmentedButtonForegroundColor:
           other.segmentedButtonForegroundColor ??
           segmentedButtonForegroundColor,
+      segmentedButtonForegroundColorLight:
+          other.segmentedButtonForegroundColorLight ??
+          segmentedButtonForegroundColorLight,
+      segmentedButtonForegroundColorDark:
+          other.segmentedButtonForegroundColorDark ??
+          segmentedButtonForegroundColorDark,
       popupMenuBackgroundLight:
           other.popupMenuBackgroundLight ?? popupMenuBackgroundLight,
       popupMenuBackgroundDark:
@@ -1516,11 +1614,27 @@ class SACThemeConfig {
       popupMenuShape: other.popupMenuShape ?? popupMenuShape,
       expansionTileBackgroundColor:
           other.expansionTileBackgroundColor ?? expansionTileBackgroundColor,
+      expansionTileBackgroundColorLight:
+          other.expansionTileBackgroundColorLight ??
+          expansionTileBackgroundColorLight,
+      expansionTileBackgroundColorDark:
+          other.expansionTileBackgroundColorDark ??
+          expansionTileBackgroundColorDark,
       expansionTileCollapsedBackgroundColor:
           other.expansionTileCollapsedBackgroundColor ??
           expansionTileCollapsedBackgroundColor,
+      expansionTileCollapsedBackgroundColorLight:
+          other.expansionTileCollapsedBackgroundColorLight ??
+          expansionTileCollapsedBackgroundColorLight,
+      expansionTileCollapsedBackgroundColorDark:
+          other.expansionTileCollapsedBackgroundColorDark ??
+          expansionTileCollapsedBackgroundColorDark,
       expansionTileIconColor:
           other.expansionTileIconColor ?? expansionTileIconColor,
+      expansionTileIconColorLight:
+          other.expansionTileIconColorLight ?? expansionTileIconColorLight,
+      expansionTileIconColorDark:
+          other.expansionTileIconColorDark ?? expansionTileIconColorDark,
       fontFamily: other.fontFamily ?? fontFamily,
       displayLarge: other.displayLarge ?? displayLarge,
       displayMedium: other.displayMedium ?? displayMedium,

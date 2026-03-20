@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.9] - 2026-03-20
+
+### Fixed
+
+- **AppPhoneTextField**: Fixed cursor alignment and height issues by adding `textAlignVertical: center` and explicit `cursorHeight`.
+- **AppTextField**: Standardized internal spacing and enabled `isDense: true` for perfect centering at any height.
+- **Granular Heights**: Added `phoneFieldHeight` and `dropdownHeight` to `SACThemeConfig` for independent component height control.
+
 ## [0.5.8] - 2026-03-20
 
 ### Fixed

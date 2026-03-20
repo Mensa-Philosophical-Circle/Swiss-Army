@@ -5,35 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 1.0.0 (2026-03-20)
 
-
-### Features
-
-* Add comprehensive button styling options and standardize input/button heights to 52.0. ([c405640](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/c40564098042719a7e8ce89826d3156c5a6a57c8))
-* add SocialLoginButton and flutter_svg dependency ([fd2e2de](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/fd2e2ded11ae1ddfa5ee6617fa6d8ee1be1b4047))
-* Create swiss_army_component library structure ([457c668](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/457c668516727d6d2e97f543af10630195ae3bf5))
-* default height fallback of 52.h for TextFields and Dropdowns ([46ff391](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/46ff39149040fdf57055658ea38c0d789c4b5ea0))
-* Enhance CustomAppBar with additional properties and flexible space options ([870dadb](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/870dadb20bc4bcee4ccaae646cc6af5a9e76aab7))
-* Implement CLI tool for swiss_army_component ([457c668](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/457c668516727d6d2e97f543af10630195ae3bf5))
-* Introduce `phoneValidator` to `AppPhoneTextField` and `isValidPhoneNumber` to `FormValidator` for enhanced phone number validation. ([2912cf6](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/2912cf61e32ef82c72958e22b08b857ede496911))
-* Introduce SACThemeConfig for theme customization ([457c668](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/457c668516727d6d2e97f543af10630195ae3bf5))
-* Refactor AppText to leverage theme text styles, adjust AppButton elevation to respect theme, and make text field properties nullable for improved theme integration, while removing test output files. ([4f917d5](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/4f917d57be16b124896f3db34735f197e60eb366))
-* Rename package to swiss_army_component and update pubspec.yaml ([457c668](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/457c668516727d6d2e97f543af10630195ae3bf5))
-* use official Nigeria 774 LGAs instead of city data ([343f91f](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/343f91febc7ea9d9fb33f5006076bdb2853b5d7b))
-
-
-### Bug Fixes
-
-* AppText theme color inheritance and custom font support ([f25363f](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/f25363f763de338fa319771292916ae3d4dce2bd))
-* **AppText:** inherit fontFamily from theme by default and update docs ([ca715fe](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/ca715fe89a4b55035857a5c6a904524b7a079941))
-* Correctly merge granular theme properties and standardize phone field and dropdown UI. ([757fe7b](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/757fe7b6ca13e0d7cb1c061848ff613efdefa682))
-* migrate repo URLs to Mensa-Philosophical-Circle/Swiss-Army ([e07f360](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/e07f3603e7fe0a3adfe14308f233e8961193c6e4))
-* migrate repo URLs to Mensa-Philosophical-Circle/Swiss-Army ([9488df8](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/9488df8f7987693463dfe2455baf11c8f48152cd))
-* resolve theme text style override issue (v0.4.3) ([6fee37b](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/6fee37b963d0ea2720d11832e9e6ee7bcaf0fa7f))
-* revert aggressive spacing and bump to 0.5.10 ([6ce9438](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/6ce943851f7ee8614549ff87841f6699415e6546))
-* **SocialLoginButton:** add full customization support ([772eabe](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/772eabeebb8f1adfc7dcc6ab783aa5e1bc4b8a29))
-* text field height, cursor alignment and granular theme heights ([25dd6fb](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/25dd6fb9893150b93f7a9dc7fccc8a9b6e99b812))
 
 ## [0.5.10] - 2026-03-20
 

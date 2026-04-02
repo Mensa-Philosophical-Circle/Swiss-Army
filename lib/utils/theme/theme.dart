@@ -297,6 +297,10 @@ class SACTheme {
         labelMedium:
             config?.labelMedium ?? TextStyle(color: colors.textPrimary),
         labelSmall: config?.labelSmall ?? TextStyle(color: colors.textPrimary),
+      ).apply(
+        fontFamily: config?.fontFamily,
+        displayColor: colors.textPrimary,
+        bodyColor: colors.textPrimary,
       ),
 
       // AppBar

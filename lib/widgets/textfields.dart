@@ -6,10 +6,8 @@ import 'package:intl_phone_field/phone_number.dart';
 
 import '../utils/utils.dart';
 
-/// TextField style variants
 enum TextFieldStyle { outlined, filled, underline, rounded, pill }
 
-/// TextField label position
 enum LabelPosition { above, inside, floating }
 
 /// A highly customizable text form field with extensive configuration options.
@@ -39,10 +37,8 @@ enum LabelPosition { above, inside, floating }
 class AppTextField extends StatefulWidget {
   const AppTextField({
     super.key,
-    // ============== Controllers & Focus ==============
     this.controller,
     this.focusNode,
-    // ============== Callbacks ==============
     this.onChanged,
     this.onSubmitted,
     this.onTap,
@@ -50,10 +46,8 @@ class AppTextField extends StatefulWidget {
     this.onSaved,
     this.validator,
     this.onFocusChanged,
-    // ============== Style Configuration ==============
     this.fieldStyle = TextFieldStyle.outlined,
     this.labelPosition = LabelPosition.above,
-    // ============== Text Configuration ==============
     this.label,
     this.hint,
     this.helperText,
@@ -61,14 +55,12 @@ class AppTextField extends StatefulWidget {
     this.counterText,
     this.prefixText,
     this.suffixText,
-    // ============== Size Configuration ==============
     this.height,
     this.width,
     this.contentPadding,
     this.borderRadius,
     this.borderWidth,
     this.labelSpacing,
-    // ============== Color Configuration ==============
     this.backgroundColor,
     this.focusedBackgroundColor,
     this.disabledBackgroundColor,
@@ -84,7 +76,6 @@ class AppTextField extends StatefulWidget {
     this.focusedIconColor,
     this.prefixTextColor,
     this.suffixTextColor,
-    // ============== Typography Configuration ==============
     this.fontSize,
     this.fontWeight,
     this.fontFamily,
@@ -97,7 +88,6 @@ class AppTextField extends StatefulWidget {
     this.errorStyle,
     this.helperStyle,
     this.counterStyle,
-    // ============== Icon Configuration ==============
     this.prefixIcon,
     this.suffixIcon,
     this.prefixIconData,
@@ -106,7 +96,6 @@ class AppTextField extends StatefulWidget {
     this.suffixIconSize,
     this.prefixIconColor,
     this.suffixIconColor,
-    // ============== Keyboard Configuration ==============
     this.keyboardType,
     this.textInputAction,
     this.textCapitalization = TextCapitalization.none,
@@ -116,13 +105,11 @@ class AppTextField extends StatefulWidget {
     this.enableSuggestions = true,
     this.autocorrect = true,
     this.showCursor,
-    // ============== Password Configuration ==============
     this.obscureText = false,
     this.obscuringCharacter = '•',
     this.showPasswordToggle = false,
     this.passwordVisibleIcon,
     this.passwordHiddenIcon,
-    // ============== Input Configuration ==============
     this.maxLength,
     this.maxLines = 1,
     this.minLines,
@@ -130,24 +117,18 @@ class AppTextField extends StatefulWidget {
     this.showCounter = false,
     this.inputFormatters,
     this.autofillHints,
-    // ============== Validation Configuration ==============
     this.autovalidateMode,
     this.isRequired = false,
     this.requiredIndicatorColor,
-    // ============== State Configuration ==============
     this.isLoading = false,
     this.loadingWidget,
-    // ============== Accessibility ==============
     this.semanticsLabel,
-    // ============== Security ==============
     this.enableSecurity,
   });
 
-  // ============== Controllers & Focus ==============
   final TextEditingController? controller;
   final FocusNode? focusNode;
 
-  // ============== Callbacks ==============
   final void Function(String)? onChanged;
   final void Function(String)? onSubmitted;
   final VoidCallback? onTap;
@@ -156,11 +137,9 @@ class AppTextField extends StatefulWidget {
   final String? Function(String?)? validator;
   final void Function(bool)? onFocusChanged;
 
-  // ============== Style Configuration ==============
   final TextFieldStyle fieldStyle;
   final LabelPosition labelPosition;
 
-  // ============== Text Configuration ==============
   final String? label;
   final String? hint;
   final String? helperText;
@@ -169,7 +148,6 @@ class AppTextField extends StatefulWidget {
   final String? prefixText;
   final String? suffixText;
 
-  // ============== Size Configuration ==============
   final double? height;
   final double? width;
   final EdgeInsetsGeometry? contentPadding;
@@ -177,7 +155,6 @@ class AppTextField extends StatefulWidget {
   final double? borderWidth;
   final double? labelSpacing;
 
-  // ============== Color Configuration ==============
   final Color? backgroundColor;
   final Color? focusedBackgroundColor;
   final Color? disabledBackgroundColor;
@@ -194,7 +171,6 @@ class AppTextField extends StatefulWidget {
   final Color? prefixTextColor;
   final Color? suffixTextColor;
 
-  // ============== Typography Configuration ==============
   final double? fontSize;
   final FontWeight? fontWeight;
   final String? fontFamily;
@@ -208,7 +184,6 @@ class AppTextField extends StatefulWidget {
   final TextStyle? helperStyle;
   final TextStyle? counterStyle;
 
-  // ============== Icon Configuration ==============
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final IconData? prefixIconData;
@@ -218,7 +193,6 @@ class AppTextField extends StatefulWidget {
   final Color? prefixIconColor;
   final Color? suffixIconColor;
 
-  // ============== Keyboard Configuration ==============
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
   final TextCapitalization textCapitalization;
@@ -229,14 +203,12 @@ class AppTextField extends StatefulWidget {
   final bool autocorrect;
   final bool? showCursor;
 
-  // ============== Password Configuration ==============
   final bool obscureText;
   final String obscuringCharacter;
   final bool showPasswordToggle;
   final Widget? passwordVisibleIcon;
   final Widget? passwordHiddenIcon;
 
-  // ============== Input Configuration ==============
   final int? maxLength;
   final int? maxLines;
   final int? minLines;
@@ -245,19 +217,14 @@ class AppTextField extends StatefulWidget {
   final List<TextInputFormatter>? inputFormatters;
   final Iterable<String>? autofillHints;
 
-  // ============== Validation Configuration ==============
   final AutovalidateMode? autovalidateMode;
   final bool isRequired;
   final Color? requiredIndicatorColor;
-
-  // ============== State Configuration ==============
   final bool isLoading;
   final Widget? loadingWidget;
 
-  // ============== Accessibility ==============
   final String? semanticsLabel;
 
-  // ============== Security ==============
   final bool? enableSecurity;
 
   @override
@@ -270,7 +237,6 @@ class _AppTextFieldState extends State<AppTextField> {
   bool _obscureText = true;
   bool _hasError = false;
 
-  // ============== Default Values ==============
   static const double _defaultFontSize = 14.0;
   static const double _defaultLabelFontSize = 16.0;
   static const double _defaultHintFontSize = 14.0;
@@ -306,8 +272,6 @@ class _AppTextFieldState extends State<AppTextField> {
   void _togglePasswordVisibility() {
     setState(() => _obscureText = !_obscureText);
   }
-
-  // ============== Getters with Validation ==============
 
   double? get _fontSize => validateTextFieldFontSize(
     widget.fontSize,
@@ -547,7 +511,6 @@ class _AppTextFieldState extends State<AppTextField> {
       fillColor: _backgroundColor,
       border: _buildBorder(),
       enabledBorder: _buildBorder(),
-      // Use _borderColor which already resolves focusedBorderColor → theme → AppColors.primary
       focusedBorder: _buildBorder(color: _borderColor),
       errorBorder: _buildBorder(color: _errorColor),
       focusedErrorBorder: _buildBorder(
@@ -595,7 +558,6 @@ class _AppTextFieldState extends State<AppTextField> {
   Widget? _buildSuffixIcon() {
     final List<Widget> suffixWidgets = [];
 
-    // Loading indicator
     if (widget.isLoading) {
       suffixWidgets.add(
         widget.loadingWidget ??
@@ -610,7 +572,6 @@ class _AppTextFieldState extends State<AppTextField> {
       );
     }
 
-    // Password toggle
     if (widget.showPasswordToggle && widget.obscureText) {
       suffixWidgets.add(
         GestureDetector(
@@ -632,7 +593,6 @@ class _AppTextFieldState extends State<AppTextField> {
       );
     }
 
-    // Custom suffix icon
     if (widget.suffixIcon != null) {
       suffixWidgets.add(widget.suffixIcon!);
     } else if (widget.suffixIconData != null && !widget.showPasswordToggle) {
@@ -769,15 +729,16 @@ class _AppTextFieldState extends State<AppTextField> {
       onSaved: widget.onSaved,
     );
 
-    // Build the text field, applying optional height constraint
     Widget fieldWidget = textField;
     final double? effectiveHeight =
         widget.maxLines == 1 ? (widget.height ?? context.inputHeight) : null;
 
     if (effectiveHeight != null || widget.width != null) {
-      fieldWidget = SizedBox(
-        width: widget.width,
-        height: effectiveHeight,
+      fieldWidget = ConstrainedBox(
+        constraints: BoxConstraints(
+          minHeight: effectiveHeight ?? 0,
+          maxWidth: widget.width ?? double.infinity,
+        ),
         child: textField,
       );
     }
@@ -800,7 +761,6 @@ class _AppTextFieldState extends State<AppTextField> {
   }
 }
 
-/// Convenience wrapper for password text field
 class AppPasswordField extends StatelessWidget {
   const AppPasswordField({
     super.key,
@@ -876,7 +836,6 @@ class AppPasswordField extends StatelessWidget {
   }
 }
 
-/// App Phone Text Field with international phone input
 class AppPhoneTextField extends StatelessWidget {
   const AppPhoneTextField({
     super.key,
@@ -911,7 +870,6 @@ class AppPhoneTextField extends StatelessWidget {
     this.requiredIndicatorColor,
     this.invalidNumberMessage,
     this.enableSecurity,
-    // ============== Size Configuration ==============
     this.height,
     this.contentPadding,
     this.phoneValidator,

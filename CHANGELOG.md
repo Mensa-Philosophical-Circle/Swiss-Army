@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [0.5.12] - 2026-04-12
+
+### Fixed
+
+- **AppTextField**: Fixed input height inconsistency caused by wrapping `TextFormField` in a fixed-height `SizedBox`. Replaced with `ConstrainedBox(minHeight)` so the input area stays consistent while validation errors and helper text expand naturally below.
+- **AppDropdown**: Applied the same `SizedBox` → `ConstrainedBox(minHeight)` fix to prevent dropdown input area from shrinking when validation errors appear.
+
 ## [0.5.11] - 2026-03-20
 
 ### Fixed

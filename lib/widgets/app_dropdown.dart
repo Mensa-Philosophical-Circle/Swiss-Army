@@ -160,8 +160,10 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
           ),
         ],
 
-        SizedBox(
-          height: widget.height ?? context.dropdownHeight,
+        ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: widget.height ?? context.dropdownHeight,
+          ),
           child: DropdownButtonFormField<T>(
             key: ValueKey(widget.value),
             initialValue: widget.value,

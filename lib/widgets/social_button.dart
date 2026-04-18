@@ -19,6 +19,9 @@ enum SocialProvider {
 /// Visual style for the social button.
 enum SocialButtonStyle { elevated, filled, outlined }
 
+/// Controls which icon variant a social button should render.
+enum SocialIconVariant { theme, light, dark }
+
 /// A highly customizable button for social login interactions.
 ///
 /// Provides sensible defaults for popular providers (Google, Apple, Facebook),
@@ -99,6 +102,9 @@ class SocialButton extends StatelessWidget {
   /// The visual style of the button. Default: [SocialButtonStyle.filled].
   final SocialButtonStyle style;
 
+  /// Controls whether the provider icon uses the theme, a light icon, or a dark icon.
+  final SocialIconVariant iconVariant;
+
   /// Spacing between icon and text. Default: 12.
   final double? iconSpacing;
 
@@ -122,13 +128,14 @@ class SocialButton extends StatelessWidget {
     this.isLoading = false,
     this.enabled = true,
     this.style = SocialButtonStyle.filled,
+    this.iconVariant = SocialIconVariant.theme,
     this.iconSpacing,
   });
 
   @override
   Widget build(BuildContext context) {
     // Get provider defaults
-    final config = _getProviderConfig(provider, context);
+    final config = _getProviderConfig(provider, context, iconVariant);
 
     // Apply overrides
     final effectiveBgColor = bgColor ?? config.bgColor;
@@ -224,7 +231,19 @@ class SocialButton extends StatelessWidget {
   _SocialConfig _getProviderConfig(
     SocialProvider provider,
     BuildContext context,
+    SocialIconVariant iconVariant,
   ) {
+    bool useDarkIcon() {
+      switch (iconVariant) {
+        case SocialIconVariant.dark:
+          return true;
+        case SocialIconVariant.light:
+          return false;
+        case SocialIconVariant.theme:
+          return Theme.of(context).brightness == Brightness.dark;
+      }
+    }
+
     switch (provider) {
       case SocialProvider.google:
         return _SocialConfig(
@@ -236,7 +255,7 @@ class SocialButton extends StatelessWidget {
           borderSide: BorderSide(color: Colors.grey.shade300),
         );
       case SocialProvider.apple:
-        final isDark = Theme.of(context).brightness == Brightness.dark;
+        final isDark = useDarkIcon();
         return _SocialConfig(
           defaultLabel: 'Continue with Apple',
           bgColor: isDark ? Colors.white : Colors.black,
@@ -245,7 +264,7 @@ class SocialButton extends StatelessWidget {
           isSvg: true,
         );
       case SocialProvider.facebook:
-        final isDark = Theme.of(context).brightness == Brightness.dark;
+        final isDark = useDarkIcon();
         return _SocialConfig(
           defaultLabel: 'Continue with Facebook',
           bgColor: isDark ? Colors.white : const Color(0xFF1877F2),
@@ -254,7 +273,7 @@ class SocialButton extends StatelessWidget {
           isSvg: true,
         );
       case SocialProvider.twitter:
-        final isDark = Theme.of(context).brightness == Brightness.dark;
+        final isDark = useDarkIcon();
         return _SocialConfig(
           defaultLabel: 'Continue with X',
           bgColor: isDark ? Colors.white : Colors.black,
@@ -271,7 +290,7 @@ class SocialButton extends StatelessWidget {
           isSvg: true,
         );
       case SocialProvider.github:
-        final isDark = Theme.of(context).brightness == Brightness.dark;
+        final isDark = useDarkIcon();
         return _SocialConfig(
           defaultLabel: 'Continue with GitHub',
           bgColor: isDark ? Colors.white : const Color(0xFF24292e),

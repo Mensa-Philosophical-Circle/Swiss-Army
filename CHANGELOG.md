@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.14] - 2026-04-18
+
+### Fixed
+
+- **SocialButton**: Added `SocialIconVariant` so callers can choose theme, light, or dark icon variants.
+- **AppTextField**: Focused input label color now follows the configured label style instead of forcing the package primary color.
+- **Dark Theme**: Improved consistency for focused text input labels in dark mode.
+
 
 
 ## [0.5.12] - 2026-04-12

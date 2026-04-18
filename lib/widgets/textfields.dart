@@ -365,7 +365,7 @@ class _AppTextFieldState extends State<AppTextField> {
         return isDark
             ? AppColors.grey800
             : (Theme.of(context).inputDecorationTheme.fillColor ??
-                AppColors.grey300);
+                  AppColors.grey300);
       case TextFieldStyle.outlined:
       case TextFieldStyle.underline:
       case TextFieldStyle.rounded:
@@ -503,7 +503,7 @@ class _AppTextFieldState extends State<AppTextField> {
             fontWeight: widget.labelFontWeight ?? FontWeight.normal,
           ),
       floatingLabelStyle: TextStyle(
-        color: _isFocused ? AppColors.primary : _labelColor,
+        color: _labelColor,
         fontSize: _labelFontSize,
         fontWeight: FontWeight.w500,
       ),
@@ -730,8 +730,9 @@ class _AppTextFieldState extends State<AppTextField> {
     );
 
     Widget fieldWidget = textField;
-    final double? effectiveHeight =
-        widget.maxLines == 1 ? (widget.height ?? context.inputHeight) : null;
+    final double? effectiveHeight = widget.maxLines == 1
+        ? (widget.height ?? context.inputHeight)
+        : null;
 
     if (effectiveHeight != null || widget.width != null) {
       fieldWidget = ConstrainedBox(
@@ -1015,13 +1016,13 @@ class AppPhoneTextField extends StatelessWidget {
               isDense: false,
               fillColor: !enabled
                   ? (theme.brightness == Brightness.dark
-                      ? AppColors.grey800.withValues(alpha: 0.5)
-                      : AppColors.grey100)
+                        ? AppColors.grey800.withValues(alpha: 0.5)
+                        : AppColors.grey100)
                   : (backgroundColor ??
-                      (theme.brightness == Brightness.light
-                          ? AppColors.white
-                          : (theme.inputDecorationTheme.fillColor ??
-                              AppColors.white))),
+                        (theme.brightness == Brightness.light
+                            ? AppColors.white
+                            : (theme.inputDecorationTheme.fillColor ??
+                                  AppColors.white))),
               contentPadding:
                   contentPadding ??
                   EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
@@ -1059,9 +1060,11 @@ class AppPhoneTextField extends StatelessWidget {
             onCountryChanged: onCountryChanged != null
                 ? (country) => onCountryChanged!(country.code)
                 : null,
-            validator: validator ?? (phoneValidator != null
-                ? (phone) => phoneValidator!(phone?.completeNumber)
-                : null),
+            validator:
+                validator ??
+                (phoneValidator != null
+                    ? (phone) => phoneValidator!(phone?.completeNumber)
+                    : null),
             cursorColor:
                 cursorColor ??
                 theme.textSelectionTheme.cursorColor ??
@@ -1082,7 +1085,8 @@ class AppPhoneTextField extends StatelessWidget {
             showCountryFlag: showCountryFlag,
             enabled: enabled,
             readOnly: readOnly,
-            invalidNumberMessage: invalidNumberMessage ?? 'Invalid phone number',
+            invalidNumberMessage:
+                invalidNumberMessage ?? 'Invalid phone number',
             autovalidateMode: AutovalidateMode.onUserInteraction,
             keyboardType: TextInputType.phone,
           ),

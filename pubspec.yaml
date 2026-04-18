@@ -1,10 +1,12 @@
 name: swiss_army_component
-description: "Swiss Army Component: a reusable Flutter component library with widgets, utilities, and theme support. Includes a CLI to help install and use the package in existing apps."
+description: "Swiss Army Component: a reusable Flutter component library with
+  widgets, utilities, and theme support. Includes a CLI to help install and use
+  the package in existing apps."
 homepage: "https://github.com/Mensa-Philosophical-Circle/Swiss-Army"
 repository: "https://github.com/Mensa-Philosophical-Circle/Swiss-Army"
 issue_tracker: "https://github.com/Mensa-Philosophical-Circle/Swiss-Army/issues"
 
-version: 0.5.12
+version: 0.5.14
 
 environment:
   sdk: ^3.10.1
@@ -43,5 +45,6 @@ dev_dependencies:
 
 executables:
   sac: sac
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

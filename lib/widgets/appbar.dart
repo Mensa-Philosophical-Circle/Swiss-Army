@@ -131,7 +131,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           defaultValue: 24,
           enableSecurity: enableSecurity,
         ),
-        color: backIconColor ?? foregroundColor ?? Colors.white,
+        color: backIconColor ?? foregroundColor ?? Theme.of(context).colorScheme.onPrimary,
       ),
       onPressed: () => safeAppBarCallback(
         onBack ?? () => Get.back(),
@@ -169,13 +169,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return null;
   }
 
-  Widget _buildTitle() {
+  Widget _buildTitle(BuildContext context) {
     if (titleWidget != null) return titleWidget!;
 
     final style =
         titleTextStyle ??
         TextStyle(
-          color: titleColor ?? Colors.white,
+          color: titleColor ?? Theme.of(context).colorScheme.onPrimary,
           fontSize: validateTitleFontSize(
             titleFontSize,
             defaultValue: 20.0,
@@ -218,7 +218,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       leadingWidth: leadingWidth,
       automaticallyImplyLeading:
           automaticallyImplyLeading ?? (leading == null && showBackButton),
-      title: _buildTitle(),
+      title: _buildTitle(context),
       centerTitle: centerTitle,
       actions: validActions,
       flexibleSpace: _buildFlexibleSpace(),
@@ -327,7 +327,7 @@ class CustomSliverAppBar extends StatelessWidget {
     return IconButton(
       icon: Icon(
         backIcon,
-        color: backIconColor ?? foregroundColor ?? Colors.white,
+        color: backIconColor ?? foregroundColor ?? Theme.of(context).colorScheme.onPrimary,
       ),
       onPressed: () => safeAppBarCallback(
         onBack ?? () => Get.back(),
@@ -336,7 +336,7 @@ class CustomSliverAppBar extends StatelessWidget {
     );
   }
 
-  Widget _buildFlexibleSpace() {
+  Widget _buildFlexibleSpace(BuildContext context) {
     if (flexibleSpace != null) return flexibleSpace!;
 
     final validGradient = validateGradientColors(
@@ -351,7 +351,7 @@ class CustomSliverAppBar extends StatelessWidget {
           Text(
             sanitizeTitleText(title, enableSecurity: enableSecurity),
             style: TextStyle(
-              color: titleColor ?? Colors.white,
+              color: titleColor ?? Theme.of(context).colorScheme.onPrimary,
               fontSize: validateTitleFontSize(
                 titleFontSize,
                 defaultValue: 20.0,
@@ -370,7 +370,7 @@ class CustomSliverAppBar extends StatelessWidget {
                 ),
               ),
             )
-          : Container(color: backgroundColor ?? AppColors.primary),
+          : Container(color: backgroundColor ?? Theme.of(context).colorScheme.primary),
     );
   }
 
@@ -406,7 +406,7 @@ class CustomSliverAppBar extends StatelessWidget {
           ? Colors.transparent
           : backgroundColor,
       foregroundColor: foregroundColor,
-      flexibleSpace: _buildFlexibleSpace(),
+      flexibleSpace: _buildFlexibleSpace(context),
       bottom: bottom,
       shape: shape,
       centerTitle: centerTitle,
@@ -433,8 +433,6 @@ class TransparentAppBar extends CustomAppBar {
     super.backIcon,
     super.backIconColor,
     super.onBack,
-    super.foregroundColor = Colors.white,
-    super.titleColor = Colors.white,
     super.elevation = 0,
     super.systemOverlayStyle = SystemUiOverlayStyle.light,
     super.semanticLabel,
@@ -524,9 +522,9 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveIconColor = iconColor ?? Colors.white;
-    final effectiveTextColor = textColor ?? Colors.white;
-    final effectiveHintColor = hintColor ?? Colors.white70;
+    final effectiveIconColor = iconColor ?? Theme.of(context).colorScheme.onPrimary;
+    final effectiveTextColor = textColor ?? Theme.of(context).colorScheme.onPrimary;
+    final effectiveHintColor = hintColor ?? Theme.of(context).colorScheme.onPrimary.withOpacity(0.7);
 
     Widget? flexibleSpace;
     final validGradient = validateGradientColors(
@@ -705,7 +703,7 @@ class TabbedAppBar extends StatelessWidget implements PreferredSizeWidget {
           leading ??
           (showBackButton
               ? IconButton(
-                  icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+                  icon: Icon(Icons.arrow_back_ios, color: Theme.of(context).colorScheme.onPrimary),
                   onPressed: () => safeAppBarCallback(
                     onBack ?? () => Get.back(),
                     context: 'TabbedAppBar.back',
@@ -718,7 +716,7 @@ class TabbedAppBar extends StatelessWidget implements PreferredSizeWidget {
               ? Text(
                   sanitizeTitleText(title, enableSecurity: enableSecurity),
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onPrimary,
                     fontSize: validateTitleFontSize(
                       20,
                       defaultValue: 20,
@@ -733,9 +731,9 @@ class TabbedAppBar extends StatelessWidget implements PreferredSizeWidget {
         controller: controller,
         tabs: validTabs,
         isScrollable: isScrollable,
-        indicatorColor: indicatorColor ?? Colors.white,
-        labelColor: labelColor ?? Colors.white,
-        unselectedLabelColor: unselectedLabelColor ?? Colors.white70,
+        indicatorColor: indicatorColor ?? Theme.of(context).colorScheme.onPrimary,
+        labelColor: labelColor ?? Theme.of(context).colorScheme.onPrimary,
+        unselectedLabelColor: unselectedLabelColor ?? Theme.of(context).colorScheme.onPrimary.withOpacity(0.7),
         indicatorSize: indicatorSize,
         indicatorPadding: indicatorPadding ?? EdgeInsets.zero,
         indicator: indicator,

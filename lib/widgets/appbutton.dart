@@ -127,7 +127,10 @@ class _AppElevatedButtonState extends State<AppElevatedButton> {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveTextColor = widget.textColor;
+    final theme = Theme.of(context);
+    final defaultFg = theme.elevatedButtonTheme.style?.foregroundColor;
+    final resolvedFg = defaultFg?.resolve(<WidgetState>{});
+    final effectiveTextColor = widget.textColor ?? resolvedFg ?? theme.colorScheme.onPrimary;
     final safeHeight = validateSize(
       widget.height,
       defaultValue: null,
@@ -338,7 +341,8 @@ class _NormalElevatedButtonState extends State<NormalElevatedButton> {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveTextColor = widget.txtcolor ?? AppColors.white;
+    final theme = Theme.of(context);
+    final effectiveTextColor = widget.txtcolor ?? theme.colorScheme.onPrimary;
     final safeRadius = validateBorderRadius(
       widget.radius,
       defaultValue: 10.r,
@@ -877,8 +881,9 @@ class _ConfigElevatedButtonState extends State<ConfigElevatedButton> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final screenWidth = MediaQuery.of(context).size.width;
-    final effectiveTextColor = widget.textcolour ?? AppColors.white;
+    final effectiveTextColor = widget.textcolour ?? theme.colorScheme.onPrimary;
 
     Widget content;
     if (widget.isLoading) {
@@ -929,7 +934,7 @@ class _ConfigElevatedButtonState extends State<ConfigElevatedButton> {
       height: widget.height ?? 50.h,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: widget.bgcolour ?? AppColors.primary,
+          backgroundColor: widget.bgcolour ?? theme.colorScheme.primary,
           padding: widget.padding ?? simPad(0, 14),
           shape: RoundedRectangleBorder(
             borderRadius: widget.radius ?? BorderRadius.circular(10.0),
@@ -940,7 +945,7 @@ class _ConfigElevatedButtonState extends State<ConfigElevatedButton> {
             defaultValue: 0,
             enableSecurity: widget.enableSecurity,
           ),
-          disabledBackgroundColor: (widget.bgcolour ?? AppColors.primary)
+          disabledBackgroundColor: (widget.bgcolour ?? theme.colorScheme.primary)
               .withValues(alpha: 0.5),
         ),
         onPressed: widget.enabled && !widget.isLoading && !_isDebouncing
@@ -1050,8 +1055,9 @@ class _ConfigOutlinedButtonState extends State<ConfigOutlinedButton> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final screenWidth = MediaQuery.of(context).size.width;
-    final effectiveTextColor = widget.textcolour ?? AppColors.black;
+    final effectiveTextColor = widget.textcolour ?? theme.colorScheme.onSurface;
 
     Widget content;
     if (widget.isLoading) {
@@ -1105,7 +1111,7 @@ class _ConfigOutlinedButtonState extends State<ConfigOutlinedButton> {
           minimumSize: widget.height != null
               ? Size(0, widget.height!)
               : Size(0, context.buttonHeight),
-          backgroundColor: widget.bgColour ?? AppColors.white,
+          backgroundColor: widget.bgColour ?? theme.colorScheme.surface,
           padding: widget.padding ?? simPad(0, 14),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(
@@ -1116,12 +1122,12 @@ class _ConfigOutlinedButtonState extends State<ConfigOutlinedButton> {
               )!,
             ),
             side: BorderSide(
-              color: widget.brdcolour ?? AppColors.grey200,
+              color: widget.brdcolour ?? theme.dividerColor,
               width: widget.borderWidth ?? 1.0,
             ),
           ),
           elevation: 0,
-          disabledBackgroundColor: (widget.bgColour ?? AppColors.white)
+          disabledBackgroundColor: (widget.bgColour ?? theme.colorScheme.surface)
               .withValues(alpha: 0.5),
         ),
         onPressed: widget.enabled && !widget.isLoading && !_isDebouncing
@@ -1221,6 +1227,7 @@ class _AppIconButtonState extends State<AppIconButton> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final safeSize = validateSize(
       widget.size,
       defaultValue: 48.w,
@@ -1242,7 +1249,7 @@ class _AppIconButtonState extends State<AppIconButton> {
       child: ElevatedButton(
         onPressed: widget.enabled && !_isDebouncing ? _handlePress : null,
         style: ElevatedButton.styleFrom(
-          backgroundColor: widget.bgColor ?? AppColors.primary,
+          backgroundColor: widget.bgColor ?? theme.colorScheme.primary,
           padding: widget.padding ?? EdgeInsets.zero,
           elevation: validateElevation(
             widget.elevation,
@@ -1263,7 +1270,7 @@ class _AppIconButtonState extends State<AppIconButton> {
         child: Icon(
           widget.icon,
           size: safeIconSize,
-          color: widget.iconColor ?? AppColors.white,
+          color: widget.iconColor ?? theme.colorScheme.onPrimary,
         ),
       ),
     );
@@ -1362,7 +1369,7 @@ class _AppTextButtonState extends State<AppTextButton> {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveColor = widget.textColor ?? AppColors.primary;
+    final effectiveColor = widget.textColor ?? Theme.of(context).colorScheme.primary;
 
     final button = TextButton(
       onPressed: widget.enabled && !_isDebouncing ? _handlePress : null,
@@ -1514,7 +1521,7 @@ class _AppGradientButtonState extends State<AppGradientButton> {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveTextColor = widget.textColor ?? AppColors.white;
+    final effectiveTextColor = widget.textColor ?? Theme.of(context).colorScheme.onPrimary;
     final safeRadius = validateBorderRadius(
       widget.radius,
       defaultValue: 10.r,

@@ -618,21 +618,21 @@ class _CustomSearchBarState extends State<CustomSearchBar>
     }
   }
 
-  Color get _backgroundColor {
+  Color _backgroundColor(BuildContext context) {
     if (!widget.enabled) {
       return widget.disabledBackgroundColor ??
-          AppColors.grey100.withValues(alpha: 0.5);
+          Theme.of(context).colorScheme.onSurface.withOpacity(0.05).withValues(alpha: 0.5);
     }
     if (_isFocused && widget.focusedBackgroundColor != null) {
       return widget.focusedBackgroundColor!;
     }
-    return widget.backgroundColor ?? _getDefaultBackgroundColor();
+    return widget.backgroundColor ?? _getDefaultBackgroundColor(context);
   }
 
-  Color _getDefaultBackgroundColor() {
+  Color _getDefaultBackgroundColor(BuildContext context) {
     switch (widget.style) {
       case SearchBarStyle.filled:
-        return AppColors.grey100;
+        return Theme.of(context).colorScheme.onSurface.withOpacity(0.05);
       case SearchBarStyle.outlined:
       case SearchBarStyle.underline:
       case SearchBarStyle.rounded:
@@ -641,37 +641,37 @@ class _CustomSearchBarState extends State<CustomSearchBar>
     }
   }
 
-  Color get _borderColor {
+  Color _borderColor(BuildContext context) {
     if (widget.hasError) {
-      return widget.errorBorderColor ?? AppColors.red;
+      return widget.errorBorderColor ?? Theme.of(context).colorScheme.error;
     }
     if (_isFocused) {
-      return widget.focusedBorderColor ?? AppColors.primary;
+      return widget.focusedBorderColor ?? Theme.of(context).colorScheme.primary;
     }
-    return widget.borderColor ?? AppColors.grey200;
+    return widget.borderColor ?? Theme.of(context).colorScheme.onSurface.withOpacity(0.1);
   }
 
-  Color get _iconColor {
+  Color _iconColor(BuildContext context) {
     if (!widget.enabled) {
-      return widget.disabledIconColor ?? AppColors.grey;
+      return widget.disabledIconColor ?? Theme.of(context).colorScheme.onSurface.withOpacity(0.6);
     }
     if (_isFocused) {
-      return widget.focusedIconColor ?? widget.iconColor ?? AppColors.primary;
+      return widget.focusedIconColor ?? widget.iconColor ?? Theme.of(context).colorScheme.primary;
     }
-    return widget.iconColor ?? AppColors.grey;
+    return widget.iconColor ?? Theme.of(context).colorScheme.onSurface.withOpacity(0.6);
   }
 
-  Color get _textColor => widget.textColor ?? AppColors.black;
-  Color get _hintColor => widget.hintColor ?? AppColors.grey;
-  Color get _cursorColor => widget.cursorColor ?? AppColors.primary;
+  Color _textColor(BuildContext context) => widget.textColor ?? Theme.of(context).colorScheme.onSurface;
+  Color _hintColor(BuildContext context) => widget.hintColor ?? Theme.of(context).colorScheme.onSurface.withOpacity(0.6);
+  Color _cursorColor(BuildContext context) => widget.cursorColor ?? Theme.of(context).colorScheme.primary;
 
-  Color get _clearButtonBgColor =>
+  Color _clearButtonBgColor(BuildContext context) =>
       widget.clearButtonBackgroundColor ??
-      AppColors.grey200.withValues(alpha: 0.5);
+      Theme.of(context).colorScheme.onSurface.withOpacity(0.1).withValues(alpha: 0.5);
 
-  Color get _clearIconColor => widget.clearButtonColor ?? _iconColor;
+  Color _clearIconColor(BuildContext context) => widget.clearButtonColor ?? _iconColor(context);
 
-  Color get _loadingColor => widget.loadingIndicatorColor ?? _iconColor;
+  Color _loadingColor(BuildContext context) => widget.loadingIndicatorColor ?? _iconColor(context);
 
   EdgeInsetsGeometry get _contentPadding {
     return widget.contentPadding ??
@@ -693,13 +693,13 @@ class _CustomSearchBarState extends State<CustomSearchBar>
       widget.errorTextPadding ??
       EdgeInsets.only(left: _iconPaddingLeft, top: 4.h);
 
-  InputDecoration _buildInputDecoration() {
+  InputDecoration _buildInputDecoration(BuildContext context) {
     return InputDecoration(
       hintText: _hintText,
       hintStyle:
           widget.hintStyle ??
           TextStyle(
-            color: _hintColor,
+            color: _hintColor(context),
             fontSize: _fontSize,
             fontWeight: widget.fontWeight ?? FontWeight.normal,
             fontFamily: widget.fontFamily,
@@ -710,8 +710,8 @@ class _CustomSearchBarState extends State<CustomSearchBar>
       errorBorder: InputBorder.none,
       disabledBorder: InputBorder.none,
       contentPadding: _contentPadding,
-      prefixIcon: _buildPrefixIcon(),
-      suffixIcon: _buildSuffixIcon(),
+      prefixIcon: _buildPrefixIcon(context),
+      suffixIcon: _buildSuffixIcon(context),
       prefixIconConstraints: BoxConstraints(
         minWidth: _prefixIconSize + _iconPaddingLeft + _iconPaddingRight,
         minHeight: _prefixIconSize,
@@ -724,7 +724,7 @@ class _CustomSearchBarState extends State<CustomSearchBar>
     );
   }
 
-  Widget? _buildPrefixIcon() {
+  Widget? _buildPrefixIcon(BuildContext context) {
     if (!widget.showPrefixIcon) return null;
 
     if (widget.prefixIcon != null) {
@@ -751,19 +751,19 @@ class _CustomSearchBarState extends State<CustomSearchBar>
                     height: _loadingSize,
                     child: CircularProgressIndicator(
                       strokeWidth: _loadingStrokeWidth,
-                      valueColor: AlwaysStoppedAnimation<Color>(_loadingColor),
+                      valueColor: AlwaysStoppedAnimation<Color>(_loadingColor(context)),
                     ),
                   )
             : Icon(
                 widget.prefixIconData ?? Icons.search,
                 size: _prefixIconSize,
-                color: _iconColor,
+                color: _iconColor(context),
               ),
       ),
     );
   }
 
-  Widget? _buildSuffixIcon() {
+  Widget? _buildSuffixIcon(BuildContext context) {
     if (widget.suffixIcon != null) {
       return Padding(
         padding: EdgeInsets.only(
@@ -776,7 +776,6 @@ class _CustomSearchBarState extends State<CustomSearchBar>
 
     final List<Widget> suffixWidgets = [];
 
-    // Clear button
     if (widget.showClearButton && _hasText) {
       suffixWidgets.add(
         FadeTransition(
@@ -789,13 +788,13 @@ class _CustomSearchBarState extends State<CustomSearchBar>
                 Container(
                   padding: EdgeInsets.all(_clearButtonPadding),
                   decoration: BoxDecoration(
-                    color: _clearButtonBgColor,
+                    color: _clearButtonBgColor(context),
                     shape: widget.clearButtonShape ?? BoxShape.circle,
                   ),
                   child: Icon(
                     Icons.close,
                     size: _clearIconSize,
-                    color: _clearIconColor,
+                    color: _clearIconColor(context),
                   ),
                 ),
           ),
@@ -803,7 +802,6 @@ class _CustomSearchBarState extends State<CustomSearchBar>
       );
     }
 
-    // Voice button
     if (widget.showVoiceButton && widget.onVoiceSearch != null) {
       suffixWidgets.add(
         GestureDetector(
@@ -814,16 +812,15 @@ class _CustomSearchBarState extends State<CustomSearchBar>
               Icon(
                 widget.voiceIconData ?? Icons.mic_outlined,
                 size: _suffixIconSize,
-                color: _iconColor,
+                color: _iconColor(context),
               ),
         ),
       );
     }
 
-    // Suffix icon data
     if (widget.suffixIconData != null) {
       suffixWidgets.add(
-        Icon(widget.suffixIconData, size: _suffixIconSize, color: _iconColor),
+        Icon(widget.suffixIconData, size: _suffixIconSize, color: _iconColor(context)),
       );
     }
 
@@ -838,9 +835,9 @@ class _CustomSearchBarState extends State<CustomSearchBar>
         mainAxisSize: MainAxisSize.min,
         children: suffixWidgets
             .map(
-              (widget) => Padding(
+              (w) => Padding(
                 padding: EdgeInsets.symmetric(horizontal: _iconSpacing),
-                child: widget,
+                child: w,
               ),
             )
             .toList(),
@@ -848,34 +845,34 @@ class _CustomSearchBarState extends State<CustomSearchBar>
     );
   }
 
-  BoxDecoration _buildDecoration() {
+  BoxDecoration _buildDecoration(BuildContext context) {
     switch (widget.style) {
       case SearchBarStyle.outlined:
         return BoxDecoration(
-          color: _backgroundColor,
+          color: _backgroundColor(context),
           borderRadius: BorderRadius.circular(_borderRadius),
-          border: Border.all(color: _borderColor, width: _borderWidth),
+          border: Border.all(color: _borderColor(context), width: _borderWidth),
         );
 
       case SearchBarStyle.filled:
         return BoxDecoration(
-          color: _backgroundColor,
+          color: _backgroundColor(context),
           borderRadius: BorderRadius.circular(_borderRadius),
         );
 
       case SearchBarStyle.underline:
         return BoxDecoration(
-          color: _backgroundColor,
+          color: _backgroundColor(context),
           border: Border(
-            bottom: BorderSide(color: _borderColor, width: _borderWidth),
+            bottom: BorderSide(color: _borderColor(context), width: _borderWidth),
           ),
         );
 
       case SearchBarStyle.rounded:
         return BoxDecoration(
-          color: _backgroundColor,
+          color: _backgroundColor(context),
           borderRadius: BorderRadius.circular(_borderRadius),
-          border: Border.all(color: _borderColor, width: _borderWidth),
+          border: Border.all(color: _borderColor(context), width: _borderWidth),
           boxShadow: widget.elevation != null && widget.elevation! > 0
               ? [
                   BoxShadow(
@@ -891,13 +888,13 @@ class _CustomSearchBarState extends State<CustomSearchBar>
 
       case SearchBarStyle.pill:
         return BoxDecoration(
-          color: _backgroundColor,
+          color: _backgroundColor(context),
           borderRadius: BorderRadius.circular(_borderRadius),
-          border: Border.all(color: _borderColor, width: _borderWidth),
+          border: Border.all(color: _borderColor(context), width: _borderWidth),
           boxShadow: _isFocused && (widget.focusedElevation ?? 0) > 0
               ? [
                   BoxShadow(
-                    color: (widget.shadowColor ?? AppColors.primary).withValues(
+                    color: (widget.shadowColor ?? Theme.of(context).colorScheme.primary).withValues(
                       alpha: 0.2,
                     ),
                     blurRadius: widget.focusedElevation! * 2,
@@ -918,19 +915,19 @@ class _CustomSearchBarState extends State<CustomSearchBar>
       width: widget.width,
       padding: widget.padding,
       margin: widget.margin,
-      decoration: _buildDecoration(),
+      decoration: _buildDecoration(context),
       child: TextField(
         controller: _controller,
         focusNode: _focusNode,
         style:
             widget.textStyle ??
             TextStyle(
-              color: _textColor,
+              color: _textColor(context),
               fontSize: _fontSize,
               fontWeight: widget.fontWeight ?? FontWeight.normal,
               fontFamily: widget.fontFamily,
             ),
-        decoration: _buildInputDecoration(),
+        decoration: _buildInputDecoration(context),
         keyboardType: _keyboardType,
         textInputAction: _textInputAction,
         textCapitalization: _textCapitalization,
@@ -939,7 +936,7 @@ class _CustomSearchBarState extends State<CustomSearchBar>
         enabled: widget.enabled,
         enableSuggestions: widget.enableSuggestions,
         autocorrect: widget.autocorrect,
-        cursorColor: _cursorColor,
+        cursorColor: _cursorColor(context),
         maxLength: widget.maxLength ?? SearchBarSecurityConfig.maxQueryLength,
         inputFormatters: widget.inputFormatters,
         autofillHints: widget.autofillHints,
@@ -953,7 +950,6 @@ class _CustomSearchBarState extends State<CustomSearchBar>
       ),
     );
 
-    // Error text
     if (widget.hasError && widget.errorText != null) {
       searchField = Column(
         mainAxisSize: MainAxisSize.min,
@@ -967,7 +963,7 @@ class _CustomSearchBarState extends State<CustomSearchBar>
               style:
                   widget.errorTextStyle ??
                   TextStyle(
-                    color: widget.errorBorderColor ?? AppColors.red,
+                    color: widget.errorBorderColor ?? Theme.of(context).colorScheme.error,
                     fontSize: _defaultErrorTextFontSize.sp,
                   ),
             ),
@@ -1091,18 +1087,18 @@ class FilterableSearchBar extends StatelessWidget {
                   itemCount: filters.length,
                   separatorBuilder: (_, _) => SizedBox(width: _spacing),
                   itemBuilder: (context, index) =>
-                      _buildFilterChip(filters[index]),
+                      _buildFilterChip(context, filters[index]),
                 )
               : Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: filters.map(_buildFilterChip).toList(),
+                  children: filters.map((f) => _buildFilterChip(context, f)).toList(),
                 ),
         ),
       ],
     );
   }
 
-  Widget _buildFilterChip(String filter) {
+  Widget _buildFilterChip(BuildContext context, String filter) {
     final isSelected = filter == selectedFilter;
 
     return GestureDetector(
@@ -1115,8 +1111,8 @@ class FilterableSearchBar extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           color: isSelected
-              ? (selectedChipColor ?? AppColors.primary)
-              : (unselectedChipColor ?? AppColors.grey100),
+              ? (selectedChipColor ?? Theme.of(context).colorScheme.primary)
+              : (unselectedChipColor ?? Theme.of(context).colorScheme.onSurface.withOpacity(0.05)),
           borderRadius: BorderRadius.circular(_chipBorderRadius),
         ),
         child: Text(
@@ -1125,8 +1121,8 @@ class FilterableSearchBar extends StatelessWidget {
               (isSelected ? selectedChipStyle : chipStyle) ??
               TextStyle(
                 color: isSelected
-                    ? (selectedTextColor ?? AppColors.white)
-                    : (unselectedTextColor ?? AppColors.grey),
+                    ? (selectedTextColor ?? Theme.of(context).colorScheme.surface)
+                    : (unselectedTextColor ?? Theme.of(context).colorScheme.onSurface.withOpacity(0.6)),
                 fontSize: _chipFontSize,
                 fontWeight: isSelected
                     ? (selectedChipFontWeight ?? FontWeight.w600)
@@ -1293,7 +1289,7 @@ class _ExpandableSearchBarState extends State<ExpandableSearchBar>
                     child: Icon(
                       widget.iconData ?? Icons.search,
                       size: _iconSize,
-                      color: widget.iconColor ?? AppColors.grey,
+                      color: widget.iconColor ?? Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                     ),
                   ),
                 ),

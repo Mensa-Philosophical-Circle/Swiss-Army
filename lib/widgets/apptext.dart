@@ -410,15 +410,13 @@ class SmallAppText extends StatelessWidget {
   final String? semanticsLabel;
   final bool? enableSecurity;
 
-  static const double _defaultFontSize = 14.0;
-
   @override
   Widget build(BuildContext context) {
     return AppText(
       data,
       style: AppTextStyle.small,
       color: color,
-      fontSize: fontSize ?? _defaultFontSize.sp,
+      fontSize: fontSize,
       fontWeight: fontWeight,
       textAlign: alignment,
       maxLines: maxLines,
@@ -499,16 +497,14 @@ class MedAppText extends StatelessWidget {
   final String? semanticsLabel;
   final bool? enableSecurity;
 
-  static const double _defaultFontSize = 16.0;
-
   @override
   Widget build(BuildContext context) {
     return AppText(
       data,
       style: AppTextStyle.medium,
       color: color,
-      fontSize: fontSize ?? _defaultFontSize.sp,
-      fontWeight: fontWeight ?? FontWeight.normal,
+      fontSize: fontSize,
+      fontWeight: fontWeight,
       textAlign: alignment,
       maxLines: maxLines,
       fontStyle: fontStyle,
@@ -588,16 +584,14 @@ class BigAppText extends StatelessWidget {
   final String? semanticsLabel;
   final bool? enableSecurity;
 
-  static const double _defaultFontSize = 18.0;
-
   @override
   Widget build(BuildContext context) {
     return AppText(
       data,
       style: AppTextStyle.large,
       color: color,
-      fontSize: fontSize ?? _defaultFontSize.sp,
-      fontWeight: fontWeight ?? FontWeight.bold,
+      fontSize: fontSize,
+      fontWeight: fontWeight,
       textAlign: alignment,
       maxLines: maxLines,
       fontStyle: fontStyle,
@@ -792,12 +786,12 @@ class PriceText extends StatelessWidget {
     return absValue.toStringAsFixed(showDecimals ? decimalPlaces : 0);
   }
 
-  Color? _getColor() {
+  Color? _getColor(BuildContext context) {
     if (isProfit != null && showProfitLossColors) {
       if (isProfit!) {
         return profitColor ?? Colors.green;
       } else {
-        return lossColor ?? AppColors.red;
+        return lossColor ?? Theme.of(context).colorScheme.error;
       }
     }
     return color;
@@ -838,10 +832,10 @@ class PriceText extends StatelessWidget {
       formattedPrice,
       style:
           textStyle ??
-          GoogleFonts.poppins(
+          TextStyle(
             fontSize: validatedFontSize,
             fontWeight: fontWeight ?? FontWeight.w600,
-            color: _getColor(),
+            color: _getColor(context),
           ),
       overflow: overflow ?? TextOverflow.ellipsis,
       maxLines: maxLines,
@@ -972,12 +966,12 @@ class SlashedPriceText extends StatelessWidget {
       formattedPrice,
       style:
           textStyle ??
-          GoogleFonts.poppins(
+          TextStyle(
             fontSize: validatedFontSize,
             fontWeight: fontWeight ?? FontWeight.normal,
-            color: color ?? AppColors.grey,
+            color: color ?? Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
             decoration: TextDecoration.lineThrough,
-            decorationColor: decorationColor ?? color ?? AppColors.grey,
+            decorationColor: decorationColor ?? color ?? Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
             decorationThickness: decorationThickness,
             decorationStyle: decorationStyle,
           ),
@@ -1068,7 +1062,7 @@ class BrandNameText extends StatelessWidget {
       displayText,
       style:
           textStyle ??
-          GoogleFonts.poppins(
+          TextStyle(
             fontSize: validatedFontSize,
             fontWeight: fontWeight ?? _getDefaultFontWeight(),
             color: color,
@@ -1158,7 +1152,7 @@ class ProductTitleText extends StatelessWidget {
       title,
       style:
           textStyle ??
-          GoogleFonts.poppins(
+          TextStyle(
             fontSize: validatedFontSize,
             fontWeight: fontWeight ?? FontWeight.w500,
             color: color,
@@ -1267,7 +1261,7 @@ class ImportantAppText extends StatelessWidget {
 
     final mainTextStyle =
         textStyle ??
-        GoogleFonts.poppins(
+        TextStyle(
           color: color,
           fontSize: validatedFontSize,
           fontWeight: fontWeight ?? FontWeight.bold,
@@ -1278,8 +1272,8 @@ class ImportantAppText extends StatelessWidget {
           backgroundColor: backgroundColor,
         );
 
-    final indicatorStyle = GoogleFonts.poppins(
-      color: indicatorColor ?? AppColors.red,
+    final indicatorStyle = TextStyle(
+      color: indicatorColor ?? Theme.of(context).colorScheme.error,
       fontSize: indicatorFontSize ?? (validatedFontSize ?? 14.sp) + 2,
       fontWeight: indicatorFontWeight ?? FontWeight.bold,
     );
@@ -1396,14 +1390,14 @@ class HighlightedText extends StatelessWidget {
 
     final baseStyle =
         textStyle ??
-        GoogleFonts.poppins(
+        TextStyle(
           fontSize: validatedFontSize,
           fontWeight: fontWeight ?? FontWeight.normal,
           color: color,
         );
 
     final highlightStyle = baseStyle.copyWith(
-      color: highlightTextColor ?? highlightColor ?? AppColors.primary,
+      color: highlightTextColor ?? highlightColor ?? Theme.of(context).colorScheme.primary,
       fontWeight: highlightFontWeight ?? FontWeight.bold,
       backgroundColor: highlightBackgroundColor,
     );
@@ -1520,14 +1514,14 @@ class _ExpandableTextState extends State<ExpandableText> {
 
     final baseStyle =
         widget.textStyle ??
-        GoogleFonts.poppins(
+        TextStyle(
           fontSize: validatedFontSize,
           fontWeight: widget.fontWeight ?? FontWeight.normal,
           color: widget.color,
         );
 
     final linkStyle = baseStyle.copyWith(
-      color: widget.linkColor ?? AppColors.primary,
+      color: widget.linkColor ?? Theme.of(context).colorScheme.primary,
       fontWeight: FontWeight.w600,
     );
 

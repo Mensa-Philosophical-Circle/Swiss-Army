@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.15] - 2026-07-24
+
+### Fixed
+
+- **Theme Control**: Removed ALL remaining hardcoded `AppColors.xxx` color fallbacks and `GoogleFonts.poppins` font defaults across every widget. All components (`AppButton`, `AppText`, `AppTextField`, `AppPhoneTextField`, `OTPTextField`, `CustomSearchBar`, `SACAppBar`, `AppDropdown`) now fully respect `Theme.of(context).colorScheme.*` for all colors.
+- **AppText Widgets**: `SmallAppText`, `MedAppText`, `BigAppText` no longer have hardcoded default font sizes (`14`, `16`, `18`) or `FontWeight.normal`/`bold`. They now inherit font size and weight from the theme, allowing your custom `AppTheme` to take full effect.
+- **AppElevatedButton**: Text color now correctly resolves from `elevatedButtonTheme.style.foregroundColor` / `colorScheme.onPrimary` instead of hardcoding from `textTheme.bodySmall`.
+
 ## [0.5.14] - 2026-04-18
 
 ### Fixed

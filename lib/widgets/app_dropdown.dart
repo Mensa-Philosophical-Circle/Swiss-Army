@@ -79,7 +79,7 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
         Theme.of(
           context,
         ).inputDecorationTheme.enabledBorder?.borderSide.color ??
-        AppColors.grey100;
+        Theme.of(context).colorScheme.onSurface.withOpacity(0.05);
   }
 
   Color get _backgroundColor {
@@ -94,17 +94,17 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
     switch (widget.fieldStyle) {
       case TextFieldStyle.filled:
         return isDark
-            ? AppColors.grey800
+            ? Theme.of(context).colorScheme.onSurface.withOpacity(0.8)
             : (Theme.of(context).inputDecorationTheme.fillColor ??
-                AppColors.grey300);
+                Theme.of(context).colorScheme.onSurface.withOpacity(0.15));
       case TextFieldStyle.outlined:
       case TextFieldStyle.underline:
       case TextFieldStyle.rounded:
       case TextFieldStyle.pill:
         return isDark
             ? (Theme.of(context).inputDecorationTheme.fillColor ??
-                  AppColors.grey900)
-            : AppColors.white;
+                  Theme.of(context).colorScheme.onSurface.withOpacity(0.9))
+            : Theme.of(context).colorScheme.surface;
     }
   }
 

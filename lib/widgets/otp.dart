@@ -289,20 +289,20 @@ class _OTPTextFieldState extends State<OTPTextField>
     }
   }
 
-  Color get _defaultBorderColor =>
-      widget.defaultBorderColor ?? AppColors.grey.withValues(alpha: 0.5);
-  Color get _focusedBorderColor =>
-      widget.focusedBorderColor ?? AppColors.primary;
-  Color get _submittedBorderColor =>
-      widget.submittedBorderColor ?? AppColors.primary;
-  Color get _errorBorderColor => widget.errorBorderColor ?? AppColors.red;
-  Color get _successBorderColor => widget.successBorderColor ?? Colors.green;
-  Color get _textColor => widget.textColor ?? AppColors.primary;
-  Color get _cursorColor => widget.cursorColor ?? AppColors.primary;
+  Color _defaultBorderColor(BuildContext context) =>
+      widget.defaultBorderColor ?? Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5);
+  Color _focusedBorderColor(BuildContext context) =>
+      widget.focusedBorderColor ?? Theme.of(context).colorScheme.primary;
+  Color _submittedBorderColor(BuildContext context) =>
+      widget.submittedBorderColor ?? Theme.of(context).colorScheme.primary;
+  Color _errorBorderColor(BuildContext context) => widget.errorBorderColor ?? Theme.of(context).colorScheme.error;
+  Color _successBorderColor(BuildContext context) => widget.successBorderColor ?? Colors.green;
+  Color _textColor(BuildContext context) => widget.textColor ?? Theme.of(context).colorScheme.primary;
+  Color _cursorColor(BuildContext context) => widget.cursorColor ?? Theme.of(context).colorScheme.primary;
 
-  Color? get _fillColor {
+  Color? _fillColor(BuildContext context) {
     if (widget.hasError || widget.forceErrorState) {
-      return widget.errorFillColor ?? AppColors.red.withValues(alpha: 0.1);
+      return widget.errorFillColor ?? Theme.of(context).colorScheme.error.withValues(alpha: 0.1);
     }
     if (widget.isSuccess) {
       return widget.successFillColor ?? Colors.green.withValues(alpha: 0.1);
@@ -310,25 +310,25 @@ class _OTPTextFieldState extends State<OTPTextField>
     return widget.fillColor;
   }
 
-  Color _getCurrentBorderColor() {
+  Color _getCurrentBorderColor(BuildContext context) {
     if (widget.hasError || widget.forceErrorState) {
-      return _errorBorderColor;
+      return _errorBorderColor(context);
     }
     if (widget.isSuccess) {
-      return _successBorderColor;
+      return _successBorderColor(context);
     }
-    return _defaultBorderColor;
+    return _defaultBorderColor(context);
   }
 
-  BoxDecoration _getDefaultDecoration() {
-    final borderColor = _getCurrentBorderColor();
+  BoxDecoration _getDefaultDecoration(BuildContext context) {
+    final borderColor = _getCurrentBorderColor(context);
 
     switch (widget.style) {
       case OTPStyle.boxed:
         return BoxDecoration(
           border: Border.all(color: borderColor, width: widget.borderWidth),
           borderRadius: BorderRadius.circular(_borderRadius),
-          color: _fillColor,
+          color: _fillColor(context),
         );
 
       case OTPStyle.underline:
@@ -336,12 +336,12 @@ class _OTPTextFieldState extends State<OTPTextField>
           border: Border(
             bottom: BorderSide(color: borderColor, width: widget.borderWidth),
           ),
-          color: _fillColor,
+          color: _fillColor(context),
         );
 
       case OTPStyle.filled:
         return BoxDecoration(
-          color: _fillColor ?? AppColors.grey.withValues(alpha: 0.1),
+          color: _fillColor(context) ?? Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(_borderRadius),
           border: Border.all(
             color: borderColor.withValues(alpha: 0.3),
@@ -353,13 +353,13 @@ class _OTPTextFieldState extends State<OTPTextField>
         return BoxDecoration(
           shape: BoxShape.circle,
           border: Border.all(color: borderColor, width: widget.borderWidth),
-          color: _fillColor,
+          color: _fillColor(context),
         );
 
       case OTPStyle.rounded:
         return BoxDecoration(
           borderRadius: BorderRadius.circular(_borderRadius),
-          color: _fillColor ?? Colors.white,
+          color: _fillColor(context) ?? Colors.white,
           border: Border.all(color: borderColor, width: widget.borderWidth),
           boxShadow: [
             BoxShadow(
@@ -372,19 +372,19 @@ class _OTPTextFieldState extends State<OTPTextField>
     }
   }
 
-  BoxDecoration _getFocusedDecoration() {
+  BoxDecoration _getFocusedDecoration(BuildContext context) {
     final focusColor = widget.hasError || widget.forceErrorState
-        ? _errorBorderColor
+        ? _errorBorderColor(context)
         : widget.isSuccess
-        ? _successBorderColor
-        : _focusedBorderColor;
+        ? _successBorderColor(context)
+        : _focusedBorderColor(context);
 
     switch (widget.style) {
       case OTPStyle.boxed:
         return BoxDecoration(
           border: Border.all(color: focusColor, width: widget.borderWidth + 1),
           borderRadius: BorderRadius.circular(_borderRadius),
-          color: widget.focusedFillColor ?? _fillColor,
+          color: widget.focusedFillColor ?? _fillColor(context),
         );
 
       case OTPStyle.underline:
@@ -395,15 +395,15 @@ class _OTPTextFieldState extends State<OTPTextField>
               width: widget.borderWidth + 1,
             ),
           ),
-          color: widget.focusedFillColor ?? _fillColor,
+          color: widget.focusedFillColor ?? _fillColor(context),
         );
 
       case OTPStyle.filled:
         return BoxDecoration(
           color:
               widget.focusedFillColor ??
-              _fillColor ??
-              AppColors.grey.withValues(alpha: 0.15),
+              _fillColor(context) ??
+              Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.15),
           borderRadius: BorderRadius.circular(_borderRadius),
           border: Border.all(color: focusColor, width: widget.borderWidth + 1),
         );
@@ -412,13 +412,13 @@ class _OTPTextFieldState extends State<OTPTextField>
         return BoxDecoration(
           shape: BoxShape.circle,
           border: Border.all(color: focusColor, width: widget.borderWidth + 1),
-          color: widget.focusedFillColor ?? _fillColor,
+          color: widget.focusedFillColor ?? _fillColor(context),
         );
 
       case OTPStyle.rounded:
         return BoxDecoration(
           borderRadius: BorderRadius.circular(_borderRadius),
-          color: widget.focusedFillColor ?? _fillColor ?? Colors.white,
+          color: widget.focusedFillColor ?? _fillColor(context) ?? Colors.white,
           border: Border.all(color: focusColor, width: widget.borderWidth + 1),
           boxShadow: [
             BoxShadow(
@@ -431,19 +431,19 @@ class _OTPTextFieldState extends State<OTPTextField>
     }
   }
 
-  BoxDecoration _getSubmittedDecoration() {
+  BoxDecoration _getSubmittedDecoration(BuildContext context) {
     final submittedColor = widget.hasError || widget.forceErrorState
-        ? _errorBorderColor
+        ? _errorBorderColor(context)
         : widget.isSuccess
-        ? _successBorderColor
-        : _submittedBorderColor;
+        ? _successBorderColor(context)
+        : _submittedBorderColor(context);
 
     switch (widget.style) {
       case OTPStyle.boxed:
         return BoxDecoration(
           border: Border.all(color: submittedColor, width: widget.borderWidth),
           borderRadius: BorderRadius.circular(_borderRadius),
-          color: widget.submittedFillColor ?? _fillColor,
+          color: widget.submittedFillColor ?? _fillColor(context),
         );
 
       case OTPStyle.underline:
@@ -454,15 +454,15 @@ class _OTPTextFieldState extends State<OTPTextField>
               width: widget.borderWidth,
             ),
           ),
-          color: widget.submittedFillColor ?? _fillColor,
+          color: widget.submittedFillColor ?? _fillColor(context),
         );
 
       case OTPStyle.filled:
         return BoxDecoration(
           color:
               widget.submittedFillColor ??
-              _fillColor ??
-              AppColors.primary.withValues(alpha: 0.1),
+              _fillColor(context) ??
+              Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(_borderRadius),
           border: Border.all(color: submittedColor, width: widget.borderWidth),
         );
@@ -471,13 +471,13 @@ class _OTPTextFieldState extends State<OTPTextField>
         return BoxDecoration(
           shape: BoxShape.circle,
           border: Border.all(color: submittedColor, width: widget.borderWidth),
-          color: widget.submittedFillColor ?? _fillColor,
+          color: widget.submittedFillColor ?? _fillColor(context),
         );
 
       case OTPStyle.rounded:
         return BoxDecoration(
           borderRadius: BorderRadius.circular(_borderRadius),
-          color: widget.submittedFillColor ?? _fillColor ?? Colors.white,
+          color: widget.submittedFillColor ?? _fillColor(context) ?? Colors.white,
           border: Border.all(color: submittedColor, width: widget.borderWidth),
           boxShadow: [
             BoxShadow(
@@ -490,17 +490,17 @@ class _OTPTextFieldState extends State<OTPTextField>
     }
   }
 
-  TextStyle get _textStyle {
+  TextStyle _textStyle(BuildContext context) {
     return widget.textStyle ??
         TextStyle(
           fontSize: _fontSize,
-          color: _textColor,
+          color: _textColor(context),
           fontWeight: widget.fontWeight ?? FontWeight.w600,
           fontFamily: widget.fontFamily,
         );
   }
 
-  Widget _buildCursor() {
+  Widget _buildCursor(BuildContext context) {
     if (widget.cursor != null) return widget.cursor!;
 
     return Column(
@@ -510,7 +510,7 @@ class _OTPTextFieldState extends State<OTPTextField>
           width: widget.cursorWidth,
           height: widget.cursorHeight ?? _fontSize * 1.2,
           decoration: BoxDecoration(
-            color: _cursorColor,
+            color: _cursorColor(context),
             borderRadius: BorderRadius.circular(widget.cursorWidth / 2),
           ),
         ),
@@ -547,8 +547,8 @@ class _OTPTextFieldState extends State<OTPTextField>
     final defaultTheme = PinTheme(
       width: _pinWidth,
       height: _pinHeight,
-      textStyle: _textStyle,
-      decoration: _getDefaultDecoration(),
+      textStyle: _textStyle(context),
+      decoration: _getDefaultDecoration(context),
       padding: EdgeInsets.zero,
       margin: EdgeInsets.symmetric(
         horizontal: validateOTPSpacing(
@@ -560,20 +560,20 @@ class _OTPTextFieldState extends State<OTPTextField>
     );
 
     final focusedTheme = defaultTheme.copyWith(
-      decoration: _getFocusedDecoration(),
+      decoration: _getFocusedDecoration(context),
     );
 
     final submittedTheme = defaultTheme.copyWith(
-      decoration: _getSubmittedDecoration(),
+      decoration: _getSubmittedDecoration(context),
     );
 
     final errorTheme =
         widget.errorPinTheme ??
         defaultTheme.copyWith(
           decoration: BoxDecoration(
-            border: Border.all(color: _errorBorderColor, width: 2),
+            border: Border.all(color: _errorBorderColor(context), width: 2),
             borderRadius: BorderRadius.circular(_borderRadius),
-            color: _errorBorderColor.withValues(alpha: 0.1),
+            color: _errorBorderColor(context).withValues(alpha: 0.1),
           ),
         );
 
@@ -596,7 +596,7 @@ class _OTPTextFieldState extends State<OTPTextField>
       forceErrorState: widget.forceErrorState,
       pinAnimationType: _pinAnimationType,
       showCursor: widget.showCursor,
-      cursor: _buildCursor(),
+      cursor: _buildCursor(context),
       obscureText: widget.obscureText,
       obscuringCharacter: widget.obscuringCharacter,
       obscuringWidget: widget.obscuringWidget,
@@ -840,7 +840,7 @@ class _OTPVerificationWidgetState extends State<OTPVerificationWidget> {
                 TextStyle(
                   fontSize: 24.sp,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.black,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
             textAlign: TextAlign.center,
           ),
@@ -852,7 +852,7 @@ class _OTPVerificationWidgetState extends State<OTPVerificationWidget> {
             widget.subtitle!,
             style:
                 widget.subtitleStyle ??
-                TextStyle(fontSize: 14.sp, color: AppColors.grey),
+                TextStyle(fontSize: 14.sp, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6)),
             textAlign: TextAlign.center,
           ),
           SizedBox(height: widget.spacing),
@@ -891,7 +891,7 @@ class _OTPVerificationWidgetState extends State<OTPVerificationWidget> {
           SizedBox(height: widget.spacing / 2),
           Text(
             widget.errorText ?? 'Invalid code. Please try again.',
-            style: TextStyle(fontSize: 12.sp, color: AppColors.red),
+            style: TextStyle(fontSize: 12.sp, color: Theme.of(context).colorScheme.error),
             textAlign: TextAlign.center,
           ),
         ],
@@ -913,7 +913,7 @@ class _OTPVerificationWidgetState extends State<OTPVerificationWidget> {
               'Resend code in $_formattedTime',
               style:
                   widget.timerTextStyle ??
-                  TextStyle(fontSize: 14.sp, color: AppColors.grey),
+                  TextStyle(fontSize: 14.sp, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6)),
             )
           else
             GestureDetector(
@@ -924,7 +924,7 @@ class _OTPVerificationWidgetState extends State<OTPVerificationWidget> {
                     widget.resendTextStyle ??
                     TextStyle(
                       fontSize: 14.sp,
-                      color: _isResending ? AppColors.grey : AppColors.primary,
+                      color: _isResending ? Theme.of(context).colorScheme.onSurface.withOpacity(0.6) : Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w600,
                       decoration: _isResending
                           ? null

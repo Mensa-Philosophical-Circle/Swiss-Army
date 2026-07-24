@@ -164,7 +164,7 @@ class _AppElevatedButtonState extends State<AppElevatedButton> {
             child: CircularProgressIndicator(
               strokeWidth: 2,
               valueColor: AlwaysStoppedAnimation<Color>(
-                effectiveTextColor ?? Theme.of(context).colorScheme.primary,
+                effectiveTextColor,
               ),
             ),
           );

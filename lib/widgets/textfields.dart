@@ -1296,13 +1296,13 @@ class AppRoundedTextField extends StatelessWidget {
           backgroundColor ??
           (Theme.of(context).inputDecorationTheme.fillColor ??
               (Theme.of(context).brightness == Brightness.dark
-                  ? Theme.of(context).colorScheme.onSurface.withOpacity(0.8)
+                  ? Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8)
                   : Theme.of(context).colorScheme.surface)),
       borderColor: showBorder
           ? (borderColor ??
                 (Theme.of(context).brightness == Brightness.dark
-                    ? Theme.of(context).colorScheme.onSurface.withOpacity(0.6)
-                    : Theme.of(context).colorScheme.onSurface.withOpacity(0.1)))
+                    ? Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6)
+                    : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.1)))
           : Colors.transparent,
       focusedBorderColor: showBorder
           ? (focusedBorderColor ?? Theme.of(context).colorScheme.primary)

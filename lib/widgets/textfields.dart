@@ -816,7 +816,7 @@ class AppPasswordField extends StatelessWidget {
       fieldStyle: fieldStyle,
       obscureText: true,
       showPasswordToggle: showPasswordToggle,
-      prefixIconData: prefixIconData ?? Icons.lock_outline,
+      prefixIconData: prefixIconData,
       textInputAction: textInputAction ?? TextInputAction.done,
       keyboardType: TextInputType.visiblePassword,
       validator: validator,

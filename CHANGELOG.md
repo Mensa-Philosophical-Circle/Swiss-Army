@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.17] - 2026-09-13
+
+### Fixed & Enhanced
+
+- **AppPhoneTextField**: Added real-time active validation according to country code length constraints.
+- **AppPhoneTextField**: Added automatic leading zero stripping (`allowLeadingZero: false` by default) to eliminate redundant leading zeros when country dial codes are present.
+- **AppDropdown**: Added `isRequired` and `requiredIndicatorColor` support for rendering required field asterisks.
+- **TransparentAppBar**: Forwarded `foregroundColor` to `CustomAppBar`.
+
 ## [0.5.16] - 2026-09-13
 
 ### Fixed & Enhanced

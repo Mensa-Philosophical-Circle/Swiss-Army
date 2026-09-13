@@ -437,6 +437,7 @@ class TransparentAppBar extends CustomAppBar {
     super.systemOverlayStyle = SystemUiOverlayStyle.light,
     super.semanticLabel,
     super.enableSecurity,
+    super.foregroundColor,
   }) : super(transparent: true);
 }
 

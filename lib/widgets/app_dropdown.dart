@@ -22,6 +22,8 @@ class AppDropdown<T> extends StatefulWidget {
     this.contentPadding,
     this.height,
     this.enabled = true,
+    this.isRequired = false,
+    this.requiredIndicatorColor,
   });
 
   final List<DropdownMenuItem<T>>? items;
@@ -41,6 +43,8 @@ class AppDropdown<T> extends StatefulWidget {
   final EdgeInsetsGeometry? contentPadding;
   final double? height;
   final bool enabled;
+  final bool isRequired;
+  final Color? requiredIndicatorColor;
 
   @override
   State<AppDropdown<T>> createState() => _AppDropdownState<T>();
@@ -150,12 +154,30 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
             widget.labelPosition == LabelPosition.above) ...[
           Padding(
             padding: EdgeInsets.only(bottom: 8.h),
-            child: Text(
-              widget.label!,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w500,
-                fontSize: 14.sp,
-              ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  widget.label!,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14.sp,
+                  ),
+                ),
+                if (widget.isRequired)
+                  Padding(
+                    padding: EdgeInsets.only(left: 4.w),
+                    child: Text(
+                      '*',
+                      style: TextStyle(
+                        color: widget.requiredIndicatorColor ??
+                            Theme.of(context).colorScheme.error,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+              ],
             ),
           ),
         ],

@@ -49,6 +49,8 @@ class AppPhoneTextField extends StatefulWidget {
     this.height,
     this.contentPadding,
     this.phoneValidator,
+    this.allowLeadingZero = false,
+    this.autovalidateMode,
   });
 
   final TextEditingController? controller;
@@ -85,6 +87,8 @@ class AppPhoneTextField extends StatefulWidget {
   final double? height;
   final EdgeInsetsGeometry? contentPadding;
   final String? Function(String?)? phoneValidator;
+  final bool allowLeadingZero;
+  final AutovalidateMode? autovalidateMode;
 
   @override
   State<AppPhoneTextField> createState() => _AppPhoneTextFieldState();
@@ -116,10 +120,14 @@ class _AppPhoneTextFieldState extends State<AppPhoneTextField> {
   }
 
   void _onNumberChanged(String val) {
+    var cleanNumber = val;
+    if (!widget.allowLeadingZero && cleanNumber.startsWith('0')) {
+      cleanNumber = cleanNumber.replaceFirst(RegExp(r'^0+'), '');
+    }
     final pn = PhoneNumber(
       countryISOCode: _selectedCountry.code,
       countryCode: '+${_selectedCountry.dialCode}',
-      number: val,
+      number: cleanNumber,
     );
     widget.onChanged?.call(pn);
   }
@@ -203,8 +211,11 @@ class _AppPhoneTextFieldState extends State<AppPhoneTextField> {
           enabled: widget.enabled,
           readOnly: widget.readOnly,
           keyboardType: TextInputType.phone,
+          autovalidateMode:
+              widget.autovalidateMode ?? AutovalidateMode.onUserInteraction,
           inputFormatters: [
             FilteringTextInputFormatter.allow(RegExp(r'^[0-9\s\-]+$')),
+            if (!widget.allowLeadingZero) _StripLeadingZeroFormatter(),
           ],
           cursorColor: widget.cursorColor ??
               theme.textSelectionTheme.cursorColor ??
@@ -217,24 +228,32 @@ class _AppPhoneTextFieldState extends State<AppPhoneTextField> {
           ),
           onChanged: _onNumberChanged,
           validator: (value) {
-            final complete = '+${_selectedCountry.dialCode}${value ?? ''}';
+            final digits = (value ?? '').replaceAll(RegExp(r'\D'), '');
+            if (widget.isRequired && digits.isEmpty) {
+              return widget.invalidNumberMessage ?? 'Phone number is required';
+            }
+            if (digits.isNotEmpty) {
+              if (digits.length < _selectedCountry.minLength ||
+                  digits.length > _selectedCountry.maxLength) {
+                final requiredLen = _selectedCountry.minLength ==
+                        _selectedCountry.maxLength
+                    ? '${_selectedCountry.maxLength}'
+                    : '${_selectedCountry.minLength}-${_selectedCountry.maxLength}';
+                return widget.invalidNumberMessage ??
+                    'Enter a valid $requiredLen-digit phone number';
+              }
+            }
             if (widget.phoneValidator != null) {
+              final complete = '+${_selectedCountry.dialCode}$digits';
               return widget.phoneValidator!(complete);
             }
             if (widget.validator != null) {
               final pn = PhoneNumber(
                 countryISOCode: _selectedCountry.code,
                 countryCode: '+${_selectedCountry.dialCode}',
-                number: value ?? '',
+                number: digits,
               );
               return widget.validator!(pn);
-            }
-            if (value != null && value.isNotEmpty) {
-              final digits = value.replaceAll(RegExp(r'\D'), '');
-              if (digits.length < _selectedCountry.minLength ||
-                  digits.length > _selectedCountry.maxLength) {
-                return widget.invalidNumberMessage ?? 'Invalid phone number';
-              }
             }
             return null;
           },
@@ -469,5 +488,24 @@ class _CountryPickerSheetState extends State<_CountryPickerSheet> {
         ],
       ),
     );
+  }
+}
+
+/// Automatically strips leading zeros when a phone number is entered or pasted,
+/// preventing redundant leading zeros since country dial codes are already selected.
+class _StripLeadingZeroFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    if (newValue.text.startsWith('0')) {
+      final stripped = newValue.text.replaceFirst(RegExp(r'^0+'), '');
+      return TextEditingValue(
+        text: stripped,
+        selection: TextSelection.collapsed(offset: stripped.length),
+      );
+    }
+    return newValue;
   }
 }

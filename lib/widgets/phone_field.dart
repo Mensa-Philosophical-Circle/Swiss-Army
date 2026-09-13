@@ -178,31 +178,27 @@ class _AppPhoneTextFieldState extends State<AppPhoneTextField> {
       mainAxisSize: MainAxisSize.min,
       children: [
         if (widget.label != null && widget.labelPosition == LabelPosition.above) ...[
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                widget.label!,
-                style: widget.labelStyle ??
-                    TextStyle(
-                      color: effectiveLabelColor,
-                      fontSize: (widget.labelFontSize ?? 14.0).sp,
-                      fontWeight: widget.labelFontWeight ?? FontWeight.w500,
-                    ),
-              ),
-              if (widget.isRequired)
-                Padding(
-                  padding: EdgeInsets.only(left: 4.w),
-                  child: Text(
-                    '*',
+          Text.rich(
+            TextSpan(
+              text: widget.label!,
+              style: widget.labelStyle ??
+                  TextStyle(
+                    color: effectiveLabelColor,
+                    fontSize: (widget.labelFontSize ?? 14.0).sp,
+                    fontWeight: widget.labelFontWeight ?? FontWeight.w500,
+                  ),
+              children: [
+                if (widget.isRequired)
+                  TextSpan(
+                    text: ' *',
                     style: TextStyle(
                       color: widget.requiredIndicatorColor ?? AppColors.red,
                       fontSize: (widget.labelFontSize ?? 14.0).sp,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                ),
-            ],
+              ],
+            ),
           ),
           SizedBox(height: (widget.labelSpacing ?? 8.0).h),
         ],

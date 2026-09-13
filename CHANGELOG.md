@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.18] - 2026-09-13
+
+### Fixed
+
+- **Typography & Layout**: Replaced `Row` wrapping in labels with `Text.rich` across `AppTextField`, `AppPhoneTextField`, and `AppDropdown` to prevent horizontal RenderFlex overflow when labels are long.
+
 ## [0.5.17] - 2026-09-13
 
 ### Fixed & Enhanced

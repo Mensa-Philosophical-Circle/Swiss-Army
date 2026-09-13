@@ -630,32 +630,30 @@ class _AppTextFieldState extends State<AppTextField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              widget.label!,
-              style:
-                  widget.labelStyle ??
-                  TextStyle(
-                    color: _labelColor(context),
-                    fontSize: _labelFontSize,
-                    fontWeight: widget.labelFontWeight ?? FontWeight.w500,
-                  ),
-            ),
-            if (widget.isRequired)
-              Padding(
-                padding: EdgeInsets.only(left: 4.w),
-                child: Text(
-                  '*',
+        Text.rich(
+          TextSpan(
+            text: widget.label!,
+            style:
+                widget.labelStyle ??
+                TextStyle(
+                  color: _labelColor(context),
+                  fontSize: _labelFontSize,
+                  fontWeight: widget.labelFontWeight ?? FontWeight.w500,
+                ),
+            children: [
+              if (widget.isRequired)
+                TextSpan(
+                  text: ' *',
                   style: TextStyle(
-                    color: widget.requiredIndicatorColor ?? Theme.of(context).colorScheme.error,
+                    color:
+                        widget.requiredIndicatorColor ??
+                        Theme.of(context).colorScheme.error,
                     fontSize: _labelFontSize,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-              ),
-          ],
+            ],
+          ),
         ),
         SizedBox(height: _labelSpacing),
       ],

@@ -51,6 +51,8 @@ class AppPhoneTextField extends StatefulWidget {
     this.phoneValidator,
     this.allowLeadingZero = false,
     this.autovalidateMode,
+    this.fontSize,
+    this.hintFontSize,
   });
 
   final TextEditingController? controller;
@@ -90,6 +92,12 @@ class AppPhoneTextField extends StatefulWidget {
   final bool allowLeadingZero;
   final AutovalidateMode? autovalidateMode;
 
+  /// The size of the number typed and of the dial code beside it, before ScreenUtil scaling (14 by default).
+  final double? fontSize;
+
+  /// The size of the hint; the size of the number when left out.
+  final double? hintFontSize;
+
   @override
   State<AppPhoneTextField> createState() => _AppPhoneTextFieldState();
 }
@@ -118,6 +126,8 @@ class _AppPhoneTextFieldState extends State<AppPhoneTextField> {
       _effectiveController = widget.controller!;
     }
   }
+
+  double get _fontSize => (widget.fontSize ?? 14.0).sp;
 
   void _onNumberChanged(String val) {
     var cleanNumber = val;
@@ -219,7 +229,7 @@ class _AppPhoneTextFieldState extends State<AppPhoneTextField> {
           cursorHeight: 20.h,
           style: TextStyle(
             color: effectiveTextColor,
-            fontSize: 14.sp,
+            fontSize: _fontSize,
             fontWeight: FontWeight.w500,
           ),
           onChanged: _onNumberChanged,
@@ -257,7 +267,7 @@ class _AppPhoneTextFieldState extends State<AppPhoneTextField> {
             hintText: widget.hint,
             hintStyle: TextStyle(
               color: effectiveHintColor,
-              fontSize: 14.sp,
+              fontSize: (widget.hintFontSize ?? widget.fontSize ?? 14.0).sp,
               fontWeight: FontWeight.w400,
             ),
             filled: true,
@@ -332,7 +342,7 @@ class _AppPhoneTextFieldState extends State<AppPhoneTextField> {
                     Text(
                       '+${_selectedCountry.dialCode}',
                       style: TextStyle(
-                        fontSize: 14.sp,
+                        fontSize: _fontSize,
                         fontWeight: FontWeight.w500,
                         color: effectiveTextColor,
                       ),

@@ -323,9 +323,20 @@ dart pub global activate swiss_army_component
 
 Make sure `~/.pub-cache/bin` is in your PATH. Then you can use:
 
-- `sac install` — Adds the package dependency to your project's pubspec.yaml
+- `sac install` — Sets up a project in one go (see below)
 - `sac doctor` — Quick environment check
 - `sac examples` — Prints code snippets for reference
+
+#### What `sac install` sets up
+
+Run it in a new Flutter project (`flutter create my_app`, then `cd my_app`, then `sac install`):
+
+- adds `swiss_army_component`, `get`, `flutter_screenutil` and `liquid_glass_widgets` to `pubspec.yaml` and runs `flutter pub get`;
+- writes the GetX layout under `lib/app/` (`routes`, `bindings`, `modules`, `data`, `utils`, `widgets`), a theme in `utils/theme/app_theme.dart` (change the colour there and every screen follows), a new `main.dart` and a smoke test;
+- gives you ready screens: **splash**, **sign in** (validated form, API call left for you) and a **main** screen with a bottom bar that is native on each platform: liquid glass on iOS, Material 3 on Android;
+- installs the GetX command line (`dart pub global activate get_cli`), so you can add screens with `get create page:orders`, which also adds the route.
+
+Files you have already written are kept (it says which); `--force` replaces them. `--no-template` only adds the dependency, `--no-cli` skips the GetX command line.
 
 ## Exports Map
 

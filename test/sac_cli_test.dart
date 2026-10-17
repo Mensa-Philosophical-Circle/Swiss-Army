@@ -18,11 +18,28 @@ void main() {
   });
   tearDown(() => app.deleteSync(recursive: true));
 
+  // Every program `sac` would run, so no test installs anything for real.
+  late List<String> ran;
+  setUp(() => ran = []);
+
   Future<int> sac(
     List<String> args, {
     String? version = '1.2.3',
     RunProcess? run,
-  }) => runSac(args, out: out, err: err, version: version, run: run);
+  }) => runSac(
+    args,
+    out: out,
+    err: err,
+    version: version,
+    run:
+        run ??
+        (exe, a, {workingDirectory}) async {
+          ran.add('$exe ${a.join(' ')}');
+          return ProcessResult(1, 0, '', '');
+        },
+  );
+  bool has(String path) => File('${app.path}/$path').existsSync();
+  String read(String path) => File('${app.path}/$path').readAsStringSync();
   String pubspec() => File('${app.path}/pubspec.yaml').readAsStringSync();
 
   test('no command shows what it can do and succeeds', () async {
@@ -91,6 +108,100 @@ void main() {
     });
   });
 
+  group('install template', () {
+    test('sets up the GetX folders and the ready screens', () async {
+      expect(await sac(['install', '-p', app.path]), exitOk);
+      for (final path in [
+        'lib/main.dart',
+        'lib/app/routes/app_pages.dart',
+        'lib/app/routes/app_routes.dart',
+        'lib/app/utils/theme/app_theme.dart',
+        'lib/app/widgets/adaptive_bottom_nav.dart',
+        'lib/app/modules/splash/views/splash_view.dart',
+        'lib/app/modules/sign_in/controllers/sign_in_controller.dart',
+        'lib/app/modules/main/views/main_view.dart',
+        'lib/app/data/repositories/.gitkeep',
+      ]) {
+        expect(has(path), isTrue, reason: path);
+      }
+      expect(pubspec(), contains('get: ^4.7.2'));
+      expect(pubspec(), contains('flutter_screenutil:'));
+      expect(pubspec(), contains('liquid_glass_widgets:'));
+      expect(
+        read('lib/app/modules/splash/views/splash_view.dart'),
+        contains("'Demo'"),
+      );
+      expect(read('test/widget_test.dart'), contains('package:demo/main.dart'));
+    });
+
+    test('gets the packages and installs the GetX command line', () async {
+      await sac(['install', '-p', app.path]);
+      expect(ran, ['flutter pub get', 'dart pub global activate get_cli']);
+      expect(out.toString(), contains('get create page:orders'));
+    });
+
+    test(
+      '--no-cli leaves the command line out, --no-template adds only the dependency',
+      () async {
+        await sac(['install', '--no-cli', '-p', app.path]);
+        expect(ran, ['flutter pub get']);
+
+        ran.clear();
+        final other = Directory.systemTemp.createTempSync('sac_plain_');
+        addTearDown(() => other.deleteSync(recursive: true));
+        File('${other.path}/pubspec.yaml').writeAsStringSync('name: plain\n');
+        await sac(['install', '--no-template', '-p', other.path]);
+        expect(ran, isEmpty);
+        expect(File('${other.path}/lib/main.dart').existsSync(), isFalse);
+        expect(
+          File('${other.path}/pubspec.yaml').readAsStringSync(),
+          isNot(contains('get:')),
+        );
+      },
+    );
+
+    test(
+      'keeps a main.dart that is theirs, but replaces the one flutter create makes',
+      () async {
+        Directory('${app.path}/lib').createSync();
+        File(
+          '${app.path}/lib/main.dart',
+        ).writeAsStringSync('void main() => print("mine");');
+        await sac(['install', '--no-cli', '-p', app.path]);
+        expect(read('lib/main.dart'), contains('mine'));
+        expect(out.toString(), contains('Kept your lib/main.dart'));
+
+        await sac(['install', '--no-cli', '--force', '-p', app.path]);
+        expect(read('lib/main.dart'), contains('GetMaterialApp'));
+
+        File(
+          '${app.path}/lib/main.dart',
+        ).writeAsStringSync('// You have pushed the button this many times');
+        await sac(['install', '--no-cli', '-p', app.path]);
+        expect(read('lib/main.dart'), contains('GetMaterialApp'));
+      },
+    );
+
+    test('keeps the versions the project already asks for', () async {
+      File(
+        '${app.path}/pubspec.yaml',
+      ).writeAsStringSync('name: demo\ndependencies:\n  get: ^4.6.0\n');
+      await sac(['install', '--no-cli', '-p', app.path]);
+      expect(pubspec(), contains('get: ^4.6.0'));
+    });
+
+    test('a step that fails is reported, and the rest still happens', () async {
+      final code = await sac(
+        ['install', '-p', app.path],
+        run: (_, _, {workingDirectory}) async =>
+            ProcessResult(1, 1, '', 'no network'),
+      );
+      expect(code, exitOk);
+      expect(out.toString(), contains('failed, run it yourself'));
+      expect(has('lib/main.dart'), isTrue);
+    });
+  });
+
   group('examples', () {
     test('show the version out now and widgets that exist', () async {
       expect(await sac(['examples']), exitOk);
@@ -105,9 +216,11 @@ void main() {
   group('doctor', () {
     test('passes when Flutter answers', () async {
       expect(
-        await sac([
-          'doctor',
-        ], run: (_, _) async => ProcessResult(1, 0, 'Flutter 3.x', '')),
+        await sac(
+          ['doctor'],
+          run: (_, _, {workingDirectory}) async =>
+              ProcessResult(1, 0, 'Flutter 3.x', ''),
+        ),
         exitOk,
       );
       expect(out.toString(), contains('Flutter is installed.'));
@@ -117,7 +230,7 @@ void main() {
       expect(
         await sac(
           ['doctor'],
-          run: (_, _) async =>
+          run: (_, _, {workingDirectory}) async =>
               throw const ProcessException('flutter', [], 'not found'),
         ),
         1,
@@ -127,9 +240,11 @@ void main() {
 
     test('fails when Flutter answers with an error', () async {
       expect(
-        await sac([
-          'doctor',
-        ], run: (_, _) async => ProcessResult(1, 2, '', 'broken')),
+        await sac(
+          ['doctor'],
+          run: (_, _, {workingDirectory}) async =>
+              ProcessResult(1, 2, '', 'broken'),
+        ),
         1,
       );
     });

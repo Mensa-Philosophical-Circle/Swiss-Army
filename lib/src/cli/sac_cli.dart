@@ -4,6 +4,8 @@ import 'dart:isolate';
 import 'package:args/args.dart';
 import 'package:yaml_edit/yaml_edit.dart';
 
+import 'scaffold.dart';
+
 /// Where the package is, for `sac install --git`.
 const gitUrl = 'https://github.com/Mensa-Philosophical-Circle/Swiss-Army.git';
 
@@ -14,7 +16,18 @@ const exitNoInput = 66;
 
 /// Runs a program and gives its result; swapped out in tests.
 typedef RunProcess =
-    Future<ProcessResult> Function(String executable, List<String> arguments);
+    Future<ProcessResult> Function(
+      String executable,
+      List<String> arguments, {
+      String? workingDirectory,
+    });
+
+/// What the project template uses besides this package.
+const templateDependencies = {
+  'get': '^4.7.2',
+  'flutter_screenutil': '^5.9.3',
+  'liquid_glass_widgets': '^1.11.1',
+};
 
 /// The version of this package, read from its own pubspec.yaml, so `install` and `examples` never go
 /// stale. Null when it cannot be found (a compiled copy of the tool): then any version will do.
@@ -45,6 +58,23 @@ ArgParser _parser() {
       abbr: 'g',
       defaultsTo: false,
       help: 'Install using Git dependency (from GitHub).',
+    )
+    ..addFlag(
+      'template',
+      defaultsTo: true,
+      help:
+          'Set up the GetX folders and the splash, sign in and bottom bar screens.',
+    )
+    ..addFlag(
+      'cli',
+      defaultsTo: true,
+      help: 'Install the GetX command line (get create page:name).',
+    )
+    ..addFlag(
+      'force',
+      defaultsTo: false,
+      negatable: false,
+      help: 'Overwrite template files that already exist.',
     )
     ..addOption(
       'path',
@@ -99,6 +129,10 @@ Future<int> runSac(
         path: command['path'] as String,
         useGit: command['git'] as bool,
         version: version ?? await ownVersion(),
+        template: command['template'] as bool,
+        installCli: command['cli'] as bool,
+        force: command['force'] as bool,
+        run: run ?? Process.run,
       );
   }
 }
@@ -111,13 +145,17 @@ void _usage(StringSink out) {
     ..writeln('Commands:')
     ..writeln('  doctor                Check Flutter environment and versions')
     ..writeln(
-      '  install [-g] [-p .]   Add swiss_army_component to pubspec.yaml',
+      '  install [-g] [-p .]   Set up a project: dependency, GetX folders, theme, splash,\n'
+      '                        sign in, bottom bar, and the GetX command line',
     )
     ..writeln('  examples              Show usage examples')
     ..writeln('')
     ..writeln('Options:')
     ..writeln('  -g, --git             Install dependency from GitHub')
-    ..writeln('  -p, --path            Path to app root (default: .)');
+    ..writeln('  -p, --path            Path to app root (default: .)')
+    ..writeln('  --no-template         Only add the dependency, no files')
+    ..writeln('  --no-cli              Do not install the GetX command line')
+    ..writeln('  --force               Overwrite template files that exist');
 }
 
 Future<int> _doctor(StringSink out, RunProcess run) async {
@@ -188,6 +226,10 @@ Future<int> _install(
   required String path,
   required bool useGit,
   required String? version,
+  required bool template,
+  required bool installCli,
+  required bool force,
+  required RunProcess run,
 }) async {
   final absolute = File(path).absolute.path;
   final pubspecPath = absolute.endsWith('pubspec.yaml')
@@ -213,10 +255,74 @@ Future<int> _install(
           }
         : constraintFor(version),
   );
+  if (template) {
+    final dependencies = (editor.parseAt(['dependencies']).value as Map);
+    templateDependencies.forEach((name, constraint) {
+      // What the project already asks for stays.
+      if (!dependencies.containsKey(name)) {
+        editor.update(['dependencies', name], constraint);
+      }
+    });
+  }
 
   file.writeAsStringSync(editor.toString());
+  out.writeln('Added swiss_army_component to $pubspecPath');
+  if (!template) {
+    out.writeln('Run: flutter pub get');
+    return exitOk;
+  }
+
+  final root = file.parent;
+  final name = projectName(pubspecPath) ?? 'app';
+  final result = scaffoldProject(root, name: name, force: force);
+  out.writeln(
+    'Wrote ${result.written.length} files (lib/app: routes, bindings, modules, data, utils, widgets).',
+  );
+  for (final kept in result.kept) {
+    out.writeln('Kept your $kept (use --force to replace it).');
+  }
+
+  await _step(out, run, 'flutter', ['pub', 'get'], root.path, 'Packages');
+  if (installCli) {
+    await _step(
+      out,
+      run,
+      'dart',
+      ['pub', 'global', 'activate', 'get_cli'],
+      root.path,
+      'GetX command line',
+    );
+  }
   out
-    ..writeln('Added swiss_army_component to $pubspecPath')
-    ..writeln('Run: flutter pub get');
+    ..writeln('')
+    ..writeln('Ready. Run the app: flutter run')
+    ..writeln('Make a screen:      get create page:orders')
+    ..writeln('(if "get" is not found, add ~/.pub-cache/bin to your PATH)');
   return exitOk;
+}
+
+/// Runs one setup step. A step that fails is said plainly and left for the person to run, it does not undo the rest.
+Future<void> _step(
+  StringSink out,
+  RunProcess run,
+  String executable,
+  List<String> arguments,
+  String directory,
+  String what,
+) async {
+  final command = '$executable ${arguments.join(' ')}';
+  try {
+    final result = await run(
+      executable,
+      arguments,
+      workingDirectory: directory,
+    );
+    if (result.exitCode == 0) {
+      out.writeln('$what: done ($command).');
+      return;
+    }
+    out.writeln('$what: "$command" failed, run it yourself.\n${result.stderr}');
+  } catch (e) {
+    out.writeln('$what: could not run "$command" ($e), run it yourself.');
+  }
 }

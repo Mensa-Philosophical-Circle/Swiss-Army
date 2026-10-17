@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/compare/v1.2.1...v1.3.0) (2026-10-17)
+
+
+### Features
+
+* **phone:** check that a phone number is real for its country, and split it ([723a386](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/723a386fee83af855b50179407bf1998f45bf3f8))
+* **phone:** check that a phone number is real for its country, and split it ([af4487e](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/af4487e84018dd308821825712ced5888024ab8e))
+
 ## [1.2.1](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/compare/v1.2.0...v1.2.1) (2026-10-17)
 
 

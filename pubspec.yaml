@@ -26,6 +26,7 @@ dependencies:
   google_fonts: ^8.0.2
   pinput: ^6.0.1
   intl_phone_field: ^3.2.0
+  phone_numbers_parser: ^9.0.28
   intl: ^0.20.2
   args: ^2.4.2
   yaml_edit: ^2.2.0

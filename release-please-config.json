@@ -4,6 +4,7 @@
     ".": {
       "release-type": "dart",
       "package-name": "swiss_army_component",
+      "include-component-in-tag": false,
       "version-file": "pubspec.yaml",
       "changelog-path": "CHANGELOG.md"
     }

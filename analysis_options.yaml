@@ -2,6 +2,8 @@ include: package:flutter_lints/flutter.yaml
 analyzer:
   errors:
     unnecessary_library_name: ignore
+  exclude:
+    - build/**
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

@@ -218,8 +218,7 @@ class _AppElevatedButtonState extends State<AppElevatedButton> {
         autofocus: widget.autofocus,
         clipBehavior: widget.clipBehavior,
         statesController: widget.statesController,
-        style: Theme.of(context).elevatedButtonTheme.style?.merge(
-          ElevatedButton.styleFrom(
+        style: ElevatedButton.styleFrom(
             backgroundColor: widget.bgColor,
             foregroundColor: widget.textColor,
             disabledBackgroundColor: widget.disabledBgColor,
@@ -233,8 +232,8 @@ class _AppElevatedButtonState extends State<AppElevatedButton> {
               borderRadius: widget.borderRadius ?? BorderRadius.circular(10.r),
               side: widget.side ?? BorderSide.none,
             ),
-          ),
-        ),
+          )
+          .merge(Theme.of(context).elevatedButtonTheme.style),
         child: content,
       ),
     );
@@ -397,8 +396,7 @@ class _NormalElevatedButtonState extends State<NormalElevatedButton> {
       width: widget.width ?? double.infinity,
       height: widget.height ?? context.buttonHeight,
       child: ElevatedButton(
-        style: Theme.of(context).elevatedButtonTheme.style?.merge(
-          ElevatedButton.styleFrom(
+        style: ElevatedButton.styleFrom(
             minimumSize: widget.height != null
                 ? Size(0, widget.height!)
                 : Size(0, context.buttonHeight),
@@ -412,8 +410,8 @@ class _NormalElevatedButtonState extends State<NormalElevatedButton> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(safeRadius!),
             ),
-          ),
-        ),
+          )
+          .merge(Theme.of(context).elevatedButtonTheme.style),
         onPressed: widget.enabled && !widget.isLoading && !_isDebouncing
             ? _handlePress
             : null,
@@ -562,8 +560,7 @@ class _AppSecondaryElevatedButtonState
       width: widget.width ?? double.infinity,
       height: widget.height ?? context.buttonHeight,
       child: ElevatedButton(
-        style: Theme.of(context).elevatedButtonTheme.style?.merge(
-          ElevatedButton.styleFrom(
+        style: ElevatedButton.styleFrom(
             backgroundColor: widget.bgColor,
             padding: widget.padding,
             minimumSize: widget.height != null
@@ -584,8 +581,8 @@ class _AppSecondaryElevatedButtonState
               enableSecurity: widget.enableSecurity,
             ),
             disabledBackgroundColor: widget.bgColor?.withValues(alpha: 0.5),
-          ),
-        ),
+          )
+          .merge(Theme.of(context).elevatedButtonTheme.style),
         onPressed: widget.enabled && !widget.isLoading && !_isDebouncing
             ? _handlePress
             : null,
@@ -749,8 +746,7 @@ class _AppOutlinedButtonState extends State<AppOutlinedButton> {
       width: widget.buttonWidth ?? double.infinity,
       height: widget.buttonHeight ?? context.buttonHeight,
       child: ElevatedButton(
-        style: Theme.of(context).outlinedButtonTheme.style?.merge(
-          OutlinedButton.styleFrom(
+        style: OutlinedButton.styleFrom(
             minimumSize: widget.buttonHeight != null
                 ? Size(0, widget.buttonHeight!)
                 : Size(0, context.buttonHeight),
@@ -772,8 +768,8 @@ class _AppOutlinedButtonState extends State<AppOutlinedButton> {
               ),
             ),
             elevation: 0,
-          ),
-        ),
+          )
+          .merge(Theme.of(context).outlinedButtonTheme.style),
         onPressed: widget.enabled && !widget.isLoading && !_isDebouncing
             ? _handlePress
             : null,

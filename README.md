@@ -334,6 +334,7 @@ Run it in a new Flutter project (`flutter create my_app`, then `cd my_app`, then
 - adds `swiss_army_component`, `get`, `flutter_screenutil` and `liquid_glass_widgets` to `pubspec.yaml` and runs `flutter pub get`;
 - writes the GetX layout under `lib/app/` (`routes`, `bindings`, `modules`, `data`, `utils`, `widgets`), a theme in `utils/theme/app_theme.dart` (change the colour there and every screen follows), a new `main.dart` and a smoke test;
 - gives you ready screens: **splash**, **sign in** (validated form, API call left for you) and a **main** screen with a bottom bar that is native on each platform: liquid glass on iOS, Material 3 on Android;
+- adds the frontend rules as `AGENTS.md` and the checks that enforce them in `scripts/` (files of 200 lines at most, text only through `BigAppText`/`MedAppText`/`SmallAppText`, font weight w600 at most, words as translation keys, widgets kept with their screen). Run them with `bash scripts/quality_gate.sh`, and before every commit with `bash scripts/setup_hooks.sh`;
 - installs the GetX command line (`dart pub global activate get_cli`), so you can add screens with `get create page:orders`, which also adds the route.
 
 Files you have already written are kept (it says which); `--force` replaces them. `--no-template` only adds the dependency, `--no-cli` skips the GetX command line.

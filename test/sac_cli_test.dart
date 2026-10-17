@@ -31,6 +31,7 @@ void main() {
     out: out,
     err: err,
     version: version,
+    templateDir: Directory('lib/src/cli/template'),
     run:
         run ??
         (exe, a, {workingDirectory}) async {
@@ -116,7 +117,11 @@ void main() {
         'lib/app/routes/app_pages.dart',
         'lib/app/routes/app_routes.dart',
         'lib/app/utils/theme/app_theme.dart',
-        'lib/app/widgets/adaptive_bottom_nav.dart',
+        'lib/app/modules/main/widgets/adaptive_bottom_nav.dart',
+        'lib/app/utils/localization/app_translations.dart',
+        'AGENTS.md',
+        'scripts/quality_gate.sh',
+        '.githooks/pre-commit',
         'lib/app/modules/splash/views/splash_view.dart',
         'lib/app/modules/sign_in/controllers/sign_in_controller.dart',
         'lib/app/modules/main/views/main_view.dart',
@@ -128,7 +133,7 @@ void main() {
       expect(pubspec(), contains('flutter_screenutil:'));
       expect(pubspec(), contains('liquid_glass_widgets:'));
       expect(
-        read('lib/app/modules/splash/views/splash_view.dart'),
+        read('lib/app/utils/constants/app_constants.dart'),
         contains("'Demo'"),
       );
       expect(read('test/widget_test.dart'), contains('package:demo/main.dart'));
@@ -200,6 +205,36 @@ void main() {
       expect(out.toString(), contains('failed, run it yourself'));
       expect(has('lib/main.dart'), isTrue);
     });
+  });
+
+  test('the template follows the rules it ships with', () {
+    final files = Directory('lib/src/cli/template')
+        .listSync(recursive: true)
+        .whereType<File>()
+        .where((f) => f.path.endsWith('.tpl'));
+    expect(files, isNotEmpty);
+    for (final file in files) {
+      final text = file.readAsStringSync();
+      expect(
+        text.split('\n').length,
+        lessThanOrEqualTo(201),
+        reason: '${file.path} is longer than 200 lines',
+      );
+      if (file.path.contains('/lib/')) {
+        expect(
+          text,
+          isNot(matches(RegExp(r'FontWeight\.(bold|w700|w800|w900)'))),
+          reason: file.path,
+        );
+        expect(
+          text,
+          isNot(
+            matches(RegExp(r'(^|[^A-Za-z_])(Text\(|Text\.rich\(|TextStyle\()')),
+          ),
+          reason: '${file.path} uses raw text',
+        );
+      }
+    }
   });
 
   group('examples', () {

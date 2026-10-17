@@ -1,30 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-/// Every word the user reads, by key: screens say `'sign_in_title'.tr`, never the text itself.
-/// To add a language, add its map under keys with the same keys as English.
+import 'languages/de_de.dart';
+import 'languages/en_us.dart';
+import 'languages/es_es.dart';
+import 'languages/fr_fr.dart';
+
+/// Every word the user reads is a key: screens say `'sign_in_title'.tr`, never the text itself. The words
+/// are in `languages/`, one file per language with the same keys as English (scripts/verify_localization.dart
+/// checks it). To add a language, add a file and a line here.
 class AppTranslations extends Translations {
   static const defaultLocale = Locale('en', 'US');
 
   @override
-  Map<String, Map<String, String>> get keys => {'en_US': _en};
-
-  static const _en = {
-    'nav_home': 'Home',
-    'nav_profile': 'Profile',
-    'not_found_title': 'Page not found',
-    'sign_in_title': 'Welcome back',
-    'sign_in_subtitle': 'Sign in to continue',
-    'sign_in_submit': 'Sign in',
-    'email_label': 'Email',
-    'email_hint': 'you@example.com',
-    'email_required': 'Enter your email',
-    'email_invalid': 'Enter a valid email',
-    'password_label': 'Password',
-    'password_hint': 'Your password',
-    'password_required': 'Enter your password',
-    'home_pressed': 'Pressed @count times',
-    'home_press_me': 'Press me',
-    'profile_sign_out': 'Sign out',
+  Map<String, Map<String, String>> get keys => {
+    'en_US': enUS,
+    'es_ES': esES,
+    'fr_FR': frFR,
+    'de_DE': deDE,
   };
 }

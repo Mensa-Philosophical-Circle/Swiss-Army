@@ -5,6 +5,7 @@ import 'package:args/args.dart';
 import 'package:yaml_edit/yaml_edit.dart';
 
 import 'scaffold.dart';
+import 'verify.dart';
 
 /// Where the package is, for `sac install --git`.
 const gitUrl = 'https://github.com/Mensa-Philosophical-Circle/Swiss-Army.git';
@@ -52,6 +53,14 @@ ArgParser _parser() {
   final parser = ArgParser()
     ..addCommand('doctor')
     ..addCommand('examples');
+  parser
+      .addCommand('verify')
+      .addOption(
+        'path',
+        abbr: 'p',
+        defaultsTo: '.',
+        help: 'Path to the app root containing pubspec.yaml',
+      );
   parser.addCommand('install')
     ..addFlag(
       'git',
@@ -120,6 +129,13 @@ Future<int> runSac(
   switch (command.name) {
     case 'doctor':
       return _doctor(stdoutSink, run ?? Process.run);
+    case 'verify':
+      return verifyProject(
+        stdoutSink,
+        stderrSink,
+        path: command['path'] as String,
+        run: run ?? Process.run,
+      );
     case 'examples':
       _examples(stdoutSink, version ?? await ownVersion());
       return exitOk;
@@ -149,6 +165,9 @@ void _usage(StringSink out) {
     ..writeln(
       '  install [-g] [-p .]   Set up a project: dependency, GetX folders, theme, splash,\n'
       '                        sign in, bottom bar, the rules and checks, GetX command line',
+    )
+    ..writeln(
+      '  verify [-p .]         Check that install was done: packages, files, GetX command line',
     )
     ..writeln('  examples              Show usage examples')
     ..writeln('')

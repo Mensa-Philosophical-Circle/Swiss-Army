@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         darkTheme: AppTheme.dark,
         themeMode: ThemeMode.system,
         translations: AppTranslations(),
-        locale: AppTranslations.defaultLocale,
+        locale: Get.deviceLocale ?? AppTranslations.defaultLocale,
         fallbackLocale: AppTranslations.defaultLocale,
       ),
     );

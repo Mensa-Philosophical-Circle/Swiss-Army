@@ -121,6 +121,12 @@ void main() {
         'lib/app/utils/localization/app_translations.dart',
         'AGENTS.md',
         'scripts/quality_gate.sh',
+        'scripts/verify_dry.dart',
+        'scripts/verify_soc.sh',
+        'scripts/verify_security.sh',
+        'scripts/verify_assets.sh',
+        'scripts/verify_localization.dart',
+        'lib/app/utils/localization/languages/de_de.dart',
         '.githooks/pre-commit',
         'lib/app/modules/splash/views/splash_view.dart',
         'lib/app/modules/sign_in/controllers/sign_in_controller.dart',
@@ -235,6 +241,48 @@ void main() {
         );
       }
     }
+  });
+
+  group('verify', () {
+    test('passes on a project that was set up, and says so', () async {
+      await sac(['install', '-p', app.path]);
+      Directory('${app.path}/.dart_tool').createSync();
+      File(
+        '${app.path}/.dart_tool/package_config.json',
+      ).writeAsStringSync('{"packages":[{"name": "swiss_army_component"}]}');
+      expect(await sac(['verify', '-p', app.path]), exitOk);
+      expect(out.toString(), contains('All set up.'));
+    });
+
+    test('fails on a bare project and says how to fix each thing', () async {
+      expect(await sac(['verify', '-p', app.path]), 1);
+      expect(out.toString(), contains('✗ lib/app/routes/app_pages.dart'));
+      expect(out.toString(), contains('✗ pubspec.yaml asks for get'));
+      expect(out.toString(), contains('run sac install'));
+      expect(out.toString(), contains('run flutter pub get'));
+    });
+
+    test('notices a file that was removed after the install', () async {
+      await sac(['install', '-p', app.path]);
+      File('${app.path}/lib/app/routes/app_pages.dart').deleteSync();
+      expect(await sac(['verify', '-p', app.path]), 1);
+      expect(out.toString(), contains('✗ lib/app/routes/app_pages.dart'));
+    });
+
+    test('fails when the GetX command line is not there', () async {
+      await sac(['install', '-p', app.path]);
+      final code = await sac(
+        ['verify', '-p', app.path],
+        run: (_, _, {workingDirectory}) async =>
+            throw const ProcessException('get', []),
+      );
+      expect(code, 1);
+      expect(out.toString(), contains('✗ GetX command line'));
+    });
+
+    test('says so, and fails, when there is no pubspec.yaml', () async {
+      expect(await sac(['verify', '-p', '${app.path}/missing']), exitNoInput);
+    });
   });
 
   group('examples', () {

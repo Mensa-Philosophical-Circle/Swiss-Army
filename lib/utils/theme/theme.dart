@@ -847,6 +847,7 @@ class SACTheme {
           phoneFieldHeight: colors.phoneFieldHeight,
           dropdownHeight: colors.dropdownHeight,
           buttonHeight: colors.buttonHeight,
+          success: colors.success,
         ),
       ],
     );
@@ -860,11 +861,15 @@ class SACThemeExtension extends ThemeExtension<SACThemeExtension> {
   final double? dropdownHeight;
   final double? buttonHeight;
 
+  /// The success colour from [SACThemeConfig.success]; what OTP success states and profit figures use.
+  final Color? success;
+
   SACThemeExtension({
     this.inputHeight,
     this.phoneFieldHeight,
     this.dropdownHeight,
     this.buttonHeight,
+    this.success,
   });
 
   @override
@@ -873,12 +878,14 @@ class SACThemeExtension extends ThemeExtension<SACThemeExtension> {
     double? phoneFieldHeight,
     double? dropdownHeight,
     double? buttonHeight,
+    Color? success,
   }) {
     return SACThemeExtension(
       inputHeight: inputHeight ?? this.inputHeight,
       phoneFieldHeight: phoneFieldHeight ?? this.phoneFieldHeight,
       dropdownHeight: dropdownHeight ?? this.dropdownHeight,
       buttonHeight: buttonHeight ?? this.buttonHeight,
+      success: success ?? this.success,
     );
   }
 
@@ -890,6 +897,7 @@ class SACThemeExtension extends ThemeExtension<SACThemeExtension> {
       phoneFieldHeight: lerpDouble(phoneFieldHeight, other.phoneFieldHeight, t),
       dropdownHeight: lerpDouble(dropdownHeight, other.dropdownHeight, t),
       buttonHeight: lerpDouble(buttonHeight, other.buttonHeight, t),
+      success: Color.lerp(success, other.success, t),
     );
   }
 
@@ -907,6 +915,9 @@ extension SACThemeContext on BuildContext {
   double get phoneFieldHeight => sacTheme.phoneFieldHeight ?? 70.h;
   double get dropdownHeight => sacTheme.dropdownHeight ?? inputHeight;
   double get buttonHeight => sacTheme.buttonHeight ?? 52.0;
+
+  /// The theme's success colour (green unless [SACThemeConfig.success] says otherwise).
+  Color get successColor => sacTheme.success ?? AppColors.green;
 
   double get height => MediaQuery.of(this).size.height;
   double get width => MediaQuery.of(this).size.width;

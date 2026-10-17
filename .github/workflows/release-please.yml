@@ -8,13 +8,11 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  actions: write
 
 jobs:
   release-please:
     runs-on: ubuntu-latest
-    outputs:
-      release_created: ${{ steps.release.outputs.release_created }}
-      tag_name: ${{ steps.release.outputs.tag_name }}
     steps:
       - uses: googleapis/release-please-action@v4
         id: release
@@ -22,30 +20,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
-
-  # Merging the release PR makes a release; this publishes that version to pub.dev, from the commit the
-  # release was made at. It needs "Automated publishing" turned on for the package at
-  # https://pub.dev/packages/swiss_army_component/admin, with the repository
-  # Mensa-Philosophical-Circle/Swiss-Army and the GitHub Actions environment "pub.dev".
-  publish:
-    needs: release-please
-    if: ${{ needs.release-please.outputs.release_created == 'true' }}
-    runs-on: ubuntu-latest
-    environment: pub.dev
-    permissions:
-      contents: read
-      id-token: write # lets pub.dev trust this run, so there is no token to keep
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ needs.release-please.outputs.tag_name }}
-      - uses: dart-lang/setup-dart@v1
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-          cache: true
-      - run: flutter pub get
-      - name: Check the package before it goes out
-        run: flutter pub publish --dry-run
-      - name: Publish to pub.dev
-        run: flutter pub publish --force
+      # Tags made with the default token do not start other workflows, so start the publish by hand,
+      # on the tag itself: pub.dev only accepts a run whose ref matches the tag pattern v{{version}}.
+      - name: Start the publish on the new tag
+        if: ${{ steps.release.outputs.release_created == 'true' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run publish.yml --repo "$GITHUB_REPOSITORY" --ref "${{ steps.release.outputs.tag_name }}"

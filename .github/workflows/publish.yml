@@ -1,0 +1,30 @@
+name: publish
+
+# Publishes to pub.dev from a version tag (v1.2.3). Set up at
+# https://pub.dev/packages/swiss_army_component/admin: repository Mensa-Philosophical-Circle/Swiss-Army,
+# tag pattern v{{version}}, push and workflow_dispatch events on, environment "pub.dev".
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+*'
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: pub.dev
+    permissions:
+      contents: read
+      id-token: write # lets pub.dev trust this run, so there is no token to keep
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: Check the package before it goes out
+        run: flutter pub publish --dry-run
+      - name: Publish to pub.dev
+        run: flutter pub publish --force

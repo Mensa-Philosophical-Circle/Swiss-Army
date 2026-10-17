@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/compare/swiss_army_component-v1.0.0...swiss_army_component-v1.1.0) (2026-10-17)
+
+
+### Features
+
+* **AppPhoneTextField:** add fontSize and hintFontSize ([289f05b](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/289f05b44567c2c51c16f976177f99188d284a58))
+* **AppPhoneTextField:** add fontSize and hintFontSize ([a2c3ff0](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/a2c3ff0420375ac352925a6c8a136cd3535ced77))
+
+
+### Bug Fixes
+
+* CLI, theme and pub.dev publishing ([468c74a](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/468c74a2db53d26adc749519113349585ffd2d0d))
+* **cli:** install the current version, show real examples, exit non-zero on a bad command ([72fdf45](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/72fdf4591b30ed81f6da30145057f88c5589a5ff))
+* **theme:** make the phone field, OTP, dropdown and profit text follow the theme ([48c7ab6](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/48c7ab65c7b24912e1241bcac573168f0960884c))
+
 ## 1.0.0 (2026-09-13)
 
 

@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/compare/v1.1.0...v1.2.0) (2026-10-17)
+
+
+### Features
+
+* **cli:** sac install sets up a GetX project with splash, sign in and a native bottom bar ([a6677e9](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/a6677e9b3f83683836bd385a321fa9dbab14ff49))
+* **cli:** sac install sets up a GetX project with splash, sign in and a native bottom bar ([05d69c2](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/05d69c22d186eca9dd23760ac1be8655f0858474))
+* **cli:** sac verify, and the security, assets, DRY, separation and translation checks in the template ([98bf17a](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/98bf17a88c27ace4c081e32db19c62e4f309076e))
+* **cli:** sac verify, template files, frontend rules and quality checks ([19fd7c2](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/19fd7c22e8de5d46cdaa43ee2238cc253c189e77))
+* **cli:** template as real files, with the frontend rules and quality checks ([61bd341](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/61bd341656cfa1dd1c1f4d39ad80cdad385909b4))
+
 ## [1.1.0](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/compare/swiss_army_component-v1.0.0...swiss_army_component-v1.1.0) (2026-10-17)
 
 

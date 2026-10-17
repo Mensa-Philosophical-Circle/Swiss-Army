@@ -249,6 +249,10 @@ class _AppPhoneTextFieldState extends State<AppPhoneTextField> {
                     'Enter a valid $requiredLen-digit phone number';
               }
             }
+            // Long enough is not the same as a real number: the country's own numbering plan decides.
+            if (digits.isNotEmpty && !PhoneParts.isValid('+${_selectedCountry.dialCode}$digits')) {
+              return widget.invalidNumberMessage ?? 'Enter a valid phone number';
+            }
             if (widget.phoneValidator != null) {
               final complete = '+${_selectedCountry.dialCode}$digits';
               return widget.phoneValidator!(complete);

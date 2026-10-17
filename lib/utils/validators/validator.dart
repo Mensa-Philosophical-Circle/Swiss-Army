@@ -1,5 +1,7 @@
 import 'package:intl_phone_field/phone_number.dart';
 
+import 'phone_parts.dart';
+
 class FormValidator {
   static String? isValidEmail(String? email) {
     final RegExp emailRegExp = RegExp(
@@ -62,10 +64,15 @@ class FormValidator {
     if (phoneNo == null || phoneNo.isEmpty) {
       return 'Please enter a valid phone number.';
     }
+    final compact = phoneNo.replaceAll(RegExp(r'\s+'), '');
     final regExp = RegExp(
       r'^\+?[1-9]\d{1,14}$',
     );
-    if (!regExp.hasMatch(phoneNo.replaceAll(RegExp(r'\s+'), ''))) {
+    if (!regExp.hasMatch(compact)) {
+      return 'Please enter a valid phone number';
+    }
+    // With a country code the country's own numbering plan decides; without one there is nothing to check it against.
+    if (compact.startsWith('+') && !PhoneParts.isValid(compact)) {
       return 'Please enter a valid phone number';
     }
     return null;

@@ -8,13 +8,22 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  actions: write
 
 jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
       - uses: googleapis/release-please-action@v4
+        id: release
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
+      # Tags made with the default token do not start other workflows, so start the publish by hand,
+      # on the tag itself: pub.dev only accepts a run whose ref matches the tag pattern v{{version}}.
+      - name: Start the publish on the new tag
+        if: ${{ steps.release.outputs.release_created == 'true' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run publish.yml --repo "$GITHUB_REPOSITORY" --ref "${{ steps.release.outputs.tag_name }}"

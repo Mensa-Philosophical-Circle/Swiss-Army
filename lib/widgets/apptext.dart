@@ -788,7 +788,7 @@ class PriceText extends StatelessWidget {
   Color? _getColor(BuildContext context) {
     if (isProfit != null && showProfitLossColors) {
       if (isProfit!) {
-        return profitColor ?? Colors.green;
+        return profitColor ?? context.successColor;
       } else {
         return lossColor ?? Theme.of(context).colorScheme.error;
       }

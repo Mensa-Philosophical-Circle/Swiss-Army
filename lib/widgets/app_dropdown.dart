@@ -144,8 +144,6 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDark = Theme.of(context).brightness == Brightness.dark;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -207,7 +205,7 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
                   )
                 : null,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: isDark ? Colors.white : Colors.black87,
+              color: Theme.of(context).colorScheme.onSurface,
               fontSize: 16.sp,
             ),
             decoration: InputDecoration(
@@ -226,7 +224,7 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
               errorBorder: _getBorder(Theme.of(context).colorScheme.error),
               focusedErrorBorder: _getBorder(Theme.of(context).colorScheme.error),
             ),
-            dropdownColor: isDark ? Colors.grey[850] : Colors.white,
+            dropdownColor: Theme.of(context).colorScheme.surface,
           ),
         ),
       ],

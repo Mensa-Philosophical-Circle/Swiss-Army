@@ -166,7 +166,7 @@ class _AppPhoneTextFieldState extends State<AppPhoneTextField> {
     final theme = Theme.of(context);
     final effectiveLabelColor = widget.labelColor ??
         theme.inputDecorationTheme.labelStyle?.color ??
-        AppColors.black;
+        theme.colorScheme.onSurface;
     final effectiveHintColor = widget.hintColor ??
         theme.inputDecorationTheme.hintStyle?.color ??
         AppColors.grey200;
@@ -175,12 +175,12 @@ class _AppPhoneTextFieldState extends State<AppPhoneTextField> {
         AppColors.grey100;
     final effectiveFocusedBorderColor = widget.focusedBorderColor ??
         theme.inputDecorationTheme.focusedBorder?.borderSide.color ??
-        AppColors.primary;
+        theme.colorScheme.primary;
     final effectiveErrorBorderColor = widget.errorBorderColor ??
         theme.inputDecorationTheme.errorBorder?.borderSide.color ??
-        AppColors.red;
+        theme.colorScheme.error;
     final effectiveTextColor =
-        widget.textColor ?? theme.textTheme.bodyLarge?.color ?? AppColors.black;
+        widget.textColor ?? theme.textTheme.bodyLarge?.color ?? theme.colorScheme.onSurface;
     final effectiveRadius = widget.borderRadius ?? 12.0;
 
     return Column(
@@ -202,7 +202,7 @@ class _AppPhoneTextFieldState extends State<AppPhoneTextField> {
                   TextSpan(
                     text: ' *',
                     style: TextStyle(
-                      color: widget.requiredIndicatorColor ?? AppColors.red,
+                      color: widget.requiredIndicatorColor ?? theme.colorScheme.error,
                       fontSize: (widget.labelFontSize ?? 14.0).sp,
                       fontWeight: FontWeight.w600,
                     ),
@@ -225,7 +225,7 @@ class _AppPhoneTextFieldState extends State<AppPhoneTextField> {
           ],
           cursorColor: widget.cursorColor ??
               theme.textSelectionTheme.cursorColor ??
-              AppColors.primary,
+              theme.colorScheme.primary,
           cursorHeight: 20.h,
           style: TextStyle(
             color: effectiveTextColor,
@@ -274,14 +274,10 @@ class _AppPhoneTextFieldState extends State<AppPhoneTextField> {
             isDense: false,
             counterText: '',
             fillColor: !widget.enabled
-                ? (theme.brightness == Brightness.dark
-                    ? AppColors.grey800.withValues(alpha: 0.5)
-                    : AppColors.grey100)
+                ? theme.colorScheme.onSurface.withValues(alpha: 0.08)
                 : (widget.backgroundColor ??
-                    (theme.brightness == Brightness.light
-                        ? AppColors.white
-                        : (theme.inputDecorationTheme.fillColor ??
-                            AppColors.white))),
+                    theme.inputDecorationTheme.fillColor ??
+                    theme.colorScheme.surface),
             contentPadding: widget.contentPadding ??
                 EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
             border: OutlineInputBorder(
@@ -352,7 +348,7 @@ class _AppPhoneTextFieldState extends State<AppPhoneTextField> {
                       Icon(
                         Icons.arrow_drop_down,
                         size: 20.sp,
-                        color: widget.dropdownIconColor ?? AppColors.grey,
+                        color: widget.dropdownIconColor ?? theme.colorScheme.onSurfaceVariant,
                       ),
                     ],
                     SizedBox(width: 6.w),
@@ -408,20 +404,20 @@ class _CountryPickerSheetState extends State<_CountryPickerSheet> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.72,
-      decoration: BoxDecoration(
-        color: theme.scaffoldBackgroundColor,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
-      ),
-      child: Column(
+    // A Material, not a coloured box: the list's ripples are painted on the nearest Material.
+    return Material(
+      color: theme.scaffoldBackgroundColor,
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.72,
+        child: Column(
         children: [
           SizedBox(height: 12.h),
           Container(
             width: 40.w,
             height: 4.h,
             decoration: BoxDecoration(
-              color: Colors.grey.shade300,
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(2.r),
             ),
           ),
@@ -434,9 +430,8 @@ class _CountryPickerSheetState extends State<_CountryPickerSheet> {
                 prefixIcon: const Icon(Icons.search),
                 hintText: 'Search country or code...',
                 filled: true,
-                fillColor: theme.brightness == Brightness.light
-                    ? Colors.grey.shade100
-                    : Colors.grey.shade900,
+                fillColor: theme.inputDecorationTheme.fillColor ??
+                    theme.colorScheme.onSurface.withValues(alpha: 0.06),
                 contentPadding: EdgeInsets.symmetric(horizontal: 16.w),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.r),
@@ -480,7 +475,9 @@ class _CountryPickerSheetState extends State<_CountryPickerSheet> {
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
-                      color: isSelected ? AppColors.primary : Colors.grey,
+                      color: isSelected
+                          ? theme.colorScheme.primary
+                          : theme.colorScheme.onSurface.withValues(alpha: 0.6),
                     ),
                   ),
                   onTap: () {
@@ -492,6 +489,7 @@ class _CountryPickerSheetState extends State<_CountryPickerSheet> {
             ),
           ),
         ],
+      ),
       ),
     );
   }

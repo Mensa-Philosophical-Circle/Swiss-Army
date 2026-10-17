@@ -8,7 +8,7 @@ Add to `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  swiss_army_component: ^0.2.0
+  swiss_army_component: ^1.0.0
 ```
 
 Or from the CLI (run inside your Flutter app directory):

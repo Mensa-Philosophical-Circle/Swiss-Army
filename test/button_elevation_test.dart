@@ -22,13 +22,13 @@ void main() {
     expect(buttonFinder, findsOneWidget);
 
     final ElevatedButton button = tester.widget<ElevatedButton>(buttonFinder);
-    final ButtonStyle style = button.style!;
+    final ButtonStyle? style = button.style;
 
     // We expect it to be 0 after fix. For now, we expect it might be 2 specific to current impl
     // But we are writing the test to PASS only if it is 0. So it should FAIL now.
 
     // Check elevation state property. We assume normal state (empty set).
-    final double? elevation = style.elevation?.resolve({});
+    final double? elevation = style?.elevation?.resolve({});
 
     expect(
       elevation,
@@ -55,8 +55,8 @@ void main() {
     expect(buttonFinder, findsOneWidget);
 
     final ElevatedButton button = tester.widget<ElevatedButton>(buttonFinder);
-    final ButtonStyle style = button.style!;
-    final double? elevation = style.elevation?.resolve({});
+    final ButtonStyle? style = button.style;
+    final double? elevation = style?.elevation?.resolve({});
 
     expect(
       elevation,

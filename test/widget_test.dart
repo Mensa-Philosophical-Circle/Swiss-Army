@@ -401,7 +401,8 @@ void main() {
         ),
       );
 
-      expect(find.text('*'), findsOneWidget);
+      // The asterisk is part of the label's rich text, not a Text of its own.
+      expect(find.textContaining('*', findRichText: true), findsOneWidget);
     });
 
     testWidgets('applies different field styles', (tester) async {

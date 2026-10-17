@@ -31,6 +31,7 @@ void main() {
     out: out,
     err: err,
     version: version,
+    templateDir: Directory('lib/src/cli/template'),
     run:
         run ??
         (exe, a, {workingDirectory}) async {
@@ -116,7 +117,17 @@ void main() {
         'lib/app/routes/app_pages.dart',
         'lib/app/routes/app_routes.dart',
         'lib/app/utils/theme/app_theme.dart',
-        'lib/app/widgets/adaptive_bottom_nav.dart',
+        'lib/app/modules/main/widgets/adaptive_bottom_nav.dart',
+        'lib/app/utils/localization/app_translations.dart',
+        'AGENTS.md',
+        'scripts/quality_gate.sh',
+        'scripts/verify_dry.dart',
+        'scripts/verify_soc.sh',
+        'scripts/verify_security.sh',
+        'scripts/verify_assets.sh',
+        'scripts/verify_localization.dart',
+        'lib/app/utils/localization/languages/de_de.dart',
+        '.githooks/pre-commit',
         'lib/app/modules/splash/views/splash_view.dart',
         'lib/app/modules/sign_in/controllers/sign_in_controller.dart',
         'lib/app/modules/main/views/main_view.dart',
@@ -128,7 +139,7 @@ void main() {
       expect(pubspec(), contains('flutter_screenutil:'));
       expect(pubspec(), contains('liquid_glass_widgets:'));
       expect(
-        read('lib/app/modules/splash/views/splash_view.dart'),
+        read('lib/app/utils/constants/app_constants.dart'),
         contains("'Demo'"),
       );
       expect(read('test/widget_test.dart'), contains('package:demo/main.dart'));
@@ -199,6 +210,78 @@ void main() {
       expect(code, exitOk);
       expect(out.toString(), contains('failed, run it yourself'));
       expect(has('lib/main.dart'), isTrue);
+    });
+  });
+
+  test('the template follows the rules it ships with', () {
+    final files = Directory('lib/src/cli/template')
+        .listSync(recursive: true)
+        .whereType<File>()
+        .where((f) => f.path.endsWith('.tpl'));
+    expect(files, isNotEmpty);
+    for (final file in files) {
+      final text = file.readAsStringSync();
+      expect(
+        text.split('\n').length,
+        lessThanOrEqualTo(201),
+        reason: '${file.path} is longer than 200 lines',
+      );
+      if (file.path.contains('/lib/')) {
+        expect(
+          text,
+          isNot(matches(RegExp(r'FontWeight\.(bold|w700|w800|w900)'))),
+          reason: file.path,
+        );
+        expect(
+          text,
+          isNot(
+            matches(RegExp(r'(^|[^A-Za-z_])(Text\(|Text\.rich\(|TextStyle\()')),
+          ),
+          reason: '${file.path} uses raw text',
+        );
+      }
+    }
+  });
+
+  group('verify', () {
+    test('passes on a project that was set up, and says so', () async {
+      await sac(['install', '-p', app.path]);
+      Directory('${app.path}/.dart_tool').createSync();
+      File(
+        '${app.path}/.dart_tool/package_config.json',
+      ).writeAsStringSync('{"packages":[{"name": "swiss_army_component"}]}');
+      expect(await sac(['verify', '-p', app.path]), exitOk);
+      expect(out.toString(), contains('All set up.'));
+    });
+
+    test('fails on a bare project and says how to fix each thing', () async {
+      expect(await sac(['verify', '-p', app.path]), 1);
+      expect(out.toString(), contains('✗ lib/app/routes/app_pages.dart'));
+      expect(out.toString(), contains('✗ pubspec.yaml asks for get'));
+      expect(out.toString(), contains('run sac install'));
+      expect(out.toString(), contains('run flutter pub get'));
+    });
+
+    test('notices a file that was removed after the install', () async {
+      await sac(['install', '-p', app.path]);
+      File('${app.path}/lib/app/routes/app_pages.dart').deleteSync();
+      expect(await sac(['verify', '-p', app.path]), 1);
+      expect(out.toString(), contains('✗ lib/app/routes/app_pages.dart'));
+    });
+
+    test('fails when the GetX command line is not there', () async {
+      await sac(['install', '-p', app.path]);
+      final code = await sac(
+        ['verify', '-p', app.path],
+        run: (_, _, {workingDirectory}) async =>
+            throw const ProcessException('get', []),
+      );
+      expect(code, 1);
+      expect(out.toString(), contains('✗ GetX command line'));
+    });
+
+    test('says so, and fails, when there is no pubspec.yaml', () async {
+      expect(await sac(['verify', '-p', '${app.path}/missing']), exitNoInput);
     });
   });
 

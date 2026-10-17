@@ -5,6 +5,7 @@ import 'package:args/args.dart';
 import 'package:yaml_edit/yaml_edit.dart';
 
 import 'scaffold.dart';
+import 'verify.dart';
 
 /// Where the package is, for `sac install --git`.
 const gitUrl = 'https://github.com/Mensa-Philosophical-Circle/Swiss-Army.git';
@@ -52,6 +53,14 @@ ArgParser _parser() {
   final parser = ArgParser()
     ..addCommand('doctor')
     ..addCommand('examples');
+  parser
+      .addCommand('verify')
+      .addOption(
+        'path',
+        abbr: 'p',
+        defaultsTo: '.',
+        help: 'Path to the app root containing pubspec.yaml',
+      );
   parser.addCommand('install')
     ..addFlag(
       'git',
@@ -93,6 +102,7 @@ Future<int> runSac(
   StringSink? err,
   String? version,
   RunProcess? run,
+  Directory? templateDir,
 }) async {
   final stdoutSink = out ?? stdout;
   final stderrSink = err ?? stderr;
@@ -119,6 +129,13 @@ Future<int> runSac(
   switch (command.name) {
     case 'doctor':
       return _doctor(stdoutSink, run ?? Process.run);
+    case 'verify':
+      return verifyProject(
+        stdoutSink,
+        stderrSink,
+        path: command['path'] as String,
+        run: run ?? Process.run,
+      );
     case 'examples':
       _examples(stdoutSink, version ?? await ownVersion());
       return exitOk;
@@ -133,6 +150,7 @@ Future<int> runSac(
         installCli: command['cli'] as bool,
         force: command['force'] as bool,
         run: run ?? Process.run,
+        templateDir: templateDir,
       );
   }
 }
@@ -146,7 +164,10 @@ void _usage(StringSink out) {
     ..writeln('  doctor                Check Flutter environment and versions')
     ..writeln(
       '  install [-g] [-p .]   Set up a project: dependency, GetX folders, theme, splash,\n'
-      '                        sign in, bottom bar, and the GetX command line',
+      '                        sign in, bottom bar, the rules and checks, GetX command line',
+    )
+    ..writeln(
+      '  verify [-p .]         Check that install was done: packages, files, GetX command line',
     )
     ..writeln('  examples              Show usage examples')
     ..writeln('')
@@ -230,6 +251,7 @@ Future<int> _install(
   required bool installCli,
   required bool force,
   required RunProcess run,
+  required Directory? templateDir,
 }) async {
   final absolute = File(path).absolute.path;
   final pubspecPath = absolute.endsWith('pubspec.yaml')
@@ -272,9 +294,16 @@ Future<int> _install(
     return exitOk;
   }
 
+  final source = templateDir ?? await templateDirectory();
+  if (source == null) {
+    err.writeln(
+      'The project template was not found next to this tool; only the dependency was added.',
+    );
+    return exitNoInput;
+  }
   final root = file.parent;
   final name = projectName(pubspecPath) ?? 'app';
-  final result = scaffoldProject(root, name: name, force: force);
+  final result = scaffoldProject(source, root, name: name, force: force);
   out.writeln(
     'Wrote ${result.written.length} files (lib/app: routes, bindings, modules, data, utils, widgets).',
   );
@@ -297,6 +326,10 @@ Future<int> _install(
     ..writeln('')
     ..writeln('Ready. Run the app: flutter run')
     ..writeln('Make a screen:      get create page:orders')
+    ..writeln(
+      'Check the rules:    bash scripts/quality_gate.sh (AGENTS.md says what they are)',
+    )
+    ..writeln('Run it on commit:   bash scripts/setup_hooks.sh')
     ..writeln('(if "get" is not found, add ~/.pub-cache/bin to your PATH)');
   return exitOk;
 }

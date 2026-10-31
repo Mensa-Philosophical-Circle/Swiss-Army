@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.1](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/compare/v1.3.0...v1.3.1) (2026-10-31)
+
+
+### Bug Fixes
+
+* **buttons:** no shadow while a button is held ([a350904](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/a350904a7dea14f0c8b1e2f86d5523bee837b3f4))
+* **buttons:** no shadow while a button is held ([4205bb5](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/commit/4205bb5d1782bc1f527be3634846f5e9eef69672))
+
 ## [1.3.0](https://github.com/Mensa-Philosophical-Circle/Swiss-Army/compare/v1.2.1...v1.3.0) (2026-10-17)
 
 

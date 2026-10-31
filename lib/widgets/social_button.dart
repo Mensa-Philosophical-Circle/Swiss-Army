@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../utils/utils.dart';
+import '../utils/theme/button_press_lift.dart';
 
 /// Supported social login providers.
 enum SocialProvider {
@@ -176,7 +177,7 @@ class SocialButton extends StatelessWidget {
           disabledBackgroundColor: style == SocialButtonStyle.outlined
               ? Colors.transparent
               : effectiveBgColor.withValues(alpha: 0.5),
-        ),
+        ).withoutPressLift(),
         child: isLoading
             ? SizedBox(
                 width: 20.w,

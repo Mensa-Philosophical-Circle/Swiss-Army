@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../utils/utils.dart';
 import 'widget.dart';
+import '../utils/theme/button_press_lift.dart';
 
 /// A secure elevated button with debouncing, loading states, and accessibility.
 ///
@@ -232,7 +233,7 @@ class _AppElevatedButtonState extends State<AppElevatedButton> {
               borderRadius: widget.borderRadius ?? BorderRadius.circular(10.r),
               side: widget.side ?? BorderSide.none,
             ),
-          )
+          ).withoutPressLift()
           .merge(Theme.of(context).elevatedButtonTheme.style),
         child: content,
       ),
@@ -410,7 +411,7 @@ class _NormalElevatedButtonState extends State<NormalElevatedButton> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(safeRadius!),
             ),
-          )
+          ).withoutPressLift()
           .merge(Theme.of(context).elevatedButtonTheme.style),
         onPressed: widget.enabled && !widget.isLoading && !_isDebouncing
             ? _handlePress
@@ -581,7 +582,7 @@ class _AppSecondaryElevatedButtonState
               enableSecurity: widget.enableSecurity,
             ),
             disabledBackgroundColor: widget.bgColor?.withValues(alpha: 0.5),
-          )
+          ).withoutPressLift()
           .merge(Theme.of(context).elevatedButtonTheme.style),
         onPressed: widget.enabled && !widget.isLoading && !_isDebouncing
             ? _handlePress
@@ -943,7 +944,7 @@ class _ConfigElevatedButtonState extends State<ConfigElevatedButton> {
           ),
           disabledBackgroundColor: (widget.bgcolour ?? theme.colorScheme.primary)
               .withValues(alpha: 0.5),
-        ),
+        ).withoutPressLift(),
         onPressed: widget.enabled && !widget.isLoading && !_isDebouncing
             ? _handlePress
             : null,
@@ -1125,7 +1126,7 @@ class _ConfigOutlinedButtonState extends State<ConfigOutlinedButton> {
           elevation: 0,
           disabledBackgroundColor: (widget.bgColour ?? theme.colorScheme.surface)
               .withValues(alpha: 0.5),
-        ),
+        ).withoutPressLift(),
         onPressed: widget.enabled && !widget.isLoading && !_isDebouncing
             ? _handlePress
             : null,
@@ -1262,7 +1263,7 @@ class _AppIconButtonState extends State<AppIconButton> {
             ),
             side: widget.side ?? BorderSide.none,
           ),
-        ),
+        ).withoutPressLift(),
         child: Icon(
           widget.icon,
           size: safeIconSize,
@@ -1603,7 +1604,7 @@ class _AppGradientButtonState extends State<AppGradientButton> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(safeRadius),
           ),
-        ),
+        ).withoutPressLift(),
         child: content,
       ),
     );

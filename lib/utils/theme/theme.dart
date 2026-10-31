@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'chip_theme.dart';
 import 'colors.dart';
 import 'theme_config.dart';
+import 'button_press_lift.dart';
 
 /// Swiss Army Component Theme Factory
 ///
@@ -385,7 +386,7 @@ class SACTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-        ).merge(config?.elevatedButtonStyle),
+        ).withoutPressLift().merge(config?.elevatedButtonStyle),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
